@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,6 +22,11 @@ export default function Register() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/user')
+     .then((response) => setUsers(response.data))
+  }, []);
 
   const validateForm = () => {
     let newErrors = {};
@@ -31,7 +36,19 @@ export default function Register() {
     if (!formData.name) newErrors.name = "Name is required.";
     if (!formData.address) newErrors.address = "Address is required.";
     if (!formData.phone || !phoneRegex.test(formData.phone)) newErrors.phone = "Valid phone number is required.";
+    for(let i = 0; i < users.length; i++){
+      if(users[i].phone === formData.phone){
+        newErrors.phone = "Phone already exists.";
+        break;
+      }
+    }
     if (!formData.dob) newErrors.dob = "Date of birth is required.";
+    for(let i = 0; i < users.length; i++){
+      if(users[i].email === formData.email){
+        newErrors.email = "Email already exists.";
+        break;
+      }
+    }
     if (!formData.email) newErrors.email = "Email is required.";
     if (!formData.password || formData.password.length < 6 || formData.password.length > 32) newErrors.password = "Password must be 6-32 characters long.";
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
@@ -42,10 +59,11 @@ export default function Register() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+      if (!validateForm()) return;
     try {
       const response = await axios.post('http://localhost:8080/api/user/create', formData);
       if (response.status === 200) {

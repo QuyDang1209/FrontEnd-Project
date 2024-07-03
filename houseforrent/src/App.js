@@ -4,6 +4,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from './components/registers/Register';
 import Login from './components/login/Login';
+import ProfileForm from './components/edit/ProfileForm';
 export default function App(){
   return (
     <Router>
@@ -12,8 +13,8 @@ export default function App(){
         <Route path="/login" element={<Login />} />
         {/* Định nghĩa các route khác ở đây */}
         <Route path="/home" element={<div>Welcome to the homepage!</div>} />
+        <Route path='/edit' element={<ProfileForm/>} />
       </Routes>
-      <ToastContainer />
     </Router>
   );
 }

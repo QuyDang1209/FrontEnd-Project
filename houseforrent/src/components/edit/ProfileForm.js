@@ -2,9 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper } from "@mui/material";
 
 const ProfileForm = () => {
+    const navigate = useNavigate();
     const [profile, setProfile] = useState({
         // avatar: '',
         name: '',
@@ -16,12 +19,14 @@ const ProfileForm = () => {
     useEffect(() => {
         fetchProfile();
     }, []);
-
+    const id = JSON.parse(localStorage.getItem('user')).id ;
+     
+    console.log(id);
     const fetchProfile = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/user/1', {
+            const response = await axios.get('http://localhost:8080/api/user/'+id, {
                 headers: {
-                    'Authorization': 'Bearer <your_access_token>'
+                    'Authorization': 'Bearer <your_access_token>' 
                 }
             });
             setProfile(response.data);
@@ -58,7 +63,7 @@ const ProfileForm = () => {
         try {
             profile.role = profile.role[0].id;
             profile.active = profile.active.id;
-            const response = await axios.patch('http://localhost:8080/api/user/edit/1', profile, {
+            const response = await axios.patch('http://localhost:8080/api/user/edit/'+id, profile, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer <your_access_token>'
@@ -66,6 +71,8 @@ const ProfileForm = () => {
             });
             setProfile(response.data);
             setError(null);
+            toast.success('Edit successful!');
+            navigate('/home');
         } catch (error) {
             setError('Lỗi khi cập nhật hồ sơ: ' + error.message);
         }

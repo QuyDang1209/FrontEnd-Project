@@ -24,7 +24,10 @@ export default function Login() {
     }
     try {
       // Send login request to API
-      await axios.post('http://localhost:8080/api/auth/login', formData);
+      let res = await axios.post('http://localhost:8080/api/auth/login', formData);
+      localStorage.setItem('user', JSON.stringify(res.data));
+      console.log(res);
+      
       toast.success('Login successful!');
       navigate('/home');
     } catch (error) {
