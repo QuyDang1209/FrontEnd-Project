@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ export default function Login() {
     }
     try {
       // Send login request to API
-      // await axios.post('http://localhost:3001/login', formData);
+      await axios.post('http://localhost:8080/api/auth/login', formData);
       toast.success('Login successful!');
       navigate('/home');
     } catch (error) {

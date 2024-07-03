@@ -1,0 +1,111 @@
+{
+  "actives": [
+    {
+      "id": 1,
+      "active": "OPENED"
+    },
+    {
+      "id": 2,
+      "active": "CLOSED"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "deposit": "BO-1234",
+      "orderDay": "2024-06-20",
+      "payDay": "2024-06-25",
+      "rent": null,
+      "forrents_id": 1,
+      "payment": 3000,
+      "user_id": "1"
+    },
+    {
+      "id": 2,
+      "deposit": "BO-1235",
+      "orderDay": "2024-06-20",
+      "payDay": "2024-06-25",
+      "rent": null,
+      "forrents_id": 1,
+      "payment": 3000,
+      "user_id": "2"
+    }
+  ],
+  "evaluate": [
+    {
+      "id": 1,
+      "comment": "",
+      "img": "",
+      "rate": 1,
+      "evaluateStatus": "kkk",
+      "forrent_id": "1",
+      "user_id": "1"
+    }
+  ],
+  "evaluateStatus": [
+    {
+      "id": 1,
+      "evaluateName": "bbb"
+    },
+    {
+      "id": 2,
+      "evaluateName": "aaa"
+    }
+  ],
+  "forrents": [
+    {
+      "id": 1,
+      "address": "aaa",
+      "description": "aaa",
+      "typeHouses_id": 1,
+      "img": "",
+      "user_id": "1"
+    }
+  ],
+  "payment": [
+    {
+      "id": 1,
+      "payName": "aaa"
+    },
+    {
+      "id": 2,
+      "payName": "bbb"
+    }
+  ],
+  "role": [
+    {
+      "id": 1,
+      "roleName": "user"
+    },
+    {
+      "id": 2,
+      "roleName": "admin"
+    },
+    {
+      "id": 3,
+      "roleName": "host"
+    }
+  ],
+  "typeHouses": [
+    {
+      "id": 1,
+      "typeName": "villa"
+    },
+    {
+      "id": 2,
+      "typeName": "homestay"
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "address": "aaa",
+      "email": "aaa@gmail.com",
+      "name": "aaa",
+      "password": "1",
+      "phone": "0123456789",
+      "role_id": 1,
+      "actives_id": 1
+    }
+  ]
+}

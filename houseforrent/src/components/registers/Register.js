@@ -6,14 +6,15 @@ import { toast } from 'react-toastify';
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    fullname: '',
+    name: '',
     address: '',
     phone: '',
     email: '',
     password: '',
-    confirmPassword: '',
     dob: '',
-    avatar: ''
+    // avatar: ''
+    active: 1,
+    role: 1,
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function Register() {
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
     const phoneRegex = /^\d+$/;
 
-    if (!formData.fullname) newErrors.fullname = "Full name is required.";
+    if (!formData.name) newErrors.name = "Name is required.";
     if (!formData.address) newErrors.address = "Address is required.";
     if (!formData.phone || !phoneRegex.test(formData.phone)) newErrors.phone = "Valid phone number is required.";
     if (!formData.dob) newErrors.dob = "Date of birth is required.";
@@ -46,7 +47,7 @@ export default function Register() {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      const response = await axios.post('https://6679198d18a459f6394dfc54.mockapi.io/Register', formData);
+      const response = await axios.post('http://localhost:8080/api/user/create', formData);
       if (response.status === 200) {
         toast.success('Registration successful! Please log in.');
         navigate('/login', { state: { email: formData.email, password: formData.password } });
@@ -91,14 +92,14 @@ export default function Register() {
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
-              label="Full Name"
-              name="fullname"
-              value={formData.fullname}
+              label="name"
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               fullWidth
               margin="normal"
-              error={!!errors.fullname || !!errors.specialChar}
-              helperText={errors.fullname || errors.specialChar}
+              error={!!errors.name || !!errors.specialChar}
+              helperText={errors.name || errors.specialChar}
             />
             <TextField
               label="Address"
