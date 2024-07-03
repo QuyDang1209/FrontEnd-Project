@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ProfileForm from "./Component/ProfileForm/ProfileForm";
+import ProfileForm from "./components/edit/ProfileForm";
 import {Avatar, Button, TextField} from "@mui/material";
 
 const App = () => {
