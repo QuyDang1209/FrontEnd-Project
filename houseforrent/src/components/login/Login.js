@@ -36,7 +36,7 @@ export default function Login() {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container >
       <Box sx={{ mt: 5 }}>
         <Typography variant="h4" gutterBottom>
           Login
