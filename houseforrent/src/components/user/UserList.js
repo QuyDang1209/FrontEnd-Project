@@ -15,12 +15,19 @@ import {
     MenuItem,
     InputLabel,
     FormControl,
-    TextField
+    TextField,
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions
 } from '@mui/material';
+import UserDetail from './UserDetail';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         fetchUsers();
@@ -55,7 +62,6 @@ const UserList = () => {
                 }
             );
 
-            // Cập nhật lại state sau khi thành công
             const updatedUsers = users.map(user => {
                 if (user.id === userId) {
                     return {
@@ -115,6 +121,14 @@ const UserList = () => {
         }
     }
 
+    const handleViewClick = (user) => {
+        setSelectedUser(user);
+    };
+
+    const handleCloseDetail = () => {
+        setSelectedUser(null);
+    };
+
     return (
         <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 4 }} >
             <Paper elevation={3} sx={{ p: 4 }}>
@@ -137,6 +151,7 @@ const UserList = () => {
                                 <TableCell>Email</TableCell>
                                 <TableCell>Vai Trò</TableCell>
                                 <TableCell>Trạng Thái</TableCell>
+                                <TableCell>Chi tiết</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -168,6 +183,15 @@ const UserList = () => {
                                                     inputProps={{ 'aria-label': 'controlled' }}
                                                 />
                                             </TableCell>
+                                            <TableCell>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={() => handleViewClick(user)}
+                                                >
+                                                    View
+                                                </Button>
+                                            </TableCell>
                                         </TableRow>
                                     ))
                                 }
@@ -175,6 +199,24 @@ const UserList = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <Dialog
+                    open={!!selectedUser}
+                    onClose={handleCloseDetail}
+                    maxWidth="md"
+                    fullWidth
+                >
+                    <DialogTitle>Thông tin chi tiết người dùng</DialogTitle>
+                    <DialogContent>
+                        {selectedUser && (
+                            <UserDetail user={selectedUser} onClose={handleCloseDetail} />
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseDetail} color="primary">
+                            Đóng
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Paper>
         </Box>
     );

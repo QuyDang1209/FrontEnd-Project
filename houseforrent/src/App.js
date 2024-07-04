@@ -26,6 +26,7 @@ const App = () => {
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/home" element={<div>Welcome to the homepage!</div>} />
                         <Route path="/main" element={<MainPage />} />
+
                     </Routes>
                 </header>
             </Container>
