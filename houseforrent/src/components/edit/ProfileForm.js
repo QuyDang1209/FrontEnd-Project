@@ -1,4 +1,4 @@
-// components/ProfileForm.js
+// components/edit.js
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import axios from 'axios';
