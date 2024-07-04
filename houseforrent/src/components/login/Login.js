@@ -26,7 +26,7 @@ export default function Login() {
       // Send login request to API
       await axios.post('http://localhost:8080/api/auth/login', formData);
       toast.success('Login successful!');
-      navigate('/home');
+      navigate('/users');
     } catch (error) {
       toast.error('Login failed. Please check your email and password.');
     }

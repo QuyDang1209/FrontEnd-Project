@@ -20,7 +20,7 @@ const App = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<ProfileForm />} />
                         <Route path="/users" element={<UserList />} /> {/* Thêm route UserList */}
-                        <Route path="/home" element={<div>Welcome to the homepage!</div>} />
+                        {/* <Route path="/home" element={<div>Welcome to the homepage!</div>} /> */}
                     </Routes>
                 </header>
             </Container>
