@@ -7,8 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProfileForm from "./components/edit/ProfileForm";
 import Register from './components/registers/Register';
 import Login from './components/login/Login';
+
 import UserList from './components/user/UserList'; // Import UserList
 import { Container } from "@mui/material";
+
+import MainPage from "./pages/MainPage";
+import UserPage from './pages/UserPage';
 
 const App = () => {
     return (
@@ -19,8 +23,10 @@ const App = () => {
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<ProfileForm />} />
-                        <Route path="/users" element={<UserList />} /> {/* Thêm route UserList */}
-                        {/* <Route path="/home" element={<div>Welcome to the homepage!</div>} /> */}
+                        <Route path="/users" element={<UserPage />} />
+                        <Route path="/home" element={<div>Welcome to the homepage!</div>} />
+                        <Route path="/main" element={<MainPage />} />
+
                     </Routes>
                 </header>
             </Container>

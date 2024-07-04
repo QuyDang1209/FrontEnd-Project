@@ -26,6 +26,7 @@ export default function Register() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+ 
 
    const validateForm = () => {
     let newErrors = {};
@@ -40,6 +41,12 @@ export default function Register() {
       }
     }
     if (!formData.phone || !phoneRegex.test(formData.phone)) newErrors.phone = "Valid phone number is required.";
+    for(let i = 0; i < users.length; i++){
+      if(users[i].phone === formData.phone){
+        newErrors.phone = "Phone already exists.";
+        break;
+      }
+    }
     if (!formData.dob) newErrors.dob = "Date of birth is required.";
     for(let i = 0; i < users.length; i++){
       if(users[i].email === formData.email){
@@ -56,10 +63,11 @@ export default function Register() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+      if (!validateForm()) return;
     try {
       const response = await axios.post('http://localhost:8080/api/user/create', formData);
       if (response.status === 200) {

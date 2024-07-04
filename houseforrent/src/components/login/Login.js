@@ -24,7 +24,10 @@ export default function Login() {
     }
     try {
       // Send login request to API
-      await axios.post('http://localhost:8080/api/auth/login', formData);
+      let res = await axios.post('http://localhost:8080/api/auth/login', formData);
+      localStorage.setItem('user', JSON.stringify(res.data));
+      console.log(res);
+      
       toast.success('Login successful!');
       navigate('/users');
     } catch (error) {
@@ -33,9 +36,9 @@ export default function Login() {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container >
       <Box sx={{ mt: 5 }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{color: 'black', textAlign: 'center', }}>
           Login
         </Typography>
         <form onSubmit={handleSubmit} className="needs-validation" noValidate>
