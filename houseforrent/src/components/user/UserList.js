@@ -11,14 +11,18 @@ import {
     Typography,
     Box,
     Switch,
-    Button
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions
 } from '@mui/material';
-import UserDetail from './UserDetail'; // Import the UserDetail component
+import UserDetail from './UserDetail';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
-    const [selectedUser, setSelectedUser] = useState(null); // State for the selected user
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         fetchUsers();
@@ -75,11 +79,11 @@ const UserList = () => {
     };
 
     const handleViewClick = (user) => {
-        setSelectedUser(user); // Set the selected user when the "View" button is clicked
+        setSelectedUser(user);
     };
 
     const handleCloseDetail = () => {
-        setSelectedUser(null); // Close the detail view
+        setSelectedUser(null);
     };
 
     return (
@@ -104,7 +108,7 @@ const UserList = () => {
                                 <TableCell>Email</TableCell>
                                 <TableCell>Vai Trò</TableCell>
                                 <TableCell>Trạng Thái</TableCell>
-                                <TableCell>Chi tiết</TableCell> {/* Add column for actions */}
+                                <TableCell>Chi tiết</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -137,9 +141,24 @@ const UserList = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {selectedUser && (
-                    <UserDetail user={selectedUser} onClose={handleCloseDetail} />
-                )}
+                <Dialog
+                    open={!!selectedUser}
+                    onClose={handleCloseDetail}
+                    maxWidth="md"
+                    fullWidth
+                >
+                    <DialogTitle>Thông tin chi tiết người dùng</DialogTitle>
+                    <DialogContent>
+                        {selectedUser && (
+                            <UserDetail user={selectedUser} onClose={handleCloseDetail} />
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseDetail} color="primary">
+                            Đóng
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Paper>
         </Box>
     );
