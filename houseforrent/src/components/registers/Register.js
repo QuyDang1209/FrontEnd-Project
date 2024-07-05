@@ -3,6 +3,8 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import HeaderMenu from '../HeaderMenu';
+import Footer from '../Footer';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -84,12 +86,14 @@ export default function Register() {
   };
 
   return (
+    <>
+    <HeaderMenu />
     <Box
       sx={{
         backgroundImage: 'url(https://source.unsplash.com/random)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        minHeight: '100vh',
+        minHeight: '90vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -109,7 +113,7 @@ export default function Register() {
       />
       <Container maxWidth="sm" sx={{ zIndex: 2, backgroundColor: 'white', borderRadius: 2, p: 4 }}>
         <Box sx={{ mt: 5 }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom sx={{ color: 'black', fontSize: '2rem' }}>
             Register
           </Typography>
           <form onSubmit={handleSubmit}>
@@ -197,5 +201,7 @@ export default function Register() {
         </Box>
       </Container>
     </Box>
+    <Footer />
+    </>
   );
 }
