@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import bcrypt from 'bcryptjs';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -11,20 +12,22 @@ const ChangePassword = () => {
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState(null);
+    const [oldUser, setOldUser] = useState(null);
+
+    const user = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const user = JSON.parse(localStorage.getItem('user'));
-                setUser(user);
+                const response = await axios.get(`http://localhost:8080/api/user/${user.id}`);
+                setOldUser(response.data);
             } catch (error) {
                 console.error('Error fetching user:', error);
                 toast.error('Không thể tải thông tin người dùng.');
             }
         };
         fetchUser();
-    }, []);
+    }, [user.id]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,7 +35,7 @@ const ChangePassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validateForm()) return;
+        if (!(await validateForm())) return;
 
         setLoading(true);
 
@@ -49,7 +52,6 @@ const ChangePassword = () => {
                     newPassword: '',
                     confirmPassword: ''
                 });
-
             } else {
                 toast.error('Thay đổi mật khẩu thất bại. Vui lòng thử lại.');
             }
@@ -60,22 +62,19 @@ const ChangePassword = () => {
         setLoading(false);
     };
 
-    const validateForm = () => {
+    const validateForm = async () => {
         let newErrors = {};
 
-        // Validate current password
         if (!formData.currentPassword) {
             newErrors.currentPassword = "Mật khẩu hiện tại là bắt buộc.";
-        } else if (user && user.password === formData.currentPassword) {
-            newErrors.currentPassword = "Mật khẩu hiện tại không được trùng mật khẩu cũ";
+        } else if (!(await bcrypt.compare(formData.currentPassword, oldUser.password))) {
+            newErrors.currentPassword = "Mật khẩu hiện tại không chính xác.";
         }
 
-        // Validate new password
         if (!formData.newPassword || formData.newPassword.length < 6 || formData.newPassword.length > 8) {
             newErrors.newPassword = "Mật khẩu mới phải từ 6 đến 8 kí tự.";
         }
 
-        // Validate confirm password
         if (!formData.confirmPassword) {
             newErrors.confirmPassword = "Vui lòng nhập lại mật khẩu mới.";
         } else if (formData.newPassword !== formData.confirmPassword) {
