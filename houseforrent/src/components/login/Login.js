@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { Container, Grid, TextField, Button, Box, Typography, Card, CardContent, Checkbox, FormControlLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -23,16 +23,13 @@ export default function Login() {
       return;
     }
     try {
-      // Send login request to API
       let res = await axios.post('http://localhost:8080/api/auth/login', formData);
       const user = res.data;
-
-      if (user.active.active === 2) {
-        toast.error('Account is not active.');
+      if (user.active.active === 2){
+        toast.error('Account is not actived');
         return;
       }
-
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(res.data));
       toast.success('Login successful!');
       navigate('/users');
     } catch (error) {
@@ -41,39 +38,53 @@ export default function Login() {
   };
 
   return (
-    <Container>
-      <Box sx={{ mt: 5 }}>
-        <Typography variant="h4" gutterBottom sx={{ color: 'black', textAlign: 'center' }}>
-          Login
-        </Typography>
-        <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-            className="form-control"
-          />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-            className="form-control"
-          />
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 3 }}>
-            Login
-          </Button>
-        </form>
-      </Box>
-    </Container>
+    <Box sx={{ backgroundColor: '#508bfc', minWidth: '100vw', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Container>
+        <Grid container justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>
+          <Grid item xs={12} md={8} lg={6}>
+            <Card sx={{ borderRadius: '1rem', boxShadow: 3 }}>
+              <CardContent sx={{ p: 5, textAlign: 'center' }}>
+                <Typography variant="h3" gutterBottom>Login</Typography>
+
+                <Box component="form" onSubmit={handleSubmit}>
+                  <TextField
+                    fullWidth
+                    type="email"
+                    id="typeEmailX-2"
+                    name="email"
+                    label="Email"
+                    variant="outlined"
+                    value={formData.email}
+                    onChange={handleChange}
+                    margin="normal"
+                  />
+                  <TextField
+                    fullWidth
+                    type="password"
+                    id="typePasswordX-2"
+                    name="password"
+                    label="Password"
+                    variant="outlined"
+                    value={formData.password}
+                    onChange={handleChange}
+                    margin="normal"
+                  />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                    sx={{ mb: 4 }}
+                  >
+                    Login
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 }
