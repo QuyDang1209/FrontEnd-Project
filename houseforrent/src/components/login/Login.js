@@ -25,14 +25,9 @@ export default function Login() {
     try {
       // Send login request to API
       let res = await axios.post('http://localhost:8080/api/auth/login', formData);
-      const user = res.data;
+      localStorage.setItem('user', JSON.stringify(res.data));
+      console.log(res);
 
-      if (user.active.active === 2) {
-        toast.error('Account is not active.');
-        return;
-      }
-
-      localStorage.setItem('user', JSON.stringify(user));
       toast.success('Login successful!');
       navigate('/users');
     } catch (error) {
@@ -41,39 +36,39 @@ export default function Login() {
   };
 
   return (
-    <Container>
-      <Box sx={{ mt: 5 }}>
-        <Typography variant="h4" gutterBottom sx={{ color: 'black', textAlign: 'center' }}>
-          Login
-        </Typography>
-        <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-            className="form-control"
-          />
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-            className="form-control"
-          />
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 3 }}>
+      <Container >
+        <Box sx={{ mt: 5 }}>
+          <Typography variant="h4" gutterBottom sx={{color: 'black', textAlign: 'center', }}>
             Login
-          </Button>
-        </form>
-      </Box>
-    </Container>
+          </Typography>
+          <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+            <TextField
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                required
+                className="form-control"
+            />
+            <TextField
+                label="Password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                required
+                className="form-control"
+            />
+            <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 3 }}>
+              Login
+            </Button>
+          </form>
+        </Box>
+      </Container>
   );
-}
+};

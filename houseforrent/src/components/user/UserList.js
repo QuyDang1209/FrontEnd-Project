@@ -109,7 +109,7 @@ const UserList = () => {
                     };
                 }
                 return user;
-                
+
             });
             console.log(updatedUsers);
             setUsers(updatedUsers);
@@ -163,16 +163,16 @@ const UserList = () => {
                                             <TableCell>{new Date(user.dob).toLocaleDateString('en-GB')}</TableCell>
                                             <TableCell>{user.email}</TableCell>
                                             <TableCell>
-                                            <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                                <FormControl sx={{ m: 1, minWidth: 120 }}>
                                                     <Select
-                                                    id="select"
-                                                    value={user.role[0].id}
-                                                    onChange={(evn) => {handleChange(user.id, evn.target.value)} }
+                                                        id="select"
+                                                        value={user.role[0].id}
+                                                        onChange={(evn) => {handleChange(user.id, evn.target.value)} }
                                                     >
-                                                    <MenuItem value={1} > User </MenuItem>
-                                                    <MenuItem value={2} > Host</MenuItem>
+                                                        <MenuItem value={1} > User </MenuItem>
+                                                        <MenuItem value={2} > Host</MenuItem>
                                                     </Select>
-                                            </FormControl>
+                                                </FormControl>
                                             </TableCell>
                                             <TableCell>
                                                 <Switch

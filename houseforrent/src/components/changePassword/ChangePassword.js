@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const ChangePassword = () => {
-    const [users, setUsers] = useState([]);
     const [formData, setFormData] = useState({
         currentPassword: '',
         newPassword: '',
@@ -12,22 +11,20 @@ const ChangePassword = () => {
     });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/user')
-            .then((response) => setUsers(response.data))
-            .catch(error => {
-                console.error('Error fetching users:', error);
-                toast.error('Không thể tải danh sách người dùng.');
-            });
+        const fetchUser = async () => {
+            try {
+                const user = JSON.parse(localStorage.getItem('user'));
+                setUser(user);
+            } catch (error) {
+                console.error('Error fetching user:', error);
+                toast.error('Không thể tải thông tin người dùng.');
+            }
+        };
+        fetchUser();
     }, []);
-
-    const user = JSON.parse(localStorage.getItem('user'));
-    const id = user ? user.id : null;
-
-    if (!id) {
-        return <Typography variant="h6" color="error">Người dùng không xác định.</Typography>;
-    }
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,8 +37,8 @@ const ChangePassword = () => {
         setLoading(true);
 
         try {
-            const response = await axios.patch(`http://localhost:8080/api/user/change-password/${id}`, {
-                id: id,
+            const response = await axios.patch(`http://localhost:8080/api/user/change-password/${user.id}`, {
+                id: user.id,
                 password: formData.newPassword,
             });
 
@@ -52,6 +49,7 @@ const ChangePassword = () => {
                     newPassword: '',
                     confirmPassword: ''
                 });
+
             } else {
                 toast.error('Thay đổi mật khẩu thất bại. Vui lòng thử lại.');
             }
@@ -65,22 +63,36 @@ const ChangePassword = () => {
     const validateForm = () => {
         let newErrors = {};
 
-        if (users.some(user => user.password === formData.currentPassword)) {
-            newErrors.currentPassword = "Mật khẩu hiện tại không chính xác.";
+        // Validate current password
+        if (!formData.currentPassword) {
+            newErrors.currentPassword = "Mật khẩu hiện tại là bắt buộc.";
+        } else if (user && user.password === formData.currentPassword) {
+            newErrors.currentPassword = "Mật khẩu hiện tại không được trùng mật khẩu cũ";
         }
 
-        if (!formData.currentPassword) newErrors.currentPassword = "Mật khẩu hiện tại là bắt buộc.";
+        // Validate new password
         if (!formData.newPassword || formData.newPassword.length < 6 || formData.newPassword.length > 8) {
             newErrors.newPassword = "Mật khẩu mới phải từ 6 đến 8 kí tự.";
         }
-        if (!formData.confirmPassword) newErrors.confirmPassword = "Vui lòng nhập lại mật khẩu mới.";
-        if (formData.newPassword !== formData.confirmPassword) {
+
+        // Validate confirm password
+        if (!formData.confirmPassword) {
+            newErrors.confirmPassword = "Vui lòng nhập lại mật khẩu mới.";
+        } else if (formData.newPassword !== formData.confirmPassword) {
             newErrors.confirmPassword = "Mật khẩu mới không trùng khớp.";
         }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
+
+    if (!user) {
+        return (
+            <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
+                <Typography variant="h6" color="error">Người dùng không xác định.</Typography>
+            </Box>
+        );
+    }
 
     return (
         <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
