@@ -10,7 +10,7 @@ import Login from './components/login/Login';
 
 import UserList from './components/user/UserList'; // Import UserList
 import { Container } from "@mui/material";
-
+import DetailPage from './pages/DetailPage';
 import MainPage from "./pages/MainPage";
 import UserPage from './pages/UserPage';
 
@@ -26,7 +26,7 @@ const App = () => {
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/home" element={<div>Welcome to the homepage!</div>} />
                         <Route path="/main" element={<MainPage />} />
-
+                        <Route path="/" element={<DetailPage />} />
                     </Routes>
                 </header>
             </Container>
