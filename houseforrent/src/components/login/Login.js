@@ -23,12 +23,17 @@ export default function Login() {
       return;
     }
     try {
-      let res = await axios.post('http://localhost:8080/api/auth/login', formData);
-      const user = res.data;
-      if (user.active.active === 2){
-        toast.error('Account is not actived');
+
+      let activeRes = await axios.get('http://localhost:8080/api/user/active/' + formData.email);
+      console.log(activeRes);
+      if(activeRes.data.isActive === false){
+        toast.error('Account is not active');
         return;
       }
+
+      let res = await axios.post('http://localhost:8080/api/auth/login', formData);
+      const user = res.data;
+      
       localStorage.setItem('user', JSON.stringify(res.data));
       toast.success('Login successful!');
       navigate('/users');
