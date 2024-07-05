@@ -81,14 +81,12 @@ const UserList = () => {
 
     const handleSwitchChange = (userId, isChecked) => {
         handleChangeStatus(userId, isChecked);
-        
     };
     const [checked, setChecked] = useState(true);
     const [unchecked, setUnChecked] = useState(false);
     const [roleId, setRoleId] = useState("");
     const handleChange = async (id, newRole) =>{
         console.log("id " + id+ " role " + newRole);
-        
         console.log(roleId);
         try{
             await axios.patch(`http://localhost:8080/api/user/change-role`, [{
@@ -105,8 +103,8 @@ const UserList = () => {
                     return {
                         ...user,
                         role: [{
-                            rolename: newRole == "1" ? "user" : "host",
-                            id: newRole == "1" ? 1 : 2
+                            rolename: newRole === "1" ? "User" : "Host",
+                            id: newRole === "1" ? 1 : 2
                         }]
                     };
                 }
@@ -156,7 +154,7 @@ const UserList = () => {
                         </TableHead>
                         <TableBody>
                             {users.map((user) => {
-                                if(user.role[0].id !=3){
+                                if(user.role[0].id !==3){
                                     return ((
                                         <TableRow key={user.id}>
                                             <TableCell>{user.name}</TableCell>
@@ -195,12 +193,12 @@ const UserList = () => {
                                         </TableRow>
                                     ))
                                 }
-                            } )}
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <Dialog
-                    open={!!selectedUser}
+                    open={selectedUser}
                     onClose={handleCloseDetail}
                     maxWidth="md"
                     fullWidth
