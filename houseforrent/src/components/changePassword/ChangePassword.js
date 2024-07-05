@@ -1,135 +1,139 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { TextField, Button, Box, Typography } from '@mui/material';
 import axios from 'axios';
-import {
-    Card,
-    CardContent,
-    TextField,
-    Button,
-    Typography,
-    Box
-} from '@mui/material';
+import { toast } from 'react-toastify';
 
-const ChangePasswordForm = () => {
-    let userId = 1;
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+const ChangePassword = () => {
+    const [users, setUsers] = useState([]);
+    const [formData, setFormData] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setError('');
-        setSuccess('');
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/user')
+            .then((response) => setUsers(response.data))
+            .catch(error => {
+                console.error('Error fetching users:', error);
+                toast.error('Không thể tải danh sách người dùng.');
+            });
+    }, []);
 
-        // Kiểm tra các điều kiện đầu vào
-        if (newPassword === currentPassword) {
-            setError('Mật khẩu mới không được trùng với mật khẩu cũ');
-            return;
-        }
+    const user = JSON.parse(localStorage.getItem('user'));
+    const id = user ? user.id : null;
 
-        if (newPassword.length < 6 || newPassword.length > 8) {
-            setError('Mật khẩu mới phải từ 6-8 ký tự');
-            return;
-        }
+    if (!id) {
+        return <Typography variant="h6" color="error">Người dùng không xác định.</Typography>;
+    }
 
-        if (newPassword !== confirmPassword) {
-            setError('Mật khẩu xác nhận không khớp');
-            return;
-        }
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-        if (!currentPassword || !newPassword || !confirmPassword) {
-            setError('Các trường dấu (*) không được để trống');
-            return;
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        setLoading(true);
 
         try {
-            const response = await axios.patch(
-                `http://localhost:8080/api/user/change-password/${userId}`,
-                {
-                    currentPassword,
-                    newPassword
-                },
-                {
-                    headers: {
-                        'Authorization': 'Bearer <your_access_token>',
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
+            const response = await axios.patch(`http://localhost:8080/api/user/change-password/${id}`, {
+                id: id,
+                password: formData.newPassword,
+            });
 
             if (response.status === 200) {
-                setSuccess('Mật khẩu đã được thay đổi thành công');
-                setCurrentPassword('');
-                setNewPassword('');
-                setConfirmPassword('');
+                toast.success('Thay đổi mật khẩu thành công!');
+                setFormData({
+                    currentPassword: '',
+                    newPassword: '',
+                    confirmPassword: ''
+                });
+            } else {
+                toast.error('Thay đổi mật khẩu thất bại. Vui lòng thử lại.');
             }
         } catch (error) {
-            setError('Đã xảy ra lỗi khi thay đổi mật khẩu: ' + error.message);
+            toast.error('Đã xảy ra lỗi khi thay đổi mật khẩu.');
         }
+
+        setLoading(false);
+    };
+
+    const validateForm = () => {
+        let newErrors = {};
+
+        if (users.some(user => user.password === formData.currentPassword)) {
+            newErrors.currentPassword = "Mật khẩu hiện tại không chính xác.";
+        }
+
+        if (!formData.currentPassword) newErrors.currentPassword = "Mật khẩu hiện tại là bắt buộc.";
+        if (!formData.newPassword || formData.newPassword.length < 6 || formData.newPassword.length > 8) {
+            newErrors.newPassword = "Mật khẩu mới phải từ 6 đến 8 kí tự.";
+        }
+        if (!formData.confirmPassword) newErrors.confirmPassword = "Vui lòng nhập lại mật khẩu mới.";
+        if (formData.newPassword !== formData.confirmPassword) {
+            newErrors.confirmPassword = "Mật khẩu mới không trùng khớp.";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     return (
-        <Card sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
-            <CardContent>
-                <Typography variant="h5" component="h2" gutterBottom>
-                    Thay Đổi Mật Khẩu
-                </Typography>
-                <Typography variant="body2" color="textSecondary" gutterBottom>
-                    Bao gồm các trường:
-                    <br />
-                    - Mật khẩu hiện tại ()
-                    <br />
-                    - Mật khẩu mới ()
-                    <br />
-                    - Nhập lại mật khẩu (*)
-                </Typography>
-                {error && (
-                    <Typography variant="body2" color="error" gutterBottom>
-                        {error}
-                    </Typography>
-                )}
-                {success && (
-                    <Typography variant="body2" color="success" gutterBottom>
-                        {success}
-                    </Typography>
-                )}
-                <Box component="form" onSubmit={handleSubmit}>
-                    <TextField
-                        label="Mật khẩu hiện tại"
-                        type="password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        fullWidth
-                        margin="normal"
-                        required
-                    />
-                    <TextField
-                        label="Mật khẩu mới"
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        fullWidth
-                        margin="normal"
-                        required
-                    />
-                    <TextField
-                        label="Nhập lại mật khẩu"
-
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        fullWidth
-                        margin="normal"
-                        required
-                    />
-                    <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
-                        Thay Đổi Mật Khẩu
-                    </Button>
-                </Box>
-            </CardContent>
-        </Card>
+        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
+            <Typography variant="h5" gutterBottom>
+                Thay đổi mật khẩu
+            </Typography>
+            <form onSubmit={handleSubmit}>
+                <TextField
+                    label="Mật khẩu hiện tại (*)"
+                    name="currentPassword"
+                    type="password"
+                    value={formData.currentPassword}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
+                    error={!!errors.currentPassword}
+                    helperText={errors.currentPassword}
+                />
+                <TextField
+                    label="Mật khẩu mới (*)"
+                    name="newPassword"
+                    type="password"
+                    value={formData.newPassword}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
+                    error={!!errors.newPassword}
+                    helperText={errors.newPassword}
+                />
+                <TextField
+                    label="Nhập lại mật khẩu (*)"
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
+                    error={!!errors.confirmPassword}
+                    helperText={errors.confirmPassword}
+                />
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    disabled={loading}
+                    sx={{ mt: 2 }}
+                >
+                    {loading ? 'Đang xử lý...' : 'Xác nhận'}
+                </Button>
+            </form>
+        </Box>
     );
 };
 
-export default ChangePasswordForm;
+export default ChangePassword;

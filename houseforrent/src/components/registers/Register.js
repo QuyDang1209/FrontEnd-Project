@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,41 +11,63 @@ export default function Register() {
     phone: '',
     email: '',
     password: '',
+    confirmPassword: '',
     dob: '',
-    // avatar: ''
     active: 1,
     role: 1,
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
+  const [users,setUsers] = useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/user')
+    .then((response) => setUsers(response.data))
+  },[]);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+ 
 
-  const validateForm = () => {
+   const validateForm = () => {
     let newErrors = {};
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
     const phoneRegex = /^\d+$/;
-
     if (!formData.name) newErrors.name = "Name is required.";
     if (!formData.address) newErrors.address = "Address is required.";
+    for(let i = 0; i < users.length; i++){
+      if(users[i].phone === formData.phone){
+        newErrors.phone = "Phone already exists. Please register with another phone number.";
+        break;
+      }
+    }
     if (!formData.phone || !phoneRegex.test(formData.phone)) newErrors.phone = "Valid phone number is required.";
+    for(let i = 0; i < users.length; i++){
+      if(users[i].phone === formData.phone){
+        newErrors.phone = "Phone already exists.";
+        break;
+      }
+    }
     if (!formData.dob) newErrors.dob = "Date of birth is required.";
+    for(let i = 0; i < users.length; i++){
+      if(users[i].email === formData.email){
+        newErrors.email = "Email already exists. Please register with a different email.";
+        break;
+      }
+    }
     if (!formData.email) newErrors.email = "Email is required.";
     if (!formData.password || formData.password.length < 6 || formData.password.length > 32) newErrors.password = "Password must be 6-32 characters long.";
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
     if (specialCharRegex.test(formData.fullname) || specialCharRegex.test(formData.address) || specialCharRegex.test(formData.phone)) {
       newErrors.specialChar = "Special characters are not allowed.";
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+      if (!validateForm()) return;
     try {
       const response = await axios.post('http://localhost:8080/api/user/create', formData);
       if (response.status === 200) {
@@ -54,7 +76,7 @@ export default function Register() {
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        toast.error('Username or Email already exists. Please use a different one.');
+        toast.error('Email already exists. Please register with a different email.');
       } else {
         toast.error('Registration failed. Please try again.');
       }
@@ -92,7 +114,7 @@ export default function Register() {
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
-              label="name"
+              label="Name"
               name="name"
               value={formData.name}
               onChange={handleChange}
@@ -176,4 +198,4 @@ export default function Register() {
       </Container>
     </Box>
   );
-};
+}
