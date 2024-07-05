@@ -14,7 +14,7 @@ const UserDetail = ({ user, onClose }) => {
             <CardContent>
                 <Box display="flex" justifyContent="space-between" mb={2}>
                     <Typography variant="h5" component="h3" gutterBottom>
-                        Thông tin chi tiết người dùng
+                        Thông tin chi tiết người dùng 111
                     </Typography>
                     {/* <Typography variant="button" onClick={onClose} sx={{ cursor: 'pointer' }}>
                         Đóng
