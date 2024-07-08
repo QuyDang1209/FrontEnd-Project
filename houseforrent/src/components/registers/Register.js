@@ -34,31 +34,26 @@ export default function Register() {
     let newErrors = {};
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
     const phoneRegex = /^\d+$/;
-    if (!formData.name) newErrors.name = "Name is required.";
-    if (!formData.address) newErrors.address = "Address is required.";
+    if (!formData.name) newErrors.name = "Tên không được để trống";
+    if (!formData.address) newErrors.address = "Địa chỉ không được để trống";
     for(let i = 0; i < users.length; i++){
       if(users[i].phone === formData.phone){
-        newErrors.phone = "Phone already exists. Please register with another phone number.";
+        newErrors.phone = "Số điện thoại này đã tồn tại, vui lòng đăng kí số điện thoại khác";
         break;
       }
     }
-    if (!formData.phone || !phoneRegex.test(formData.phone)) newErrors.phone = "Valid phone number is required.";
-    for(let i = 0; i < users.length; i++){
-      if(users[i].phone === formData.phone){
-        newErrors.phone = "Phone already exists.";
-        break;
-      }
-    }
-    if (!formData.dob) newErrors.dob = "Date of birth is required.";
+    if (!formData.phone || !phoneRegex.test(formData.phone)) newErrors.phone = "Số điện thoại không được để trống";
+    
+    if (!formData.dob) newErrors.dob = "Ngày tháng năm sinh không được để trống";
     for(let i = 0; i < users.length; i++){
       if(users[i].email === formData.email){
-        newErrors.email = "Email already exists. Please register with a different email.";
+        newErrors.email = "Email này đã tồn tại, vui lòng đăng kí email khác";
         break;
       }
     }
-    if (!formData.email) newErrors.email = "Email is required.";
-    if (!formData.password || formData.password.length < 6 || formData.password.length > 32) newErrors.password = "Password must be 6-32 characters long.";
-    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
+    if (!formData.email) newErrors.email = "Email không được để trống";
+    if (!formData.password || formData.password.length < 6 || formData.password.length > 32) newErrors.password = "Mật khẩu phải có độ dài từ 6-32 kí tự";
+    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Mật khẩu không trùng khớp";
     if (specialCharRegex.test(formData.fullname) || specialCharRegex.test(formData.address) || specialCharRegex.test(formData.phone)) {
       newErrors.specialChar = "Special characters are not allowed.";
     }
@@ -74,11 +69,11 @@ export default function Register() {
       const response = await axios.post('http://localhost:8080/api/user/create', formData);
       if (response.status === 200) {
         toast.success('Registration successful! Please log in.');
-        navigate('/login', { state: { email: formData.email, password: formData.password } });
+        navigate('/', { state: { email: formData.email, password: formData.password } });
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        toast.error('Email already exists. Please register with a different email.');
+        toast.error('Email này đã tồn tại, vui lòng đăng kí email khác');
       } else {
         toast.error('Registration failed. Please try again.');
       }

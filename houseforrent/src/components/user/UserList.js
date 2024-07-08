@@ -130,7 +130,7 @@ const UserList = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 4 }} >
+        <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 4 }} >
             <Paper elevation={3} sx={{ p: 4 }}>
                 <Typography variant="h4" component="h2" gutterBottom>
                     Danh sách người dùng
@@ -144,6 +144,7 @@ const UserList = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
+                                <TableCell>STT</TableCell>
                                 <TableCell>Họ và tên</TableCell>
                                 <TableCell>Địa chỉ</TableCell>
                                 <TableCell>Số điện thoại</TableCell>
@@ -155,10 +156,11 @@ const UserList = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {users.map((user) => {
+                            {users.map((user,index) => {
                                 if(user.role[0].id !=3){
                                     return ((
                                         <TableRow key={user.id}>
+                                            <TableCell>{index}</TableCell>
                                             <TableCell>{user.name}</TableCell>
                                             <TableCell>{user.address}</TableCell>
                                             <TableCell>{user.phone}</TableCell>

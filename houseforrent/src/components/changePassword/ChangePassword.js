@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import bcrypt from 'bcryptjs';
 import Footer from '../Footer';
 import HeaderMenu from '../HeaderMenu';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const ChangePassword = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [oldUser, setOldUser] = useState(null);
+    const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -54,6 +56,7 @@ const ChangePassword = () => {
                     newPassword: '',
                     confirmPassword: ''
                 });
+                navigate("/main")
             } else {
                 toast.error('Thay đổi mật khẩu thất bại. Vui lòng thử lại.');
             }
@@ -62,6 +65,7 @@ const ChangePassword = () => {
         }
 
         setLoading(false);
+
     };
 
     const validateForm = async () => {

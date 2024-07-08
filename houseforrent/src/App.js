@@ -12,6 +12,7 @@ import DetailPage from './pages/DetailPage';
 import ChangePassword from "./components/changePassword/ChangePassword";
 import MainPage from "./pages/MainPage";
 import UserPage from './pages/UserPage';
+import ForrentHouse from './components/forrenthouse/ForrentHouse';
 
 const App = () => {
     return (
@@ -20,13 +21,13 @@ const App = () => {
                 <header className="App-header">
                     <Routes>
                         <Route path="/register" element={<Register />} />
-                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<Login />} />
                         <Route path="/profile" element={<ProfileForm />} />
-                        <Route path="/home" element={<div>Welcome to the homepage!</div>} />
                         <Route path="/change-password" element={<ChangePassword />} />
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/home" element={<div>Welcome to the homepage!</div>} />
                         <Route path="/main" element={<MainPage />} />
+                        <Route path="/forrent-hosue" element={<ForrentHouse />} />
                         <Route path="/" element={<DetailPage />} />
                     </Routes>
                 </header>

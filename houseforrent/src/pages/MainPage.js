@@ -43,7 +43,7 @@ export default function MainPage() {
           <CardItem img="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" />
           <CardItem img="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" />
           <CardItem img="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" />
-          <CardItem img="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" />
+          <CardItem img="https://images.unsplash.com/photo-1469854523086-cc02fe5d880" />
         </Box>
       </Container>
       <Divider />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Grid, TextField, Button, Box, Typography, Card, CardContent, Checkbox, FormControlLabel } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -19,7 +19,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      toast.error('All fields are required.');
+      toast.error('Không được để trống');
       return;
     }
     try {
@@ -27,7 +27,7 @@ export default function Login() {
       let activeRes = await axios.get('http://localhost:8080/api/user/active/' + formData.email);
       console.log(activeRes);
       if(activeRes.data.isActive === false){
-        toast.error('Account is not active');
+        toast.error('Tài khoản hiện tại đang tạm khóa, vui lòng liên hệ với chúng tôi để được khắc phục');
         return;
       }
 
@@ -36,9 +36,9 @@ export default function Login() {
       
       localStorage.setItem('user', JSON.stringify(res.data));
       toast.success('Login successful!');
-      navigate('/users');
+      navigate('/main');
     } catch (error) {
-      toast.error('Login failed. Please check your email and password.');
+      toast.error('Đăng nhập thất bại, vui lòng kiểm tra lại email và mật khẩu của bạn');
     }
   };
 
@@ -84,6 +84,7 @@ export default function Login() {
                   >
                     Login
                   </Button>
+                  <Link to="/register">Don't have an account? Register here.</Link>
                 </Box>
               </CardContent>
             </Card>

@@ -4,6 +4,7 @@ import validator from 'validator';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container } from "@mui/material";
 import HeaderMenu from '../HeaderMenu';
 import Footer from '../Footer';
@@ -22,7 +23,6 @@ const ProfileForm = () => {
         fetchProfile();
     }, []);
     const id = JSON.parse(localStorage.getItem('user')).id ;
-
     console.log(id);
     const fetchProfile = async () => {
         try {
@@ -73,8 +73,8 @@ const ProfileForm = () => {
             });
             setProfile(response.data);
             setError(null);
-            toast.success('Edit successful!');
-            navigate('users');
+            toast.success('Cập nhật thông tin cá nhân thành công');
+            navigate('/main');
         } catch (error) {
             setError('Lỗi khi cập nhật hồ sơ: ' + error.message);
         }

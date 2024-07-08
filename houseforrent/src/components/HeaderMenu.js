@@ -18,7 +18,7 @@ import { Label, SearchRounded } from "@mui/icons-material";
 import LanguageIcon from "@mui/icons-material/Language";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-
+import {Link} from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Popover from "@mui/material/Popover";
@@ -205,13 +205,19 @@ export default function HeaderMenu() {
         }}
       >
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          Profile
+          <Link to="/profile">Thay đổi thông tin cá nhân</Link>
+          
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          My account
+          <Link to="/change-password">
+            Thay đổi mật khẩu
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          Logout
+          <Link to="/">
+          Đăng Xuất
+          </Link>
+          
         </MenuItem>
       </Menu>
       <Popover
