@@ -4,7 +4,9 @@ import validator from 'validator';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Button, TextField, Grid, Box, Typography, Paper } from "@mui/material";
+import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container } from "@mui/material";
+import HeaderMenu from '../HeaderMenu';
+import Footer from '../Footer';
 
 const ProfileForm = () => {
     const navigate = useNavigate();
@@ -79,7 +81,21 @@ const ProfileForm = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4 }}>
+        <>
+            <HeaderMenu />
+            <Divider />
+            <Container 
+                sx={{
+                "@media (min-width: 1536px)": {
+                maxWidth: "1400px",
+                },
+            }}
+            style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
+            >
+            <Box>
+            <Grid container justifyContent="center">
+                <Grid item xs={8}>
+                <Box sx={{ width: "75%"}}>
             <Paper elevation={3} sx={{ p: 4 }}>
                 <Typography variant="h4" component="h2" gutterBottom>
                     Hồ sơ
@@ -91,29 +107,12 @@ const ProfileForm = () => {
                 )}
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2} alignItems="center">
-                        {/*<Grid item xs={12} sm={4} sx={{ display: 'flex', justifyContent: 'center' }}>*/}
-                        {/*    <Avatar*/}
-                        {/*        alt="User Avatar"*/}
-                        {/*        src={profile.avatar}*/}
-                        {/*        sx={{ width: 100, height: 100 }}*/}
-                        {/*    />*/}
-                        {/*</Grid>*/}
-                        {/*<Grid item xs={12} sm={8}>*/}
-                        {/*    <TextField*/}
-                        {/*        label="URL ảnh đại diện"*/}
-                        {/*        variant="outlined"*/}
-                        {/*        id="avatar"*/}
-                        {/*        name="avatar"*/}
-                        {/*        value={profile.avatar}*/}
-                        {/*        onChange={handleInputChange}*/}
-                        {/*        fullWidth*/}
-                        {/*    />*/}
-                        {/*</Grid>*/}
                         <Grid item xs={12}>
                             <TextField
+                                sx={{ mt: 2 }}
                                 label="Họ và tên"
                                 variant="outlined"
-                                id="name"
+                                id="outlined-size-small"
                                 name="name"
                                 value={profile.name}
                                 onChange={handleInputChange}
@@ -122,9 +121,10 @@ const ProfileForm = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                sx={{ mt: 2 }}
                                 label="Địa chỉ"
                                 variant="outlined"
-                                id="address"
+                                id="outlined-size-small"
                                 name="address"
                                 value={profile.address}
                                 onChange={handleInputChange}
@@ -135,22 +135,30 @@ const ProfileForm = () => {
                             <TextField
                                 label="Số điện thoại"
                                 variant="outlined"
-                                id="phone"
+                                id="outlined-size-small"
                                 name="phone"
                                 value={profile.phone}
                                 onChange={handleInputChange}
                                 fullWidth
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <Button variant="contained" color="primary" type="submit" fullWidth>
+                        <Box display={"flex"} sx={{ mt: 2 }}>
+                            <Grid item xs={12}>
+                            <Button variant="contained" color="success" type="submit" fullWidth>
                                 Lưu
                             </Button>
                         </Grid>
+                        </Box>
                     </Grid>
                 </form>
             </Paper>
-        </Box>
+            </Box>
+            </Grid>
+            </Grid>
+            </Box>
+            </Container>
+            <Footer />
+        </>
     );
 };
 
