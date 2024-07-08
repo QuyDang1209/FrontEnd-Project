@@ -205,15 +205,17 @@ export default function HeaderMenu() {
         }}
       >
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/profile">Profile</Link>
+          <Link to="/profile">Thay đổi thông tin cá nhân</Link>
           
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          My account
+          <Link to="/change-password">
+            Thay đổi mật khẩu
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/login">
-          Logout
+          <Link to="/">
+          Đăng Xuất
           </Link>
           
         </MenuItem>

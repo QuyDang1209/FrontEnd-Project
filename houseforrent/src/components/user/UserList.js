@@ -81,14 +81,14 @@ const UserList = () => {
 
     const handleSwitchChange = (userId, isChecked) => {
         handleChangeStatus(userId, isChecked);
-        
+
     };
     const [checked, setChecked] = useState(true);
     const [unchecked, setUnChecked] = useState(false);
     const [roleId, setRoleId] = useState("");
     const handleChange = async (id, newRole) =>{
         console.log("id " + id+ " role " + newRole);
-        
+
         console.log(roleId);
         try{
             await axios.patch(`http://localhost:8080/api/user/change-role`, [{
@@ -111,7 +111,7 @@ const UserList = () => {
                     };
                 }
                 return user;
-                
+
             });
             console.log(updatedUsers);
             setUsers(updatedUsers);
@@ -130,7 +130,7 @@ const UserList = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 4 }} >
+        <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 4 }} >
             <Paper elevation={3} sx={{ p: 4 }}>
                 <Typography variant="h4" component="h2" gutterBottom>
                     Danh sách người dùng
@@ -144,6 +144,7 @@ const UserList = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
+                                <TableCell>STT</TableCell>
                                 <TableCell>Họ và tên</TableCell>
                                 <TableCell>Địa chỉ</TableCell>
                                 <TableCell>Số điện thoại</TableCell>
@@ -155,26 +156,27 @@ const UserList = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {users.map((user) => {
+                            {users.map((user,index) => {
                                 if(user.role[0].id !=3){
                                     return ((
                                         <TableRow key={user.id}>
+                                            <TableCell>{index}</TableCell>
                                             <TableCell>{user.name}</TableCell>
                                             <TableCell>{user.address}</TableCell>
                                             <TableCell>{user.phone}</TableCell>
                                             <TableCell>{new Date(user.dob).toLocaleDateString('en-GB')}</TableCell>
                                             <TableCell>{user.email}</TableCell>
                                             <TableCell>
-                                            <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                                <FormControl sx={{ m: 1, minWidth: 120 }}>
                                                     <Select
-                                                    id="select"
-                                                    value={user.role[0].id}
-                                                    onChange={(evn) => {handleChange(user.id, evn.target.value)} }
+                                                        id="select"
+                                                        value={user.role[0].id}
+                                                        onChange={(evn) => {handleChange(user.id, evn.target.value)} }
                                                     >
-                                                    <MenuItem value={1} > User </MenuItem>
-                                                    <MenuItem value={2} > Host</MenuItem>
+                                                        <MenuItem value={1} > User </MenuItem>
+                                                        <MenuItem value={2} > Host</MenuItem>
                                                     </Select>
-                                            </FormControl>
+                                                </FormControl>
                                             </TableCell>
                                             <TableCell>
                                                 <Switch

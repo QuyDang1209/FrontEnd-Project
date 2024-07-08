@@ -32,7 +32,7 @@ export default function DetailPage() {
       <Container
         sx={{
           "@media (min-width: 1536px)": {
-            maxWidth: "1400px",
+            maxWidth: "1300px",
           },
         }}
         style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}

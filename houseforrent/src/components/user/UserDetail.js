@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import {
     Typography,
     Card,
@@ -8,7 +8,6 @@ import {
 
 const UserDetail = ({ user, onClose }) => {
     if (!user) return null;
-
     return (
         <Card elevation={3} sx={{ p: 4, mt: 4 }}>
             <CardContent>
@@ -39,7 +38,7 @@ const UserDetail = ({ user, onClose }) => {
                     <strong>Vai Trò:</strong> {user.role[0].rolename}
                 </Typography>
                 <Typography variant="body1" mb={1}>
-                    <strong>Trạng Thái:</strong> {user.active.active === 'OPEN' ? 'Hoạt động' : 'Không hoạt động'}
+                    <strong>Trạng Thái:</strong> {user.active.active === 'open' ? 'Hoạt động' : 'Không hoạt động'}
                 </Typography>
             </CardContent>
         </Card>
