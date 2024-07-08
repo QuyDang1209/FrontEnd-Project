@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container } from "@mui/material";
 import HeaderMenu from '../HeaderMenu';
+import Footer from '../Footer';
 
 const ProfileForm = () => {
     const navigate = useNavigate();
@@ -156,6 +157,7 @@ const ProfileForm = () => {
             </Grid>
         </Box>
         </Container>
+        <Footer />
         </>
     );
 };

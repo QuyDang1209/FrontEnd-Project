@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import { TextField, Button, Box, Typography, Divider, Container, Grid, Paper } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import bcrypt from 'bcryptjs';
+import Footer from '../Footer';
+import HeaderMenu from '../HeaderMenu';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -94,12 +96,27 @@ const ChangePassword = () => {
     }
 
     return (
-        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
-            <Typography variant="h5" gutterBottom>
+        <>
+            <HeaderMenu />
+            <Divider />
+            <Container
+                sx={{
+                    "@media (min-width: 1536px)": {
+                    maxWidth: "1400px",
+                },
+                }}
+                style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
+            >
+            <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
+            <Typography variant="h4" component="h2" gutterBottom style={{fontSize: '24px', color: 'black'}}>
                 Thay đổi mật khẩu
             </Typography>
-            <form onSubmit={handleSubmit}>
-                <TextField
+            <Box>
+                <Grid container>
+                <Box sx={{ width: "75%" }}>
+                <form onSubmit={handleSubmit}>
+                <Grid container spacing={2} alignItems="center">
+                    <TextField
                     label="Mật khẩu hiện tại (*)"
                     name="currentPassword"
                     type="password"
@@ -142,8 +159,15 @@ const ChangePassword = () => {
                 >
                     {loading ? 'Đang xử lý...' : 'Xác nhận'}
                 </Button>
-            </form>
-        </Box>
+                </Grid>
+                </form>
+                </Box>
+                </Grid>
+            </Box>
+            </Box>  
+            </Container>
+            <Footer />
+        </>
     );
 };
 
