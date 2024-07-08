@@ -93,9 +93,9 @@ const ProfileForm = () => {
             style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
             >
             <Box>
-            <Grid container>
+            <Grid container justifyContent="center">
                 <Grid item xs={8}>
-                    <Box sx={{ width: "75%"}}>
+                <Box sx={{ width: "75%"}}>
             <Paper elevation={3} sx={{ p: 4 }}>
                 <Typography variant="h4" component="h2" gutterBottom>
                     Hồ sơ
