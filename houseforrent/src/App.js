@@ -13,6 +13,7 @@ import { Container } from "@mui/material";
 
 import MainPage from "./pages/MainPage";
 import UserPage from './pages/UserPage';
+import ForrentHouse from './components/forrenthouse/ForrentHouse';
 
 const App = () => {
     return (
@@ -26,7 +27,7 @@ const App = () => {
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/home" element={<div>Welcome to the homepage!</div>} />
                         <Route path="/main" element={<MainPage />} />
-
+                        <Route path="/" element={<ForrentHouse />} />
                     </Routes>
                 </header>
             </Container>
