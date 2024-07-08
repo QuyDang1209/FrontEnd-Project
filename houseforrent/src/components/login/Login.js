@@ -3,6 +3,10 @@ import { Container, Grid, TextField, Button, Box, Typography, Card, CardContent,
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import HeaderMenu from '../HeaderMenu';
+import Footer from '../Footer';
+import Google from '@mui/icons-material/Google';
+import Facebook from '@mui/icons-material/Facebook';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -43,14 +47,15 @@ export default function Login() {
   };
 
   return (
-    <Box sx={{ backgroundColor: '#508bfc', minWidth: '100vw', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <>
+      <HeaderMenu />
+    <Box sx={{ backgroundColor: '#grey', minWidth: '100vw', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Container>
         <Grid container justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>
           <Grid item xs={12} md={8} lg={6}>
             <Card sx={{ borderRadius: '1rem', boxShadow: 3 }}>
               <CardContent sx={{ p: 5, textAlign: 'center' }}>
                 <Typography variant="h3" gutterBottom>Login</Typography>
-
                 <Box component="form" onSubmit={handleSubmit}>
                   <TextField
                     fullWidth
@@ -84,6 +89,26 @@ export default function Login() {
                   >
                     Login
                   </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                    fullWidth
+                    sx={{ mb: 2 }}
+                    startIcon={<Google />}
+                  >
+                    Login with Google
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                    sx={{ mb: 4 }}
+                    startIcon={<Facebook />}
+                  >
+                    Login with Facebook
+                  </Button>
                   <Link to="/register">Don't have an account? Register here.</Link>
                 </Box>
               </CardContent>
@@ -92,5 +117,7 @@ export default function Login() {
         </Grid>
       </Container>
     </Box>
+    <Footer/>
+    </>
   );
 }
