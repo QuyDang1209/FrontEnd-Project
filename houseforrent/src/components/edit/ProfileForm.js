@@ -88,11 +88,11 @@ const ProfileForm = () => {
                 sx={{
                 "@media (min-width: 1536px)": {
                 maxWidth: "1400px",
-          },
-        }}
-        style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
-        >
-        <Box>
+                },
+            }}
+            style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
+            >
+            <Box>
             <Grid container>
                 <Grid item xs={8}>
                     <Box sx={{ width: "75%"}}>
@@ -155,9 +155,9 @@ const ProfileForm = () => {
             </Box>
             </Grid>
             </Grid>
-        </Box>
-        </Container>
-        <Footer />
+            </Box>
+            </Container>
+            <Footer />
         </>
     );
 };
