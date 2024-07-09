@@ -1,32 +1,35 @@
-// components/edit.js
 import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container } from "@mui/material";
+import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container, IconButton } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 import HeaderMenu from '../HeaderMenu';
 import Footer from '../Footer';
 
 const ProfileForm = () => {
     const navigate = useNavigate();
     const [profile, setProfile] = useState({
-        // avatar: '',
         name: '',
         address: '',
         phone: ''
     });
     const [error, setError] = useState(null);
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [isEditingAddress, setIsEditingAddress] = useState(false);
+    const [isEditingPhone, setIsEditingPhone] = useState(false);
 
     useEffect(() => {
         fetchProfile();
     }, []);
-    const id = JSON.parse(localStorage.getItem('user')).id ;
+    const id = JSON.parse(localStorage.getItem('user')).id;
     console.log(id);
     const fetchProfile = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/user/'+id, {
+            const response = await axios.get('http://localhost:8080/api/user/' + id, {
                 headers: {
                     'Authorization': 'Bearer <your_access_token>'
                 }
@@ -65,7 +68,7 @@ const ProfileForm = () => {
         try {
             profile.role = profile.role[0].id;
             profile.active = profile.active.id;
-            const response = await axios.patch('http://localhost:8080/api/user/edit/'+id, profile, {
+            const response = await axios.patch('http://localhost:8080/api/user/edit/' + id, profile, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer <your_access_token>'
@@ -73,8 +76,11 @@ const ProfileForm = () => {
             });
             setProfile(response.data);
             setError(null);
+            setIsEditingName(false);
+            setIsEditingAddress(false);
+            setIsEditingPhone(false);
             toast.success('Cập nhật thông tin cá nhân thành công');
-            navigate('/main');
+            navigate('/profile');
         } catch (error) {
             setError('Lỗi khi cập nhật hồ sơ: ' + error.message);
         }
@@ -84,78 +90,112 @@ const ProfileForm = () => {
         <>
             <HeaderMenu />
             <Divider />
-            <Container 
+            <Container
                 sx={{
-                "@media (min-width: 1536px)": {
-                maxWidth: "1400px",
-                },
-            }}
-            style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
+                    "@media (min-width: 1536px)": {
+                        maxWidth: "1400px",
+                    },
+                }}
+
+                style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px", minHeight: "80vh" }}
             >
-            <Box>
-            <Grid container justifyContent="center">
-                <Grid item xs={8}>
-                <Box sx={{ width: "75%"}}>
-            <Paper elevation={3} sx={{ p: 4 }}>
-                <Typography variant="h4" component="h2" gutterBottom>
-                    Hồ sơ
-                </Typography>
-                {error && (
-                    <Typography variant="body2" color="error" gutterBottom>
-                        {error}
-                    </Typography>
-                )}
-                <form onSubmit={handleSubmit}>
-                    <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12}>
-                            <TextField
-                                sx={{ mt: 2 }}
-                                label="Họ và tên"
-                                variant="outlined"
-                                id="outlined-size-small"
-                                name="name"
-                                value={profile.name}
-                                onChange={handleInputChange}
-                                fullWidth
-                            />
+                <Box>
+                    <Grid container justifyContent="center">
+                        <Grid item xs={8}>
+                            <Box sx={{ width: "75%" }}>
+                                <Paper elevation={3} sx={{ p: 4 }}>
+                                    <Typography variant="h4" component="h2" gutterBottom>
+                                        Hồ sơ
+                                    </Typography>
+                                    {error && (
+                                        <Typography variant="body2" color="error" gutterBottom>
+                                            {error}
+                                        </Typography>
+                                    )}
+                                    <form onSubmit={handleSubmit}>
+                                        <Grid container spacing={2} alignItems="center">
+                                            <Grid item xs={12}>
+                                                {isEditingName ? (
+                                                    <TextField
+                                                        sx={{ mt: 2 }}
+                                                        label="Họ và tên"
+                                                        variant="outlined"
+                                                        id="outlined-size-small"
+                                                        name="name"
+                                                        value={profile.name}
+                                                        onChange={handleInputChange}
+                                                        fullWidth
+                                                    />
+                                                ) : (
+                                                    <Box display="flex" alignItems="center">
+                                                        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                                                            {profile.name}
+                                                        </Typography>
+                                                        <IconButton onClick={() => setIsEditingName(true)}>
+                                                            <EditIcon />
+                                                        </IconButton>
+                                                    </Box>
+                                                )}
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                {isEditingAddress ? (
+                                                    <TextField
+                                                        sx={{ mt: 2 }}
+                                                        label="Địa chỉ"
+                                                        variant="outlined"
+                                                        id="outlined-size-small"
+                                                        name="address"
+                                                        value={profile.address}
+                                                        onChange={handleInputChange}
+                                                        fullWidth
+                                                    />
+                                                ) : (
+                                                    <Box display="flex" alignItems="center">
+                                                        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                                                            {profile.address}
+                                                        </Typography>
+                                                        <IconButton onClick={() => setIsEditingAddress(true)}>
+                                                            <EditIcon />
+                                                        </IconButton>
+                                                    </Box>
+                                                )}
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                {isEditingPhone ? (
+                                                    <TextField
+                                                        label="Số điện thoại"
+                                                        variant="outlined"
+                                                        id="outlined-size-small"
+                                                        name="phone"
+                                                        value={profile.phone}
+                                                        onChange={handleInputChange}
+                                                        fullWidth
+                                                    />
+                                                ) : (
+                                                    <Box display="flex" alignItems="center">
+                                                        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                                                            {profile.phone}
+                                                        </Typography>
+                                                        <IconButton onClick={() => setIsEditingPhone(true)}>
+                                                            <EditIcon />
+                                                        </IconButton>
+                                                    </Box>
+                                                )}
+                                            </Grid>
+                                            <Box display={"flex"} sx={{ mt: 2 }}>
+                                                <Grid item xs={12}>
+                                                    <Button variant="contained" color="success" type="submit" fullWidth>
+                                                        Lưu
+                                                    </Button>
+                                                </Grid>
+                                            </Box>
+                                        </Grid>
+                                    </form>
+                                </Paper>
+                            </Box>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                sx={{ mt: 2 }}
-                                label="Địa chỉ"
-                                variant="outlined"
-                                id="outlined-size-small"
-                                name="address"
-                                value={profile.address}
-                                onChange={handleInputChange}
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label="Số điện thoại"
-                                variant="outlined"
-                                id="outlined-size-small"
-                                name="phone"
-                                value={profile.phone}
-                                onChange={handleInputChange}
-                                fullWidth
-                            />
-                        </Grid>
-                        <Box display={"flex"} sx={{ mt: 2 }}>
-                            <Grid item xs={12}>
-                            <Button variant="contained" color="success" type="submit" fullWidth>
-                                Lưu
-                            </Button>
-                        </Grid>
-                        </Box>
                     </Grid>
-                </form>
-            </Paper>
-            </Box>
-            </Grid>
-            </Grid>
-            </Box>
+                </Box>
             </Container>
             <Footer />
         </>
