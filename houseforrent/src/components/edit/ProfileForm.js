@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container } from "@mui/material";
 import HeaderMenu from '../HeaderMenu';
@@ -80,6 +80,10 @@ const ProfileForm = () => {
         }
     };
 
+    const handleBack = () => {
+        navigate('/users');
+    };
+
     return (
         <>
             <HeaderMenu />
@@ -148,6 +152,15 @@ const ProfileForm = () => {
                                 Lưu
                             </Button>
                         </Grid>
+                        </Box>
+                        <Box display="flex" justifyContent="flex-end" sx={{mt:2}}>
+                            <Grid item xs={12}>
+                            <Link to="/users">
+                                <Button variant="outlined" color="primary" onclick={handleBack}>
+                                    Back
+                                </Button>
+                            </Link>
+                            </Grid>
                         </Box>
                     </Grid>
                 </form>

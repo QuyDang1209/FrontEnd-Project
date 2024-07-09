@@ -163,6 +163,17 @@ const ChangePassword = () => {
                 >
                     {loading ? 'Đang xử lý...' : 'Xác nhận'}
                 </Button>
+                <Link to="/users" style={{textDecoration:'none'}}>
+                <Button variant="contained"
+                    type="submit"
+                    fullWidth
+                    style={{color:'white',
+                    backgroundColor:'red'}}
+                    sx={{ mt : 2 }}
+                    >
+                    Back
+                </Button>
+                </Link>
                 </Grid>
                 </form>
                 </Box>
