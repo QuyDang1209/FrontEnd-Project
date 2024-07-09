@@ -13,6 +13,7 @@ import ChangePassword from "./components/changePassword/ChangePassword";
 import MainPage from "./pages/MainPage";
 import UserPage from './pages/UserPage';
 import ForrentHouse from './components/forrenthouse/ForrentHouse';
+import MenuPage from './pages/MenuPage';
 
 const App = () => {
     return (
@@ -21,14 +22,15 @@ const App = () => {
                 <header className="App-header">
                     <Routes>
                         <Route path="/register" element={<Register />} />
-                        <Route path="/" element={<Login />} />
+                        <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<ProfileForm />} />
                         <Route path="/change-password" element={<ChangePassword />} />
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/home" element={<div>Welcome to the homepage!</div>} />
                         <Route path="/main" element={<MainPage />} />
                         <Route path="/forrent-hosue" element={<ForrentHouse />} />
-                        <Route path="/" element={<DetailPage />} />
+                        <Route path="/detail" element={<DetailPage />} />
+                        <Route path="/" element={<MenuPage />} />
                     </Routes>
                 </header>
             </Container>
