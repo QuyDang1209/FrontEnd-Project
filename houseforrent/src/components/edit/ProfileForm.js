@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container } from "@mui/material";
-import HeaderMenu from '../HeaderMenu';
+import HeaderLogin from '../HeaderLogin';
 import Footer from '../Footer';
 
 const ProfileForm = () => {
@@ -86,7 +86,7 @@ const ProfileForm = () => {
 
     return (
         <>
-            <HeaderMenu />
+            <HeaderLogin />
             <Divider />
             <Container 
                 sx={{

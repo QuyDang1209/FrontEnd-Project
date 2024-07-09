@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import bcrypt from 'bcryptjs';
 import Footer from '../Footer';
-import HeaderMenu from '../HeaderMenu';
+import HeaderLogin from '../HeaderLogin';
 import { Link, useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
@@ -101,7 +101,7 @@ const ChangePassword = () => {
 
     return (
         <>
-            <HeaderMenu />
+            <HeaderLogin />
             <Divider />
             <Container
                 sx={{

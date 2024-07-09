@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { CustomButton } from "../custom-component/CustomButton";
 
-import HeaderMenu from "../components/HeaderMenu";
+import HeaderLogin from "../components/HeaderLogin";
 import BasicList from "../components/BasicList";
 import UserList from "../components/user/UserList";
 import Footer from "../components/Footer";
@@ -25,7 +25,7 @@ import Footer from "../components/Footer";
 export default function UserPage() {
   return (
     <>
-    <HeaderMenu />
+    <HeaderLogin />
       <Divider />
       <Container
         sx={{

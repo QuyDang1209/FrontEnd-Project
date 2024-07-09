@@ -170,7 +170,7 @@ export default function HeaderMenu() {
           <Grid item md={3} xs={9} sm={9}>
             <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
               <Button variant="text" style={{ color: "black" }}>
-                let's join with us at Airbnb
+                Become a host
               </Button>
               <LanguageIcon style={{ color: "black", marginLeft: "10px" }} />
               <Button
@@ -204,6 +204,9 @@ export default function HeaderMenu() {
           transform: "translateX(70px)", // Dịch chuyển Menu 80px sang bên trái
         }}
       >
+        <MenuItem onclick={handleClose} style={{ paddingRight: "100px"}}>
+            <Link to="/users">Quản lý tài khoản</Link>
+        </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
           <Link to="/profile">Thay đổi thông tin cá nhân</Link>
           
