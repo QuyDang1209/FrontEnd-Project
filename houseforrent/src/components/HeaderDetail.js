@@ -170,7 +170,7 @@ export default function HeaderDetail() {
           <Grid item md={3} xs={9} sm={9}>
             <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
               <Button variant="text" style={{ color: "black" }}>
-                Become a host
+                Welcome to our website
               </Button>
               <LanguageIcon style={{ color: "black", marginLeft: "10px" }} />
               <Button

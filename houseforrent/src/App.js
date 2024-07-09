@@ -14,6 +14,7 @@ import MainPage from "./pages/MainPage";
 import UserPage from './pages/UserPage';
 import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
+import AdminPage from './pages/AdminPage';
 
 const App = () => {
     return (
@@ -26,11 +27,11 @@ const App = () => {
                         <Route path="/profile" element={<ProfileForm />} />
                         <Route path="/change-password" element={<ChangePassword />} />
                         <Route path="/users" element={<UserPage />} />
-                        <Route path="/home" element={<div>Welcome to the homepage!</div>} />
-                        <Route path="/main" element={<MainPage />} />
+                        <Route path="/" element={<MainPage />} />
                         <Route path="/forrent-hosue" element={<ForrentHouse />} />
                         <Route path="/detail" element={<DetailPage />} />
-                        <Route path="/" element={<MenuPage />} />
+                        <Route path="/menu" element={<MenuPage />} />
+                        <Route path="/main" element={<AdminPage />} />
                     </Routes>
                 </header>
             </Container>
