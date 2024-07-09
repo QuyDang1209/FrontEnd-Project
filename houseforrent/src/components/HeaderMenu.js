@@ -10,26 +10,34 @@ import {
     InputAdornment,
     TextField,
     useMediaQuery,
+    Menu,
+    MenuItem,
+    Popover,
+    Typography,
 } from "@mui/material";
-
 import Input from "@mui/material/Input";
 import { SearchRounded } from "@mui/icons-material";
 import LanguageIcon from "@mui/icons-material/Language";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import {Link, useNavigate} from "react-router-dom";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 
 export default function HeaderMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [accountAnchorEl, setAccountAnchorEl] = React.useState(null);
+    const [anchorElPopover, setAnchorElPopover] = React.useState(null);
+    const [anchorElPopoverWeek, setAnchorElPopoverWeek] = React.useState(null);
+
+    const navigation = useNavigate();
+    const theme = useTheme();
+    const matchesXS = useMediaQuery(theme.breakpoints.up("xs"));
+    const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+
     const open = Boolean(anchorEl);
     const accountOpen = Boolean(accountAnchorEl);
-    const navigation = useNavigate();
+    const openPopover = Boolean(anchorElPopover);
+    const openPopoverWeek = Boolean(anchorElPopoverWeek);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -43,13 +51,11 @@ export default function HeaderMenu() {
         setAnchorEl(null);
         setAccountAnchorEl(null);
     };
+
     const handleMenuClick = (url) => {
         handleClose();
         navigation(url);
-    }
-
-    // Start for Popover
-    const [anchorElPopover, setAnchorElPopover] = React.useState(null);
+    };
 
     const handleClickPopover = (event) => {
         setAnchorElPopover(event.currentTarget);
@@ -59,30 +65,23 @@ export default function HeaderMenu() {
         setAnchorElPopover(null);
     };
 
-    const openPopover = Boolean(anchorElPopover);
-    const idPopover = openPopover ? "simple-popover" : undefined;
-    // End of Popover
-    // Start for Popover Week
-    const [anchorElPopoverWeek, setAnchorElPopoverWeek] = React.useState(null);
     const handleClickPopoverWeek = (event) => {
         setAnchorElPopoverWeek(event.currentTarget);
     };
+
     const handleClosePopoverWeek = () => {
         setAnchorElPopoverWeek(null);
     };
-    const openPopoverWeek = Boolean(anchorElPopoverWeek);
-    const idPopoverWeek = openPopoverWeek ? "simple-popover" : undefined;
-    // End of Popover Week
 
-    const theme = useTheme();
-    const matchesXS = useMediaQuery(theme.breakpoints.up("xs"));
-    const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+    const idPopover = openPopover ? "simple-popover" : undefined;
+    const idPopoverWeek = openPopoverWeek ? "simple-popover" : undefined;
 
     if (matchesXS && matchesMD && openPopoverWeek) {
-        handleClosePopoverWeek(); // handle
+        handleClosePopoverWeek();
     }
+
     if (matchesXS && matchesMD && openPopover) {
-        handleClosePopover(); // handle
+        handleClosePopover();
     }
 
     return (
@@ -100,6 +99,7 @@ export default function HeaderMenu() {
                         <img
                             style={{ width: "100px", height: "50px" }}
                             src={"/images/logo-airbnb.png"}
+                            alt="Airbnb Logo"
                         />
                     </Grid>
                     <Grid
@@ -217,28 +217,28 @@ export default function HeaderMenu() {
                     transform: "translateX(70px)", // Dịch chuyển Menu 80px sang bên trái
                 }}
             >
-                <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-                    <Link to="/messages" style={{textDecoration: "none", color: "black"}}>
+                <MenuItem onClick={() => handleMenuClick("/messages")} style={{ paddingRight: "100px" }}>
+                    <Link to="/messages" style={{ textDecoration: "none", color: "black" }}>
                         <Typography>Tin nhắn</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-                    <Link to="/notifications" style={{textDecoration: "none", color: "black"}}>
+                <MenuItem onClick={() => handleMenuClick("/notifications")} style={{ paddingRight: "100px" }}>
+                    <Link to="/notifications" style={{ textDecoration: "none", color: "black" }}>
                         <Typography>Thông báo</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-                    <Link to="/trips" style={{textDecoration: "none", color: "black"}}>
+                <MenuItem onClick={() => handleMenuClick("/trips")} style={{ paddingRight: "100px" }}>
+                    <Link to="/trips" style={{ textDecoration: "none", color: "black" }}>
                         <Typography>Chuyến đi</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-                    <Link to="/favorites" style={{textDecoration: "none", color: "black"}}>
+                <MenuItem onClick={() => handleMenuClick("/favorites")} style={{ paddingRight: "100px" }}>
+                    <Link to="/favorites" style={{ textDecoration: "none", color: "black" }}>
                         <Typography>Danh sách Yêu thích</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-                    <Link to="/hosting" style={{textDecoration: "none", color: "black"}}>
+                <MenuItem onClick={() => handleMenuClick("/hosting")} style={{ paddingRight: "100px" }}>
+                    <Link to="/hosting" style={{ textDecoration: "none", color: "black" }}>
                         <Typography>Cho thuê chỗ ở qua Airbnb</Typography>
                     </Link>
                 </MenuItem>
@@ -248,13 +248,13 @@ export default function HeaderMenu() {
                 >
                     <Typography>Tài khoản</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }} >
-                    <Link to="/help" style={{textDecoration: "none", color: "black"}}>
+                <MenuItem onClick={() => handleMenuClick("/help")} style={{ paddingRight: "100px" }} >
+                    <Link to="/help" style={{ textDecoration: "none", color: "black" }}>
                         <Typography>Trung tâm trợ giúp</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-                    <Link to="/" style={{textDecoration: "none", color: "black"}}>
+                <MenuItem onClick={() => handleMenuClick("/")} style={{ paddingRight: "100px" }}>
+                    <Link to="/" style={{ textDecoration: "none", color: "black" }}>
                         <Typography>Đăng Xuất</Typography>
                     </Link>
                 </MenuItem>
@@ -276,10 +276,10 @@ export default function HeaderMenu() {
                 }}
             >
                 <MenuItem onClick={() => handleMenuClick("/profile")} style={{ paddingRight: "100px" }}>
-                        <Typography>Thay đổi thông tin cá nhân</Typography>
+                    <Typography>Thay đổi thông tin cá nhân</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick("/change-password")} style={{ paddingRight: "100px" }}>
-                        <Typography>Thay đổi mật khẩu</Typography>
+                    <Typography>Thay đổi mật khẩu</Typography>
                 </MenuItem>
             </Menu>
             <Popover

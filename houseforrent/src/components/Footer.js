@@ -53,7 +53,7 @@ export default function Footer() {
       >
         <Box display={"flex"}>
           <Link href="#" underline="none">
-            &reg;2020 Airbnb
+            &reg;2024 Airbnb
           </Link>
           <Typography variant="body2" mx={1} sx={{ display: "inline" }}>
             •

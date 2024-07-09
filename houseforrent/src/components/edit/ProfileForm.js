@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import validator from 'validator';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, Link } from 'react-router-dom';
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import HeaderMenu from '../HeaderMenu';
+import HeaderLogin from '../HeaderLogin';
 import Footer from '../Footer';
+import HeaderMenu from "../HeaderMenu";
 
 const ProfileForm = () => {
     const navigate = useNavigate();
@@ -25,15 +24,13 @@ const ProfileForm = () => {
     useEffect(() => {
         fetchProfile();
     }, []);
-    const id = JSON.parse(localStorage.getItem('user')).id;
-    console.log(id);
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const id = user.id;
+
     const fetchProfile = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/user/' + id, {
-                headers: {
-                    'Authorization': 'Bearer <your_access_token>'
-                }
-            });
+            const response = await axios.get(`http://localhost:8080/api/user/${id}`);
             setProfile(response.data);
         } catch (error) {
             setError('Lỗi khi lấy dữ liệu hồ sơ: ' + error.message);
@@ -66,14 +63,12 @@ const ProfileForm = () => {
         }
 
         try {
-            profile.role = profile.role[0].id;
-            profile.active = profile.active.id;
-            const response = await axios.patch('http://localhost:8080/api/user/edit/' + id, profile, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer <your_access_token>'
-                }
-            });
+            let objSend = {
+                ...profile,
+                role: profile.role[0].id,
+                active: profile.active.id
+            }
+            const response = await axios.patch(`http://localhost:8080/api/user/edit/${id}`, objSend);
             setProfile(response.data);
             setError(null);
             setIsEditingName(false);
@@ -86,6 +81,10 @@ const ProfileForm = () => {
         }
     };
 
+    const handleBack = () => {
+        navigate('/users');
+    };
+
     return (
         <>
             <HeaderMenu />
@@ -96,7 +95,6 @@ const ProfileForm = () => {
                         maxWidth: "1400px",
                     },
                 }}
-
                 style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px", minHeight: "80vh" }}
             >
                 <Box>
@@ -182,13 +180,18 @@ const ProfileForm = () => {
                                                     </Box>
                                                 )}
                                             </Grid>
-                                            <Box display={"flex"} sx={{ mt: 2 }}>
-                                                <Grid item xs={12}>
-                                                    <Button variant="contained" color="success" type="submit" fullWidth>
+                                            <Grid item xs={12}>
+                                                <Box display="flex" justifyContent="space-between" mt={2}>
+                                                    <Button variant="contained" color="primary" type="submit">
                                                         Lưu
                                                     </Button>
-                                                </Grid>
-                                            </Box>
+                                                    <Link to="/users" style={{ textDecoration: 'none' }}>
+                                                        <Button variant="outlined" color="primary">
+                                                            Quay lại
+                                                        </Button>
+                                                    </Link>
+                                                </Box>
+                                            </Grid>
                                         </Grid>
                                     </form>
                                 </Paper>
