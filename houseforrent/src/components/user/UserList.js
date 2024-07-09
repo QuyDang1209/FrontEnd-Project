@@ -15,7 +15,6 @@ import {
     MenuItem,
     InputLabel,
     FormControl,
-    TextField,
     Button,
     Dialog,
     DialogTitle,
@@ -28,30 +27,41 @@ const UserList = () => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [filter, setFilter] = useState('all');
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [filter]);
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/user', {
-                headers: {
-                    'Authorization': 'Bearer <your_access_token>'
-                }
-            });
+            let response;
+            if (filter === 'all') {
+                response = await axios.get('http://localhost:8080/api/user', {
+                    headers: {
+                        'Authorization': 'Bearer <your_access_token>'
+                    }
+                });
+            } else {
+                const roleId = filter === 'user' ? 1 : 2;
+                response = await axios.get(`http://localhost:8080/api/user/filter?roleId=${roleId}`, {
+                    headers: {
+                        'Authorization': 'Bearer <your_access_token>'
+                    }
+                });
+            }
             setUsers(response.data);
         } catch (error) {
             setError('Lỗi khi lấy danh sách người dùng: ' + error.message);
         }
     };
 
-    const handleChangeStatus = async (userId, newStatus) => {
+    const handleChangeStatus = async (id, newStatus) => {
         try {
             await axios.patch(
                 `http://localhost:8080/api/user/change-active`,
                 [{
-                    id: userId,
+                    id: id,
                     active: newStatus ? 1 : 2
                 }],
                 {
@@ -62,17 +72,17 @@ const UserList = () => {
                 }
             );
 
-            const updatedUsers = users.map(user => {
-                if (user.id === userId) {
-                    return {
-                        ...user,
-                        active: {
-                            active: newStatus ? 'open' : 'close'
-                        }
-                    };
-                }
+    const updatedUsers = users.map(user => {
+        if (user.id === id) {
+            return {
+                ...user,
+                    active: {
+                        active: newStatus ? 'open' : 'close'
+                    }
+                };
+            }
                 return user;
-            });
+        });
             setUsers(updatedUsers);
         } catch (error) {
             setError('Lỗi khi cập nhật trạng thái: ' + error.message);
@@ -81,16 +91,17 @@ const UserList = () => {
 
     const handleSwitchChange = (userId, isChecked) => {
         handleChangeStatus(userId, isChecked);
-
     };
+
     const [checked, setChecked] = useState(true);
     const [unchecked, setUnChecked] = useState(false);
     const [roleId, setRoleId] = useState("");
-    const handleChange = async (id, newRole) =>{
-        console.log("id " + id+ " role " + newRole);
+
+    const handleChangeRole = async (id, newRole) => {
+        console.log("id " + id + " role " + newRole);
 
         console.log(roleId);
-        try{
+        try {
             await axios.patch(`http://localhost:8080/api/user/change-role`, [{
                 id: id,
                 role: newRole
@@ -100,7 +111,7 @@ const UserList = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            const updatedUsers = users.map(user => {
+            const updatedUsers1 = users.map(user => {
                 if (user.id === id) {
                     return {
                         ...user,
@@ -111,13 +122,11 @@ const UserList = () => {
                     };
                 }
                 return user;
-
             });
-            console.log(updatedUsers);
-            setUsers(updatedUsers);
-        }
-        catch(error){
-            setError('Lỗi khi thay đổi vai trò: '+ error.message);
+            console.log("updatedUsers1",updatedUsers1 );
+            setUsers(updatedUsers1);
+        } catch (error) {
+            setError('Lỗi khi thay đổi vai trò: ' + error.message);
         }
     }
 
@@ -129,12 +138,31 @@ const UserList = () => {
         setSelectedUser(null);
     };
 
+    const handleFilterChange = (event) => {
+        setFilter(event.target.value);
+    }
+
     return (
         <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 4 }} >
             <Paper elevation={3} sx={{ p: 4 }}>
-                <Typography variant="h4" component="h2" gutterBottom>
-                    Danh sách người dùng
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                    <Typography variant="h4" component="h2">
+                        Danh sách người dùng
+                    </Typography>
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="filter-label"></InputLabel>
+                        <Select
+                            labelId="filter-label"
+                            id="filter-select"
+                            value={filter}
+                            onChange={handleFilterChange}
+                        >
+                            <MenuItem value="all">Tất cả</MenuItem>
+                            <MenuItem value="user">User</MenuItem>
+                            <MenuItem value="host">Host</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
                 {error && (
                     <Typography variant="body2" color="error" gutterBottom>
                         {error}
@@ -156,11 +184,11 @@ const UserList = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {users.map((user,index) => {
-                                if(user.role[0].id !=3){
-                                    return ((
+                            {users.map((user, index) => {
+                                if (user.role[0].id !=3) {
+                                    return (
                                         <TableRow key={user.id}>
-                                            <TableCell>{index}</TableCell>
+                                            <TableCell>{index + 1}</TableCell>
                                             <TableCell>{user.name}</TableCell>
                                             <TableCell>{user.address}</TableCell>
                                             <TableCell>{user.phone}</TableCell>
@@ -171,16 +199,16 @@ const UserList = () => {
                                                     <Select
                                                         id="select"
                                                         value={user.role[0].id}
-                                                        onChange={(evn) => {handleChange(user.id, evn.target.value)} }
+                                                        onChange={(evn) => { handleChangeRole(user.id, evn.target.value) }}
                                                     >
-                                                        <MenuItem value={1} > User </MenuItem>
-                                                        <MenuItem value={2} > Host</MenuItem>
+                                                        <MenuItem value={1}> User </MenuItem>
+                                                        <MenuItem value={2}> Host</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             </TableCell>
                                             <TableCell>
                                                 <Switch
-                                                    checked={user.active.active === 'open' ? checked : unchecked }
+                                                    checked={user.active.active === 'open' ? checked : unchecked}
                                                     onChange={(event) => handleSwitchChange(user.id, event.target.checked)}
                                                     inputProps={{ 'aria-label': 'controlled' }}
                                                 />
@@ -195,9 +223,10 @@ const UserList = () => {
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
-                                    ))
+                                    )
                                 }
-                            } )}
+                                return null;
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -223,5 +252,4 @@ const UserList = () => {
         </Box>
     );
 };
-
 export default UserList;
