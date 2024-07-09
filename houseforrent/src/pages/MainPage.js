@@ -16,11 +16,12 @@ import {
 import CardItem from "./../components/CardItem";
 import HeaderLogin from "../components/HeaderLogin";
 import Footer from "../components/Footer";
+import HeaderMenu from "../components/HeaderMenu";
 
 export default function MainPage() {
   return (
     <>
-      <HeaderLogin />
+      <HeaderMenu />
       <Divider />
       <Container
         sx={{

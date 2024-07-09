@@ -205,11 +205,11 @@ export default function HeaderDetail() {
         }}
       >
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/Login">Đăng nhập</Link>
+          <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>Đăng nhập</Link>
           
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/change-password">
+          <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
             Đăng ký tài khoản
           </Link>
         </MenuItem>

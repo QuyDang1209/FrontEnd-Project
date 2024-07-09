@@ -20,12 +20,13 @@ import HeaderLogin from "../components/HeaderLogin";
 import BasicList from "../components/BasicList";
 import UserList from "../components/user/UserList";
 import Footer from "../components/Footer";
+import HeaderMenu from "../components/HeaderMenu";
 
 
 export default function UserPage() {
   return (
     <>
-    <HeaderLogin />
+    <HeaderMenu />
       <Divider />
       <Container
         sx={{
