@@ -4,8 +4,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import bcrypt from 'bcryptjs';
 import Footer from '../Footer';
-import HeaderMenu from '../HeaderMenu';
+import HeaderLogin from '../HeaderLogin';
 import { Link, useNavigate } from 'react-router-dom';
+import HeaderMenu from "../HeaderMenu";
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ const ChangePassword = () => {
                     newPassword: '',
                     confirmPassword: ''
                 });
-                navigate("/main")
+                navigate("/main");
             } else {
                 toast.error('Thay đổi mật khẩu thất bại. Vui lòng thử lại.');
             }
@@ -106,69 +107,88 @@ const ChangePassword = () => {
             <Container
                 sx={{
                     "@media (min-width: 1536px)": {
-                    maxWidth: "1400px",
-                },
+                        maxWidth: "1400px",
+                    },
                 }}
-                style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
+                style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px", minHeight: "80vh" }}
             >
-            <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
-            <Typography variant="h4" component="h2" gutterBottom style={{fontSize: '24px', color: 'black'}}>
-                Thay đổi mật khẩu
-            </Typography>
-            <Box>
-                <Grid container>
-                <Box sx={{ width: "75%" }}>
-                <form onSubmit={handleSubmit}>
-                <Grid container spacing={2} alignItems="center">
-                    <TextField
-                    label="Mật khẩu hiện tại (*)"
-                    name="currentPassword"
-                    type="password"
-                    value={formData.currentPassword}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.currentPassword}
-                    helperText={errors.currentPassword}
-                />
-                <TextField
-                    label="Mật khẩu mới (*)"
-                    name="newPassword"
-                    type="password"
-                    value={formData.newPassword}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.newPassword}
-                    helperText={errors.newPassword}
-                />
-                <TextField
-                    label="Nhập lại mật khẩu (*)"
-                    name="confirmPassword"
-                    type="password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.confirmPassword}
-                    helperText={errors.confirmPassword}
-                />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    disabled={loading}
-                    sx={{ mt: 2 }}
-                >
-                    {loading ? 'Đang xử lý...' : 'Xác nhận'}
-                </Button>
-                </Grid>
-                </form>
+                <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
+                    <Paper elevation={3} sx={{ p: 4 }}>
+                        <Typography variant="h4" component="h2" gutterBottom style={{ fontSize: '24px', color: 'black' }}>
+                            Thay đổi mật khẩu
+                        </Typography>
+                        <form onSubmit={handleSubmit}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        label="Mật khẩu hiện tại (*)"
+                                        name="currentPassword"
+                                        type="password"
+                                        value={formData.currentPassword}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        margin="normal"
+                                        error={!!errors.currentPassword}
+                                        helperText={errors.currentPassword}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        label="Mật khẩu mới (*)"
+                                        name="newPassword"
+                                        type="password"
+                                        value={formData.newPassword}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        margin="normal"
+                                        error={!!errors.newPassword}
+                                        helperText={errors.newPassword}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        label="Nhập lại mật khẩu mới (*)"
+                                        name="confirmPassword"
+                                        type="password"
+                                        value={formData.confirmPassword}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        margin="normal"
+                                        error={!!errors.confirmPassword}
+                                        helperText={errors.confirmPassword}
+                                    />
+                                </Grid>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={6}>
+                                        <Box display="flex" justifyContent="flex-start">
+                                            <Button
+                                                type="submit"
+                                                variant="contained"
+                                                color="primary"
+                                                disabled={loading}
+                                            >
+                                                {loading ? 'Đang xử lý...' : 'Xác nhận'}
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Box display="flex" justifyContent="flex-end">
+                                            <Link to="/users" style={{ textDecoration: 'none' }}>
+                                                <Button
+                                                    variant="contained"
+                                                    style={{ color: 'blue', backgroundColor: 'white' }}
+                                                >
+                                                    Quay lại
+                                                </Button>
+                                            </Link>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+                        </form>
+                    </Paper>
                 </Box>
-                </Grid>
-            </Box>
-            </Box>  
             </Container>
             <Footer />
         </>
