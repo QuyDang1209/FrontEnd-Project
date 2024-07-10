@@ -3,7 +3,7 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import HeaderMenu from '../HeaderMenu';
+import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
 
 export default function Register() {
@@ -82,7 +82,7 @@ export default function Register() {
 
   return (
     <>
-    <HeaderMenu />
+    <HeaderDetail />
     <Box
       sx={{
         backgroundImage: 'url(https://source.unsplash.com/random)',
