@@ -70,12 +70,14 @@ export default function ForrentHouse() {
     })
     const storage = getStorage();
     const handleDelete = (index) => {
-        // for(let i = 0; i < imgUrl.length; i++) {
-        //     if(index === (i)) {
-        //         imgUrl.splice(i, 1);
-        //         setImgUrl([...imgUrl]);
-        //     }
-        // }
+        /*
+        for(let i = 0; i < imgUrl.length; i++) {
+            if(index === (i)) {
+                imgUrl.splice(i, 1);
+                setImgUrl([...imgUrl]);
+            }
+        }
+        */    
         const imageUrl = imgUrl[index];
         const imageRef = ref(storage, imageUrl);
 
@@ -96,10 +98,22 @@ export default function ForrentHouse() {
 
         })
     }
+    /*
     const handleChangeTypeHouse = (e) => {
         console.log("value select", e);
         setValue(e)
     }
+        */
+    // đoạn code ở trên bị sai
+    // dưới đây là đoạn code đúng nhất
+    const handleChangeTypeHouse = (e) => {
+        const value = e.target.value;
+         setFormForrent({
+            ...formForrent,
+            type: value
+        });
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log("value", formForrent);
@@ -111,11 +125,13 @@ export default function ForrentHouse() {
         }
         catch(error){
             console.log(error);
-            // if (error.response && error.response.status === 409) {
-            //     toast.error('Email này đã tồn tại, vui lòng đăng kí email khác');
-            //   } else {
-            //     toast.error('Registration failed. Please try again.');
-            //   }
+            /*
+            if (error.response && error.response.status === 409) {
+                toast.error('Email này đã tồn tại, vui lòng đăng kí email khác');
+              } else {
+                toast.error('Registration failed. Please try again.');
+              }
+            */    
         }
         
        
@@ -211,7 +227,7 @@ export default function ForrentHouse() {
                             label="Loại nhà của bạn"
                             id="select"
                             value={formForrent.type}
-                            onChange={handleChange }
+                            onChange={handleChangeTypeHouse}
                         >
                             <MenuItem value={1} > Villa </MenuItem>
                             <MenuItem value={2} > HomeStay</MenuItem>

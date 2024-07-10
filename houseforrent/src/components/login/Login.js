@@ -7,7 +7,6 @@ import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
 import Google from '@mui/icons-material/Google';
 import Facebook from '@mui/icons-material/Facebook';
-import HeaderDetail from '../HeaderDetail';
 
 export default function Login() {
     const [formData, setFormData] = useState({
