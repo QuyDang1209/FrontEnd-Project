@@ -15,7 +15,7 @@ import {
   TextField,
 } from "@mui/material";
 import { CustomButton } from "../custom-component/CustomButton";
-import HeaderDetail from "../components/HeaderDetail";
+import HeaderLogin from "../components/HeaderLogin";
 import BasicList from "../components/BasicList";
 import Footer from "../components/Footer";
 function srcset(image, size, rows = 1, cols = 1) {
@@ -27,7 +27,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 export default function MenuPage(){
     return (
         <>
-            <HeaderDetail />
+            <HeaderLogin />
             <Divider />
             <Container
         sx={{
