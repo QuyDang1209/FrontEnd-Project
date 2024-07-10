@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
+import HeaderDetail from '../HeaderDetail';
 
 export default function Register() {
   const [formData, setFormData] = useState({

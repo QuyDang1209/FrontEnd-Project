@@ -17,6 +17,7 @@ import CardItem from "./../components/CardItem";
 import HeaderDetail from "../components/HeaderDetail";
 import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
+import HeaderDetail from "../components/HeaderDetail";
 
 export default function MainPage() {
   return (
