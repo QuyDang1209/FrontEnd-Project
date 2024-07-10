@@ -21,12 +21,12 @@ const App = () => {
                 <header className="App-header">
                     <Routes>
                         <Route path="/register" element={<Register />} />
-                        <Route path="/" element={<Login />} />
+                        <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<ProfileForm />} />
                         <Route path="/change-password" element={<ChangePassword />} />
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/home" element={<div>Welcome to the homepage!</div>} />
-                        <Route path="/main" element={<MainPage />} />
+                        <Route path="/" element={<MainPage />} />
                         <Route path="/forrent-hosue" element={<ForrentHouse />} />
                         <Route path="/" element={<DetailPage />} />
                     </Routes>
