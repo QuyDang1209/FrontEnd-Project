@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import HeaderMenu from '../HeaderMenu';
 import Footer from '../Footer';
+import HeaderDetail from '../HeaderDetail';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -82,7 +83,7 @@ export default function Register() {
 
   return (
     <>
-    <HeaderMenu />
+    <HeaderDetail />
     <Box
       sx={{
         backgroundImage: 'url(https://source.unsplash.com/random)',

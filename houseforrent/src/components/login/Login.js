@@ -7,6 +7,7 @@ import HeaderMenu from '../HeaderMenu';
 import Footer from '../Footer';
 import Google from '@mui/icons-material/Google';
 import Facebook from '@mui/icons-material/Facebook';
+import HeaderDetail from '../HeaderDetail';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ export default function Login() {
 
   return (
     <>
-      <HeaderMenu />
+      <HeaderDetail />
     <Box sx={{ backgroundColor: '#grey', minWidth: '100vw', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Container>
         <Grid container justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>
@@ -109,7 +110,9 @@ export default function Login() {
                   >
                     Login with Facebook
                   </Button>
-                  <Link to="/register">Don't have an account? Register here.</Link>
+                  <Link to="/register" >
+                  <Typography variant="body2"> Bạn chưa có tài khoản? Đăng kí mới tại đây.</Typography>
+                 </Link>
                 </Box>
               </CardContent>
             </Card>
