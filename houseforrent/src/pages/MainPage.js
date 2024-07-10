@@ -14,14 +14,14 @@ import {
 } from "@mui/material";
 
 import CardItem from "./../components/CardItem";
-import HeaderLogin from "../components/HeaderLogin";
+import HeaderDetail from "../components/HeaderDetail";
 import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
 
 export default function MainPage() {
   return (
     <>
-      <HeaderMenu />
+      <HeaderDetail />
       <Divider />
       <Container
         sx={{
