@@ -25,7 +25,7 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@emotion/react";
 
-export default function HeaderDetail() {
+export default function HeaderDetail0() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -170,7 +170,7 @@ export default function HeaderDetail() {
           <Grid item md={3} xs={9} sm={9}>
             <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
               <Button variant="text" style={{ color: "black" }}>
-                Welcome to our website
+                Become a host
               </Button>
               <LanguageIcon style={{ color: "black", marginLeft: "10px" }} />
               <Button
@@ -205,14 +205,12 @@ export default function HeaderDetail() {
         }}
       >
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>
-            <Typography>Đăng nhập</Typography>
-          </Link>
+          <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>Đăng nhập</Link>
           
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
           <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
-            <Typography>Đăng ký tài khoản</Typography>
+            Đăng ký tài khoản
           </Link>
         </MenuItem>
       </Menu>
