@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 import Footer from '../Footer';
 import HeaderLogin from '../HeaderLogin';
 import { Link, useNavigate } from 'react-router-dom';
-import HeaderMenu from "../HeaderMenu";
+import HeaderMenu0 from "../HeaderMenu0";
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -102,7 +102,7 @@ const ChangePassword = () => {
 
     return (
         <>
-            <HeaderMenu />
+            <HeaderMenu0 />
             <Divider />
             <Container
                 sx={{

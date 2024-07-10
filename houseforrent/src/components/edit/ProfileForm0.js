@@ -7,9 +7,9 @@ import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Conta
 import EditIcon from '@mui/icons-material/Edit';
 import HeaderLogin from '../HeaderLogin';
 import Footer from '../Footer';
-import HeaderMenu from "../HeaderMenu";
+import HeaderMenu0 from "../HeaderMenu0";
 
-const ProfileForm = () => {
+const ProfileForm0 = () => {
     const navigate = useNavigate();
     const [profile, setProfile] = useState({
         name: '',
@@ -87,7 +87,7 @@ const ProfileForm = () => {
 
     return (
         <>
-            <HeaderMenu />
+            <HeaderMenu0 />
             <Divider />
             <Container
                 sx={{
@@ -205,4 +205,4 @@ const ProfileForm = () => {
     );
 };
 
-export default ProfileForm;
+export default ProfileForm0;

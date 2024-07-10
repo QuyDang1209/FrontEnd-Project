@@ -25,7 +25,7 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@emotion/react";
 
-export default function HeaderMenu() {
+export default function HeaderDetail0() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -204,23 +204,14 @@ export default function HeaderMenu() {
           transform: "translateX(70px)", // Dịch chuyển Menu 80px sang bên trái
         }}
       >
-        <MenuItem onclick={handleClose} style={{ paddingRight: "100px"}}>
-            <Link to="/users">Quản lý tài khoản</Link>
-        </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/profile">Thay đổi thông tin cá nhân</Link>
+          <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>Đăng nhập</Link>
           
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/change-password">
-            Thay đổi mật khẩu
+          <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
+            Đăng ký tài khoản
           </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
-          <Link to="/">
-          Đăng Xuất
-          </Link>
-          
         </MenuItem>
       </Menu>
       <Popover

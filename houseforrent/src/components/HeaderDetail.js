@@ -169,9 +169,6 @@ export default function HeaderDetail() {
           </Grid>
           <Grid item md={3} xs={9} sm={9}>
             <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
-              <Button variant="text" style={{ color: "black" }}>
-                Become a host
-              </Button>
               <LanguageIcon style={{ color: "black", marginLeft: "10px" }} />
               <Button
                 onClick={handleClick}
@@ -205,12 +202,15 @@ export default function HeaderDetail() {
         }}
       >
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
+          <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>
+            <Typography>Đăng nhập</Typography>
+          </Link>
           <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>Đăng nhập</Link>
           
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>
           <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
-            Đăng ký tài khoản
+            <Typography>Đăng ký tài khoản</Typography>
           </Link>
         </MenuItem>
       </Menu>

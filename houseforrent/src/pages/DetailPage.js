@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { CustomButton } from "../custom-component/CustomButton";
 
-import HeaderMenu from "../components/HeaderMenu";
+import HeaderDetail from "../components/HeaderDetail";
 import BasicList from "../components/BasicList";
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -27,7 +27,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 export default function DetailPage() {
   return (
     <>
-      <HeaderMenu />
+      <HeaderDetail />
       <Divider />
       <Container
         sx={{
