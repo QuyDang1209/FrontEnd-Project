@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { imgUpload } from './ConfigImg';
 import { toast } from 'react-toastify';
 import { uploadBytes, ref, getDownloadURL, getStorage, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container, Select, MenuItem } from "@mui/material";
 import HeaderMenu from '../HeaderMenu';
 import Footer from '../Footer';
-import { imgUpload } from './ConfigImg';
 import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import InputLabel from '@mui/material/InputLabel';
@@ -18,19 +18,20 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 
 const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
 });
 
 export default function ForrentHouse() {
     const [imgUrl, setImgUrl] = useState([]);
+
     const [progress, setProgress] = useState([]);
     const id = JSON.parse(localStorage.getItem('user')).id ;
     const [formForrent, setFormForrent] = useState({
@@ -78,6 +79,7 @@ export default function ForrentHouse() {
         });
     }
 
+
     const handleClick = (e) => {
         let arr = [...formForrent.img];
         for (let i = 0; i < e.target.files.length; i++) {
@@ -103,7 +105,6 @@ export default function ForrentHouse() {
             toast.error('Please fill out all required fields.');
             return;
         }
-
         try {
             const response = await axios.post('http://localhost:8080/api/forrent-house', formForrent);
             if (response.data.status === 200) {
@@ -130,8 +131,9 @@ export default function ForrentHouse() {
             }, 500); // Update every 500ms
         });
 
-        return () => intervals.forEach(clearInterval); // Clear intervals on unmount
+        return () => intervals.forEach(clearInterval); // Xóa interval khi unmount
     }, [imgUrl]);
+
 
     const calculateGridHeight = () => {
         const rows = Math.ceil(imgUrl.length / 3);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CustomButton } from "./../custom-component/CustomButton";
 import {
     Box,
@@ -22,18 +22,12 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-
-import "./HeaderMenu.css"
 
 export default function HeaderMenu0() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [accountAnchorEl, setAccountAnchorEl] = useState(null);
-    const [anchorElPopover, setAnchorElPopover] = useState(null);
-    const [anchorElPopoverWeek, setAnchorElPopoverWeek] = useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [accountAnchorEl, setAccountAnchorEl] = React.useState(null);
+    const [anchorElPopover, setAnchorElPopover] = React.useState(null);
+    const [anchorElPopoverWeek, setAnchorElPopoverWeek] = React.useState(null);
 
     const navigation = useNavigate();
     const theme = useTheme();
@@ -90,28 +84,6 @@ export default function HeaderMenu0() {
         handleClosePopover();
     }
 
-    const [formState, setFormState] = useState({
-        numberOfPeople: '',
-        numberOfBedrooms: '',
-        numberOfBathrooms: '',
-    });
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
-    };
-
-    const handleReset = () => {
-        setFormState({
-            numberOfPeople: '',
-            numberOfBedrooms: '',
-            numberOfBathrooms: '',
-        });
-    };
-
     return (
         <>
             <Container
@@ -123,8 +95,7 @@ export default function HeaderMenu0() {
                 style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
             >
                 <Grid container>
-
-                    <Grid item md={2} xs={3} sm={3}>
+                    <Grid item md={3} xs={3} sm={3}>
                         <img
                             style={{ width: "100px", height: "50px" }}
                             src={"/images/logo-airbnb.png"}
@@ -133,7 +104,7 @@ export default function HeaderMenu0() {
                     </Grid>
                     <Grid
                         item
-                        md={7}
+                        md={6}
                         sx={{ display: { xs: "none", sm: "none", md: "block" } }}
                     >
                         <ButtonGroup
@@ -152,7 +123,7 @@ export default function HeaderMenu0() {
                                 }}
                                 onClick={handleClickPopover}
                             >
-                                Yêu cầu
+                                Any wherEEEEEEEE
                                 <Box
                                     sx={{
                                         position: "absolute",
@@ -164,11 +135,25 @@ export default function HeaderMenu0() {
                                     }}
                                 />
                             </CustomButton>
-                            <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                <DemoContainer components={['DateRangePicker']} >
-                                    <DateRangePicker localeText={{ start: 'Check-in', end: 'Check-out' }} className="demoxxx"/>
-                                </DemoContainer>
-                            </LocalizationProvider>
+                            <CustomButton
+                                sx={{
+                                    position: "relative",
+                                    display: "inline-block",
+                                }}
+                                onClick={handleClickPopoverWeek}
+                            >
+                                Any week
+                                <Box
+                                    sx={{
+                                        position: "absolute",
+                                        top: "10%",
+                                        right: 0,
+                                        width: "1px",
+                                        height: "80%",
+                                        backgroundColor: "rgba(0, 0, 0, 0.4)",
+                                    }}
+                                />
+                            </CustomButton>
                             <FormControl variant="standard" style={{ paddingLeft: "10px" }}>
                                 <Input
                                     id="input-with-icon-adornment"
@@ -252,6 +237,11 @@ export default function HeaderMenu0() {
                         <Typography>Danh sách Yêu thích</Typography>
                     </Link>
                 </MenuItem>
+                <MenuItem onClick={() => handleMenuClick("/hosting")} style={{ paddingRight: "100px" }}>
+                    <Link to="/hosting" style={{ textDecoration: "none", color: "black" }}>
+                        <Typography>Cho thuê chỗ ở qua Airbnb</Typography>
+                    </Link>
+                </MenuItem>
                 <MenuItem
                     onClick={handleAccountClick}
                     style={{ paddingRight: "100px" }}
@@ -275,7 +265,7 @@ export default function HeaderMenu0() {
                 open={accountOpen}
                 onClose={handleClose}
                 MenuListProps={{
-                    "aria-labelledby": "account-button"
+                    "aria-labelledby": "account-button",
                 }}
                 transformOrigin={{
                     vertical: "top",
@@ -304,37 +294,13 @@ export default function HeaderMenu0() {
                 sx={{ marginTop: "2px" }}
             >
                 <Box padding={2}>
-                    <Typography paddingBottom={2}>Yêu cầu:</Typography>
+                    <Typography paddingBottom={2}>Search by:</Typography>
                     <Grid container width={"300px"} spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                name="numberOfPeople"
-                                label="Số người"
-                                variant="outlined"
-                                fullWidth
-                                value={formState.numberOfPeople}
-                                onChange={handleInputChange}
-                            />
+                        <Grid item>
+                            <TextField name="" id="" label="City" variant="outlined" />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                name="numberOfBedrooms"
-                                label="Số lượng phòng ngủ"
-                                variant="outlined"
-                                fullWidth
-                                value={formState.numberOfBedrooms}
-                                onChange={handleInputChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                name="numberOfBathrooms"
-                                label="Số lượng phòng tắm"
-                                variant="outlined"
-                                fullWidth
-                                value={formState.numberOfBathrooms}
-                                onChange={handleInputChange}
-                            />
+                        <Grid item>
+                            <TextField name="" id="" label="City" variant="outlined" />
                         </Grid>
                     </Grid>
                     <Box
@@ -343,15 +309,14 @@ export default function HeaderMenu0() {
                         sx={{ marginTop: "10px" }}
                     >
                         <Button variant="contained" color="success">
-                            OK
+                            Search
                         </Button>
                         <Button
                             variant="contained"
                             sx={{ marginLeft: "10px" }}
                             color="warning"
-                            onClick={handleReset}
                         >
-                            Reset
+                            Cancel
                         </Button>
                     </Box>
                 </Box>
@@ -368,7 +333,7 @@ export default function HeaderMenu0() {
                 sx={{ marginTop: "2px" }}
             >
                 <Box padding={2}>
-                    <Typography paddingBottom={2}>Checkin - Checkout:</Typography>
+                    <Typography paddingBottom={2}>Search by any week:</Typography>
                     <Grid container width={"300px"} spacing={2}>
                         <Grid item>
                             <TextField name="" id="" label="City" variant="outlined" />
