@@ -15,7 +15,7 @@ import UserPage from './pages/UserPage';
 import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
 import AdminPage from './pages/AdminPage';
-
+import Textxx from './components/Textxx';
 const App = () => {
     return (
         <Router>
@@ -32,6 +32,8 @@ const App = () => {
                         <Route path="/detail" element={<DetailPage />} />
                         <Route path="/menu" element={<MenuPage />} />
                         <Route path="/main" element={<AdminPage />} />
+                        <Route path="/test" element={<Textxx />} />
+
                     </Routes>
                 </header>
             </Container>

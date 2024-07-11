@@ -66,7 +66,10 @@ export default function ForrentHouse() {
         "decription": "",
         "rentingprice":"",
         "type":1,
-        "users": id
+        "users": id,
+        "namehouse":"",
+        "bedroom":"",
+        "bathroom":""
     })
     const storage = getStorage();
     const handleDelete = (index) => {
@@ -168,6 +171,18 @@ export default function ForrentHouse() {
                 )}
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12}>
+                            <TextField
+                                sx={{ mt: 2 }}
+                                label="Tên nhà"
+                                variant="outlined"
+                                id="outlined-size-small"
+                                name="namehouse"
+                                value={formForrent.namehouse}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                        </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 sx={{ mt: 2 }}
@@ -176,6 +191,30 @@ export default function ForrentHouse() {
                                 id="outlined-size-small"
                                 name="address"
                                 value={formForrent.address}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                sx={{ mt: 2 }}
+                                label="Số phòng ngủ"
+                                variant="outlined"
+                                id="outlined-size-small"
+                                name="bedroom"
+                                value={formForrent.bedroom}
+                                onChange={handleChange}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                sx={{ mt: 2 }}
+                                label="Số phòng tắm"
+                                variant="outlined"
+                                id="outlined-size-small"
+                                name="bathroom"
+                                value={formForrent.bathroom}
                                 onChange={handleChange}
                                 fullWidth
                             />
@@ -257,7 +296,6 @@ export default function ForrentHouse() {
                                         aria-label={`star ${item.title}`}
                                         onClick={() => handleDelete(index)}
                                         >
-                                           
                                         <DeleteForeverSharpIcon />
                                         </IconButton>
                                     }
