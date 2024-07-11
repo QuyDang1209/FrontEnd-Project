@@ -15,6 +15,7 @@ import UserPage from './pages/UserPage';
 import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
 import AdminPage from './pages/AdminPage';
+import ForrentHouseEdit from './components/forrenthouse/ForrentHouseEdit';
 
 const App = () => {
     return (
@@ -28,10 +29,11 @@ const App = () => {
                         <Route path="/change-password" element={<ChangePassword0 />} />
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/" element={<MainPage />} />
-                        <Route path="/forrent-hosue" element={<ForrentHouse />} />
+                        <Route path="/forrent-house" element={<ForrentHouse />} />
                         <Route path="/detail" element={<DetailPage />} />
                         <Route path="/menu" element={<MenuPage />} />
                         <Route path="/main" element={<AdminPage />} />
+                        <Route path="/forrent-house/edit" element={<ForrentHouseEdit/>} />
                     </Routes>
                 </header>
             </Container>
