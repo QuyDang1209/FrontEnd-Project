@@ -3,7 +3,7 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import HeaderDetail from '../HeaderDetail';
+// import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
 import HeaderDetail from '../HeaderDetail';
 

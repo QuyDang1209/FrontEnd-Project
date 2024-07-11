@@ -123,7 +123,7 @@ export default function HeaderMenu() {
                                 }}
                                 onClick={handleClickPopover}
                             >
-                                Any where
+                                Anywhere
                                 <Box
                                     sx={{
                                         position: "absolute",

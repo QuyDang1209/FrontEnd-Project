@@ -3,7 +3,7 @@ import { Container, Grid, TextField, Button, Box, Typography, Card, CardContent,
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import HeaderDetail from '../HeaderDetail';
+// import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
 import Google from '@mui/icons-material/Google';
 import Facebook from '@mui/icons-material/Facebook';
