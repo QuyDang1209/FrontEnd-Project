@@ -11,6 +11,7 @@ import HeaderDetail from "../components/HeaderDetail";
 import axios from "axios";
 import HeaderMenu0 from "../components/HeaderMenu0";
 
+
 export default function MainPage() {
     const [forrentList, setForrentList] = useState([]);
 

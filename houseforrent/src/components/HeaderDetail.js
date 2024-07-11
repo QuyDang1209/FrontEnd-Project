@@ -205,7 +205,6 @@ export default function HeaderDetail() {
           <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>
             <Typography>Đăng nhập</Typography>
           </Link>
-          <Link to="/Login" style={{ textDecoration: "none", color: "black" }}>Đăng nhập</Link>
           
         </MenuItem>
         <MenuItem onClick={handleClose} style={{ paddingRight: "100px" }}>

@@ -3,9 +3,8 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
-import HeaderDetail from '../HeaderDetail';
+import HeaderDetail0 from "../HeaderDetail0";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -70,7 +69,7 @@ export default function Register() {
       const response = await axios.post('http://localhost:8080/api/user/create', formData);
       if (response.status === 200) {
         toast.success('Registration successful! Please log in.');
-        navigate('/', { state: { email: formData.email, password: formData.password } });
+        navigate('/login', { state: { email: formData.email, password: formData.password } });
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
@@ -83,7 +82,7 @@ export default function Register() {
 
   return (
     <>
-    <HeaderDetail />
+    <HeaderDetail0 />
     <Box
       sx={{
         backgroundImage: 'url(https://source.unsplash.com/random)',
