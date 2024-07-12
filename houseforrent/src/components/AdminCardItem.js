@@ -9,8 +9,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
-export default function AdminCardItem({ img }) {
+export default function AdminCardItem({ img, title, address, description, rentingprice }) {
   return (
     <Card
       sx={{
@@ -28,10 +29,10 @@ export default function AdminCardItem({ img }) {
     >
       <CardMedia
         component="img"
-        height="300px"
-        image={img}
-        alt="Paella dish"
-        style={{ borderRadius: "10px" }}
+                height="140"
+                image={img}
+                alt={title}
+                style={{ borderRadius: "10px" }}
       />
       <CardHeader
         action={
@@ -39,8 +40,16 @@ export default function AdminCardItem({ img }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
+        title={title}
+                subheader={`Address: ${address}`}
+                sx={{ paddingBottom: "0px" }}
       />
+      <Typography variant="body2" color="text.secondary" style={{ padding: "16px" }}>
+                {description}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" style={{ padding: "0 16px 16px" }}>
+                {`Renting Price: ${rentingprice}`}
+            </Typography>
       <CardActions disableSpacing>
         <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
           <Box>
