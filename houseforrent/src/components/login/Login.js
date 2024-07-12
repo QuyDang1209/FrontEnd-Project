@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Container, Grid, TextField, Button, Box, Typography, Card, CardContent, Checkbox, FormControlLabel } from '@mui/material';
+import { Container, Grid, TextField, Button, Box, Typography, Card, CardContent, Checkbox, FormControlLabel, IconButton, InputAdornment } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 // import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
 import Google from '@mui/icons-material/Google';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Facebook from '@mui/icons-material/Facebook';
 import HeaderDetail0 from "../HeaderDetail0";
 
@@ -14,6 +16,8 @@ export default function Login() {
         email: '',
         password: '',
     });
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -47,6 +51,7 @@ export default function Login() {
     }
   };
 
+  const toggleShowPassword = () => setShowPassword((prev) => !prev);
   return (
     <>
       <HeaderDetail0 />
@@ -79,6 +84,17 @@ export default function Login() {
                     value={formData.password}
                     onChange={handleChange}
                     margin="normal"
+                    InputProps={{
+                      endAdorment:(
+                        <InputAdornment position="end">
+                          <IconButton
+                            onclick={toggleShowPassword}
+                            edge="end">
+                               {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   <Button
                     type="submit"

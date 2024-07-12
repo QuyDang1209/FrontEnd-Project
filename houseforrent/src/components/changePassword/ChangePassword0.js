@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Divider, Container, Grid, Paper } from '@mui/material';
+import { TextField, Button, Box, Typography, Divider, Container, Grid, Paper, IconButton, InputAdornment } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import bcrypt from 'bcryptjs';
@@ -7,6 +7,8 @@ import Footer from '../Footer';
 import HeaderLogin from '../HeaderLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderMenu0 from "../HeaderMenu0";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -17,6 +19,11 @@ const ChangePassword = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [oldUser, setOldUser] = useState(null);
+    const [showPassword, setShowPassword] = useState({
+        currentPassword: false,
+        newPassword: false,
+        confirmPassword: false
+    });
     const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem('user'));
@@ -92,6 +99,10 @@ const ChangePassword = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    const toggleShowPassword = (field) => {
+        setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
+    };
+
     if (!user) {
         return (
             <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
@@ -123,39 +134,75 @@ const ChangePassword = () => {
                                     <TextField
                                         label="Mật khẩu hiện tại (*)"
                                         name="currentPassword"
-                                        type="password"
+                                        type={showPassword.currentPassword ? 'text' : 'password'}
                                         value={formData.currentPassword}
                                         onChange={handleChange}
                                         fullWidth
                                         margin="normal"
                                         error={!!errors.currentPassword}
                                         helperText={errors.currentPassword}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={() => toggleShowPassword('currentPassword')}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword.currentPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         label="Mật khẩu mới (*)"
                                         name="newPassword"
-                                        type="password"
+                                        type={showPassword.newPassword ? 'text' : 'password'}
                                         value={formData.newPassword}
                                         onChange={handleChange}
                                         fullWidth
                                         margin="normal"
                                         error={!!errors.newPassword}
                                         helperText={errors.newPassword}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={() => toggleShowPassword('newPassword')}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword.newPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         label="Nhập lại mật khẩu mới (*)"
                                         name="confirmPassword"
-                                        type="password"
+                                        type={showPassword.confirmPassword ? 'text' : 'password'}
                                         value={formData.confirmPassword}
                                         onChange={handleChange}
                                         fullWidth
                                         margin="normal"
                                         error={!!errors.confirmPassword}
                                         helperText={errors.confirmPassword}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={() => toggleShowPassword('confirmPassword')}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword.confirmPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
                                     />
                                 </Grid>
                                 <Grid container spacing={2}>
@@ -184,7 +231,6 @@ const ChangePassword = () => {
                                         </Box>
                                     </Grid>
                                 </Grid>
-
                             </Grid>
                         </form>
                     </Paper>

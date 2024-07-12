@@ -82,7 +82,7 @@ const ForrentHouseEdit = ({ id }) => {
     useEffect(() => {
         const fetchForRentHouse = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/forrent-house/21`);
+                const response = await axios.get(`http://localhost:8080/api/forrent-house/${id}`);
                 const data = response.data;
                 setAddress(data.address);
                 // setImg(data.imgs);
@@ -201,7 +201,7 @@ const ForrentHouseEdit = ({ id }) => {
 
         try {
             console.log("formForent", formForrent);
-            const response = await axios.patch(`http://localhost:8080/api/forrent-house/edit/21`, formForrent);
+            const response = await axios.patch(`http://localhost:8080/api/forrent-house/edit/${id}`, formForrent);
             if (response.data.status === 200) {
                 toast.success('Cập nhật thông tin nhà thành công');
             }
@@ -364,8 +364,8 @@ const ForrentHouseEdit = ({ id }) => {
                                                     ))}
                                                 </ImageList>
                                             </Grid>
-                                            <Grid item xs={2}>
-                                                <Button variant="contained" color="primary" type="submit" fullWidth>
+                                            <Grid item xs={12} mt={2}>
+                                                <Button variant="contained" color="primary" type="submit" sx={{mt:2}}>
                                                     Lưu thay đổi
                                                 </Button>
                                             </Grid>
