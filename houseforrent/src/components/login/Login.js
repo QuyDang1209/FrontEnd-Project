@@ -3,11 +3,11 @@ import { Container, Grid, TextField, Button, Box, Typography, Card, CardContent,
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import HeaderMenu from '../HeaderMenu';
+// import HeaderDetail from '../HeaderDetail';
 import Footer from '../Footer';
 import Google from '@mui/icons-material/Google';
 import Facebook from '@mui/icons-material/Facebook';
-import HeaderDetail from '../HeaderDetail';
+import HeaderDetail0 from "../HeaderDetail0";
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -49,7 +49,7 @@ export default function Login() {
 
   return (
     <>
-      <HeaderDetail />
+      <HeaderDetail0 />
     <Box sx={{ backgroundColor: '#grey', minWidth: '100vw', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Container>
         <Grid container justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { CustomButton } from "./../custom-component/CustomButton";
+import dayjs from 'dayjs';
+import axios from "axios";
+import { format, parseISO } from 'date-fns';
 import {
     Box,
     Button,
@@ -22,12 +25,24 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { DateTimeRangePicker } from '@mui/x-date-pickers-pro/DateTimeRangePicker';
 
-export default function HeaderMenu0() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [accountAnchorEl, setAccountAnchorEl] = React.useState(null);
-    const [anchorElPopover, setAnchorElPopover] = React.useState(null);
-    const [anchorElPopoverWeek, setAnchorElPopoverWeek] = React.useState(null);
+import "./HeaderMenu.css"
+import 'dayjs/locale/en-gb';  // Import locale if necessary
+
+// Extend dayjs with custom parsing and formatting capabilities
+const customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
+
+export default function HeaderMenu0( {onDataChange} ) {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [accountAnchorEl, setAccountAnchorEl] = useState(null);
+    const [anchorElPopover, setAnchorElPopover] = useState(null);
+    const [anchorElPopoverWeek, setAnchorElPopoverWeek] = useState(null);
 
     const navigation = useNavigate();
     const theme = useTheme();
@@ -84,6 +99,51 @@ export default function HeaderMenu0() {
         handleClosePopover();
     }
 
+    const [formState, setFormState] = useState({
+        bedroom: '',
+        bathroom: '',
+        checkin: "",
+        checkout: "",
+        address:""
+    });
+
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormState({
+            ...formState,
+            [name]: value,
+        });
+    };
+    const handleChangeDatePicker = (newValue) => {
+        setFormState({
+            ...formState,
+            checkin: newValue[0],
+            checkout: newValue[1],
+        });
+    };
+
+    const handleReset = () => {
+        setFormState({
+            // numberOfPeople: '',
+            bedroom: '',
+            bathroom: '',
+        });
+    };
+    const handleClickSearch = () => {
+        console.log(formState);
+
+        let objSend = {
+            ...formState,
+            checkin: format(formState.checkin.toDate() , 'yyyy-MM-dd'),
+            checkout: format(formState.checkout.toDate(), 'yyyy-MM-dd'),
+        }
+        console.log(objSend);
+        axios.post("http://localhost:8080/api/forrent-house/filter", objSend).then((res) => {
+            onDataChange(res.data)
+        })
+    };
+
     return (
         <>
             <Container
@@ -95,7 +155,8 @@ export default function HeaderMenu0() {
                 style={{ paddingLeft: 0, paddingRight: 0, marginTop: "20px" }}
             >
                 <Grid container>
-                    <Grid item md={3} xs={3} sm={3}>
+
+                    <Grid item md={2} xs={3} sm={3}>
                         <img
                             style={{ width: "100px", height: "50px" }}
                             src={"/images/logo-airbnb.png"}
@@ -104,7 +165,7 @@ export default function HeaderMenu0() {
                     </Grid>
                     <Grid
                         item
-                        md={6}
+                        md={7}
                         sx={{ display: { xs: "none", sm: "none", md: "block" } }}
                     >
                         <ButtonGroup
@@ -123,7 +184,7 @@ export default function HeaderMenu0() {
                                 }}
                                 onClick={handleClickPopover}
                             >
-                                Any where
+                                Yêu cầu
                                 <Box
                                     sx={{
                                         position: "absolute",
@@ -135,30 +196,22 @@ export default function HeaderMenu0() {
                                     }}
                                 />
                             </CustomButton>
-                            <CustomButton
-                                sx={{
-                                    position: "relative",
-                                    display: "inline-block",
-                                }}
-                                onClick={handleClickPopoverWeek}
-                            >
-                                Any week
-                                <Box
-                                    sx={{
-                                        position: "absolute",
-                                        top: "10%",
-                                        right: 0,
-                                        width: "1px",
-                                        height: "80%",
-                                        backgroundColor: "rgba(0, 0, 0, 0.4)",
-                                    }}
-                                />
-                            </CustomButton>
+                            <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                <DemoContainer components={['DateRangePicker']} >
+                                    <DateRangePicker 
+                                        localeText={{ start: 'Check-in', end: 'Check-out' }} className="demoxxx"
+                                        value={[dayjs(formState.checkin), dayjs(formState.checkout)]}
+                                         onChange={handleChangeDatePicker}
+                                         />  
+                                </DemoContainer>
+                            </LocalizationProvider>
                             <FormControl variant="standard" style={{ paddingLeft: "10px" }}>
                                 <Input
                                     id="input-with-icon-adornment"
                                     placeholder="Add guests"
                                     style={{ height: "100%" }}
+                                    value={formState.address}
+                                    onChange={handleInputChange}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <Box
@@ -172,7 +225,7 @@ export default function HeaderMenu0() {
                                                     height: "30px",
                                                 }}
                                             >
-                                                <SearchRounded style={{ color: "white" }} />
+                                                <SearchRounded style={{ color: "white" }} onClick={handleClickSearch} />
                                             </Box>
                                         </InputAdornment>
                                     }
@@ -237,11 +290,6 @@ export default function HeaderMenu0() {
                         <Typography>Danh sách Yêu thích</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={() => handleMenuClick("/hosting")} style={{ paddingRight: "100px" }}>
-                    <Link to="/hosting" style={{ textDecoration: "none", color: "black" }}>
-                        <Typography>Cho thuê chỗ ở qua Airbnb</Typography>
-                    </Link>
-                </MenuItem>
                 <MenuItem
                     onClick={handleAccountClick}
                     style={{ paddingRight: "100px" }}
@@ -265,7 +313,7 @@ export default function HeaderMenu0() {
                 open={accountOpen}
                 onClose={handleClose}
                 MenuListProps={{
-                    "aria-labelledby": "account-button",
+                    "aria-labelledby": "account-button"
                 }}
                 transformOrigin={{
                     vertical: "top",
@@ -294,13 +342,37 @@ export default function HeaderMenu0() {
                 sx={{ marginTop: "2px" }}
             >
                 <Box padding={2}>
-                    <Typography paddingBottom={2}>Search by:</Typography>
+                    <Typography paddingBottom={2}>Yêu cầu:</Typography>
                     <Grid container width={"300px"} spacing={2}>
-                        <Grid item>
-                            <TextField name="" id="" label="City" variant="outlined" />
+                        {/* <Grid item xs={12}>
+                            <TextField
+                                name="numberOfPeople"
+                                label="Số người"
+                                variant="outlined"
+                                fullWidth
+                                value={formState.numberOfPeople}
+                                onChange={handleInputChange}
+                            />
+                        </Grid> */}
+                        <Grid item xs={12}>
+                            <TextField
+                                name="bedroom"
+                                label="Số lượng phòng ngủ"
+                                variant="outlined"
+                                fullWidth
+                                value={formState.bedroom}
+                                onChange={handleInputChange}
+                            />
                         </Grid>
-                        <Grid item>
-                            <TextField name="" id="" label="City" variant="outlined" />
+                        <Grid item xs={12}>
+                            <TextField
+                                name="bathroom"
+                                label="Số lượng phòng tắm"
+                                variant="outlined"
+                                fullWidth
+                                value={formState.bathroom}
+                                onChange={handleInputChange}
+                            />
                         </Grid>
                     </Grid>
                     <Box
@@ -309,14 +381,15 @@ export default function HeaderMenu0() {
                         sx={{ marginTop: "10px" }}
                     >
                         <Button variant="contained" color="success">
-                            Search
+                            OK
                         </Button>
                         <Button
                             variant="contained"
                             sx={{ marginLeft: "10px" }}
                             color="warning"
+                            onClick={handleReset}
                         >
-                            Cancel
+                            Reset
                         </Button>
                     </Box>
                 </Box>
@@ -333,7 +406,7 @@ export default function HeaderMenu0() {
                 sx={{ marginTop: "2px" }}
             >
                 <Box padding={2}>
-                    <Typography paddingBottom={2}>Search by any week:</Typography>
+                    <Typography paddingBottom={2}>Checkin - Checkout:</Typography>
                     <Grid container width={"300px"} spacing={2}>
                         <Grid item>
                             <TextField name="" id="" label="City" variant="outlined" />

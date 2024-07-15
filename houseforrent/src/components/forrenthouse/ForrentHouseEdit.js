@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { imgUpload } from './ConfigImg';
 import { toast } from 'react-toastify';
 import { uploadBytes, ref, getDownloadURL, getStorage, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
-import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Divider, Container, Select, MenuItem } from "@mui/material";
-import HeaderMenu from '../HeaderMenu';
+import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Container, Select, MenuItem } from "@mui/material";
+import HeaderMenu0 from '../HeaderMenu0';
 import Footer from '../Footer';
+import { imgUpload } from './ConfigImg';
 import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import InputLabel from '@mui/material/InputLabel';
@@ -29,117 +29,191 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-export default function ForrentHouse() {
+const ForrentHouseEdit = ({ id }) => {
     const [imgUrl, setImgUrl] = useState([]);
-
     const [progress, setProgress] = useState([]);
-    const id = JSON.parse(localStorage.getItem('user')).id ;
+    const userId = JSON.parse(localStorage.getItem('user')).id;
+    const [address,setAddress] = useState('');
+    const [img,setImg] = useState('');
+    const [decription, setDecription] = useState('');
+    const [rentingprice,setRentingprice] = useState('');
+    const [type, setType] = useState(1);
+    const [namehouse, setNamehouse] = useState('');
+    const [bedroom, setBedroom] = useState('');
+    const [bathroom, setBathroom] = useState('');
+    /*
     const [formForrent, setFormForrent] = useState({
         "address": "",
         "img": [],
         "decription": "",
         "rentingprice": "",
         "type": 1,
-        "users": id,
-        "namehouse":"",
-        "bedroom":"",
-        "bathroom":""
-    });
+        "users": userId,
+        "namehouse": "",
+        "bedroom": "",
+        "bathroom": ""
+    });*/
 
+    /*
     useEffect(() => {
-        setProgress([...Array(imgUrl.length).fill(0)]);
-    }, [imgUrl]);
+        const fetchForRentHouse = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/forrent-house/2`);
+                const data = response.data;
+                setFormForrent({
+                    address: data.address,
+                    img: data.img,
+                    decription: data.decription,
+                    rentingprice: data.rentingprice,
+                    type: data.type,
+                    users: data.users,
+                    namehouse: data.namehouse,
+                    bedroom: data.bedroom,
+                    bathroom: data.bathroom
+                });
+                setImgUrl(data.img.map(img => img.img));
+                 console.log(formForrent,"---------------------------");
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+        };
+        fetchForRentHouse();
+    }, [id]);*/
+    useEffect(() => {
+        const fetchForRentHouse = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/forrent-house/21`);
+                const data = response.data;
+                setAddress(data.address);
+                // setImg(data.imgs);
+                setDecription(data.decription);
+                setRentingprice(data.rentingprice);
+                setType(data.type.id);
+                setNamehouse(data.namehouse);
+                setBedroom(data.bedroom);
+                setBathroom(data.bathroom);
+                // setImgUrl(data.img.map(img => img.img));
+                setImgUrl(data.img)
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+            }
+            
+        };
+        fetchForRentHouse();
+    }, [id]);
+    console.log("File ảnh hiện ra",imgUrl);
+    const calculateGridHeight = () => {
+        const rows = Math.ceil(imgUrl.length / 3);
+        return rows * 200;
+    }
 
+    /*
     const handleChange = (e) => {
         setFormForrent({
             ...formForrent,
             [e.target.name]: e.target.value
         });
-    }
+    }*/
 
+    /*    
     const handleChangeTypeHouse = (e) => {
         const value = e.target.value;
         setFormForrent({
             ...formForrent,
             type: value
         });
-    }
+    }*/
 
-    const handleDelete = (index) => {
+    const handleDelete = (index,id) => {
+        console.log(index,'id:',id)
         const storage = getStorage();
-        const imageUrl = imgUrl[index];
+        const imageUrl = imgUrl[index].img;
         const imageRef = ref(storage, imageUrl);
 
         deleteObject(imageRef).then(() => {
             const newImgUrl = [...imgUrl];
             newImgUrl.splice(index, 1);
+            // setImgUrl(newImgUrl);
+            // const newImg = img.fitler((imgObj, i) => i !== index);
+            // setImg(newImg);
+            axios.delete(`http://localhost:8080/api/img/delete/${id}`)
+            .then(console.log("okkkkkkk"))
             setImgUrl(newImgUrl);
         }).catch((error) => {
             console.error('Error deleting image: ', error);
         });
-    }
-
+    };
 
     const handleClick = (e) => {
-        let arr = [...formForrent.img];
-        for (let i = 0; i < e.target.files.length; i++) {
-            const imgRef = ref(imgUpload, `file/${v4()}`)
+    // let arr = [...formForrent.img || []]; // Initialize as empty array if undefined
+    /*
+    for (let i = 0; i < e.target.files.length; i++) {
+        const imgRef = ref(imgUpload, `file/${v4()}`)
+        uploadBytes(imgRef, e.target.files[i]).then((value) => {
+            getDownloadURL(value.ref).then(url => {
+                arr.push({ "img": url });
+                setImgUrl(data => [...data, url]);
+                setFormForrent({
+                    ...formForrent,
+                    img: arr  // Ensure you set the 'img' property correctly
+                });
+            })
+        });
+    }*/
+    let arr = [];
+    for (let i = 0; i < e.target.files.length; i++) {
+            const imgRef = ref(imgUpload, `file/${v4()}`);
             uploadBytes(imgRef, e.target.files[i]).then((value) => {
                 getDownloadURL(value.ref).then(url => {
-                    arr.push({ "img": url });
-                    setImgUrl(data => [...data, url]);
-                    setFormForrent({
-                        ...formForrent,
-                        [e.target.name]: arr
-                    });
-                })
+                    arr.push({ "img":url} );
+                    setImgUrl(data => [...data, {"id":"","img":url} ]);
+                    setImg(imgUrl);
+                });
             });
         }
-    }
+}
+
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(formForrent,"-------------------------------");
+        // console.log('Form data before validation', formForrent);
         // Basic validation example (you can customize this as per your requirements)
+        /*
         if (!formForrent.address || !formForrent.decription || !formForrent.rentingprice) {
             toast.error('Please fill out all required fields.');
             return;
+        }*/
+        e.preventDefault();
+            const formForrent = {
+            address,
+            img:imgUrl,
+            decription,
+            rentingprice,
+            type,
+            users: userId,
+            namehouse,
+            bedroom,
+            bathroom
+        };
+       if (!address || !decription || !rentingprice || !namehouse || !bedroom || !bathroom) {
+            toast.error('Please fill out all required fields.');
+            return;
         }
+
         try {
-            const response = await axios.post('http://localhost:8080/api/forrent-house', formForrent);
+            console.log("formForent", formForrent);
+            const response = await axios.patch(`http://localhost:8080/api/forrent-house/edit/21`, formForrent);
             if (response.data.status === 200) {
-                toast.success('Đăng kí nhà của bạn thành công, chờ admin duyệt');
+                toast.success('Cập nhật thông tin nhà thành công');
             }
         } catch (error) {
             console.error('Error submitting form: ', error);
-            toast.error('Registration failed. Please try again.');
+            toast.error('Cập nhật thông tin nhà thất bại. Vui lòng thử lại.');
         }
     }
 
-    useEffect(() => {
-        const intervals = imgUrl.map((_, index) => {
-            return setInterval(() => {
-                setProgress((prevProgress) => {
-                    const newProgress = [...prevProgress];
-                    if (newProgress[index] < 100) {
-                        newProgress[index] += 10; // Increase progress by 10%
-                    } else {
-                        clearInterval(intervals[index]);
-                    }
-                    return newProgress;
-                });
-            }, 500); // Update every 500ms
-        });
-
-        return () => intervals.forEach(clearInterval); // Xóa interval khi unmount
-    }, [imgUrl]);
-    const calculateGridHeight = () => {
-        const rows = Math.ceil(imgUrl.length / 3);
-        return rows * 200; // Adjust 200 based on your desired row height
-    }
     return (
         <>
-            <HeaderMenu />
+            <HeaderMenu0 />
             <Container
                 sx={{
                     "@media (min-width: 1536px)": {
@@ -155,7 +229,7 @@ export default function ForrentHouse() {
                             <Box sx={{ width: "75%" }}>
                                 <Paper elevation={3} sx={{ p: 4 }}>
                                     <Typography variant="h4" component="h2" gutterBottom>
-                                        Chia sẻ thông tin về nhà của bạn
+                                        Chỉnh sửa thông tin nhà cho thuê
                                     </Typography>
                                     <form onSubmit={handleSubmit}>
                                         <Grid container spacing={2} alignItems="center">
@@ -166,8 +240,8 @@ export default function ForrentHouse() {
                                                     variant="outlined"
                                                     id="outlined-size-small"
                                                     name="namehouse"
-                                                    value={formForrent.namehouse}
-                                                    onChange={handleChange}
+                                                    value={namehouse}
+                                                    onChange={(e) => setNamehouse(e.target.value)}
                                                     fullWidth
                                                 />
                                             </Grid>
@@ -178,8 +252,8 @@ export default function ForrentHouse() {
                                                     variant="outlined"
                                                     id="outlined-size-small"
                                                     name="address"
-                                                    value={formForrent.address}
-                                                    onChange={handleChange}
+                                                    value={address}
+                                                    onChange={(e) => setAddress(e.target.value)}
                                                     fullWidth
                                                 />
                                             </Grid>
@@ -190,8 +264,8 @@ export default function ForrentHouse() {
                                                     variant="outlined"
                                                     id="outlined-size-small"
                                                     name="decription"
-                                                    value={formForrent.decription}
-                                                    onChange={handleChange}
+                                                    value={decription}
+                                                    onChange={(e) => setDecription(e.target.value)}
                                                     fullWidth
                                                 />
                                             </Grid>
@@ -202,8 +276,8 @@ export default function ForrentHouse() {
                                                     variant="outlined"
                                                     id="outlined-size-small"
                                                     name="rentingprice"
-                                                    value={formForrent.rentingprice}
-                                                    onChange={handleChange}
+                                                    value={rentingprice}
+                                                    onChange={(e) => setRentingprice(e.target.value)}
                                                     fullWidth
                                                 />
                                             </Grid>
@@ -215,10 +289,10 @@ export default function ForrentHouse() {
                                                     id="outlined-size-small"
                                                     name="bedroom"
                                                     type="number"
-                                                    value={formForrent.bedroom}
-                                                    onChange={handleChange}
+                                                    value={bedroom}
+                                                    onChange={(e) => setBedroom(e.target.value)}
                                                     fullWidth
-                                            />
+                                                />
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextField
@@ -228,10 +302,10 @@ export default function ForrentHouse() {
                                                     id="outlined-size-small"
                                                     name="bathroom"
                                                     type="number"
-                                                    value={formForrent.bathroom}
-                                                    onChange={handleChange}
+                                                    value={bathroom}
+                                                    onChange={(e) => setBathroom(e.target.value)}
                                                     fullWidth
-                                            />
+                                                />
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <InputLabel id="house">Loại nhà của bạn</InputLabel>
@@ -239,8 +313,8 @@ export default function ForrentHouse() {
                                                     labelId="house"
                                                     label="Loại nhà của bạn"
                                                     id="select"
-                                                    value={formForrent.type}
-                                                    onChange={handleChangeTypeHouse}
+                                                    value={type}
+                                                    onChange={(e) => setType(e.target.value)}
                                                 >
                                                     <MenuItem value={1}>Villa</MenuItem>
                                                     <MenuItem value={2}>HomeStay</MenuItem>
@@ -261,8 +335,8 @@ export default function ForrentHouse() {
                                                     {imgUrl.map((item, index) => (
                                                         <ImageListItem key={index}>
                                                             <img
-                                                                srcSet={`${item}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                                                src={`${item}?w=164&h=164&fit=crop&auto=format`}
+                                                                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                                                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                                                                 alt=""
                                                                 loading="lazy"
                                                             />
@@ -278,7 +352,7 @@ export default function ForrentHouse() {
                                                                     <IconButton
                                                                         sx={{ color: 'white' }}
                                                                         aria-label={`star ${item.title}`}
-                                                                        onClick={() => handleDelete(index)}
+                                                                        onClick={() => handleDelete(index,item.id)}
                                                                     >
                                                                         <DeleteForeverSharpIcon />
                                                                     </IconButton>
@@ -291,8 +365,8 @@ export default function ForrentHouse() {
                                                 </ImageList>
                                             </Grid>
                                             <Grid item xs={2}>
-                                                <Button variant="contained" color="success" type="submit" fullWidth>
-                                                    Lưu
+                                                <Button variant="contained" color="primary" type="submit" fullWidth>
+                                                    Lưu thay đổi
                                                 </Button>
                                             </Grid>
                                         </Grid>
@@ -306,4 +380,6 @@ export default function ForrentHouse() {
             <Footer />
         </>
     );
-}
+};
+
+export default ForrentHouseEdit;

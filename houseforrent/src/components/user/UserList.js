@@ -22,6 +22,7 @@ import {
     DialogActions
 } from '@mui/material';
 import UserDetail from './UserDetail';
+import SortIcon from '@mui/icons-material/Sort';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -157,7 +158,7 @@ const UserList = () => {
                             value={filter}
                             onChange={handleFilterChange}
                         >
-                            <MenuItem value="all">Tất cả</MenuItem>
+                            <MenuItem value="all"><SortIcon/>Tất cả</MenuItem>
                             <MenuItem value="user">User</MenuItem>
                             <MenuItem value="host">Host</MenuItem>
                         </Select>

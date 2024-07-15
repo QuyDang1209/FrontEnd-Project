@@ -15,7 +15,9 @@ import UserPage from './pages/UserPage';
 import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
 import AdminPage from './pages/AdminPage';
-import Textxx from './components/Textxx';
+import ForrentHouseEdit from './components/forrenthouse/ForrentHouseEdit';
+import ChildComponent from './components/ChildComponent';
+import ParentComponent from './components/ParentComponent';
 const App = () => {
     return (
         <Router>
@@ -28,17 +30,20 @@ const App = () => {
                         <Route path="/change-password" element={<ChangePassword0 />} />
                         <Route path="/users" element={<UserPage />} />
                         <Route path="/" element={<MainPage />} />
-                        <Route path="/forrent-hosue" element={<ForrentHouse />} />
+                        <Route path="/forrent-house" element={<ForrentHouse />} />
                         <Route path="/detail" element={<DetailPage />} />
                         <Route path="/menu" element={<MenuPage />} />
+                        {/*<Route path="/main" element={<MainPage />}  của ánh />*/}
                         <Route path="/main" element={<AdminPage />} />
-                        <Route path="/test" element={<Textxx />} />
-
+                        <Route path="/forrent-house/edit" element={<ForrentHouseEdit/>} />
                     </Routes>
                 </header>
             </Container>
             <ToastContainer />
         </Router>
+        // <>
+        // <ParentComponent/>
+        // </>
     );
 };
 
