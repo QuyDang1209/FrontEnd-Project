@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { CustomButton } from "./../custom-component/CustomButton";
+import dayjs from 'dayjs';
+import axios from "axios";
+import { format, parseISO } from 'date-fns';
 import {
     Box,
     Button,
@@ -26,10 +29,16 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { DateTimeRangePicker } from '@mui/x-date-pickers-pro/DateTimeRangePicker';
 
 import "./HeaderMenu.css"
+import 'dayjs/locale/en-gb';  // Import locale if necessary
 
-export default function HeaderMenu0() {
+// Extend dayjs with custom parsing and formatting capabilities
+const customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
+
+export default function HeaderMenu0( {onDataChange} ) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [accountAnchorEl, setAccountAnchorEl] = useState(null);
     const [anchorElPopover, setAnchorElPopover] = useState(null);
@@ -91,10 +100,13 @@ export default function HeaderMenu0() {
     }
 
     const [formState, setFormState] = useState({
-        numberOfPeople: '',
-        numberOfBedrooms: '',
-        numberOfBathrooms: '',
+        bedroom: '',
+        bathroom: '',
+        checkin: "",
+        checkout: "",
+        address:""
     });
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -103,13 +115,33 @@ export default function HeaderMenu0() {
             [name]: value,
         });
     };
+    const handleChangeDatePicker = (newValue) => {
+        setFormState({
+            ...formState,
+            checkin: newValue[0],
+            checkout: newValue[1],
+        });
+    };
 
     const handleReset = () => {
         setFormState({
-            numberOfPeople: '',
-            numberOfBedrooms: '',
-            numberOfBathrooms: '',
+            // numberOfPeople: '',
+            bedroom: '',
+            bathroom: '',
         });
+    };
+    const handleClickSearch = () => {
+        console.log(formState);
+
+        let objSend = {
+            ...formState,
+            checkin: format(formState.checkin.toDate() , 'yyyy-MM-dd'),
+            checkout: format(formState.checkout.toDate(), 'yyyy-MM-dd'),
+        }
+        console.log(objSend);
+        axios.post("http://localhost:8080/api/forrent-house/filter", objSend).then((res) => {
+            onDataChange(res.data)
+        })
     };
 
     return (
@@ -166,7 +198,11 @@ export default function HeaderMenu0() {
                             </CustomButton>
                             <LocalizationProvider dateAdapter={AdapterDayjs} >
                                 <DemoContainer components={['DateRangePicker']} >
-                                    <DateRangePicker localeText={{ start: 'Check-in', end: 'Check-out' }} className="demoxxx"/>
+                                    <DateRangePicker 
+                                        localeText={{ start: 'Check-in', end: 'Check-out' }} className="demoxxx"
+                                        value={[dayjs(formState.checkin), dayjs(formState.checkout)]}
+                                         onChange={handleChangeDatePicker}
+                                         />  
                                 </DemoContainer>
                             </LocalizationProvider>
                             <FormControl variant="standard" style={{ paddingLeft: "10px" }}>
@@ -174,6 +210,8 @@ export default function HeaderMenu0() {
                                     id="input-with-icon-adornment"
                                     placeholder="Add guests"
                                     style={{ height: "100%" }}
+                                    value={formState.address}
+                                    onChange={handleInputChange}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <Box
@@ -187,7 +225,7 @@ export default function HeaderMenu0() {
                                                     height: "30px",
                                                 }}
                                             >
-                                                <SearchRounded style={{ color: "white" }} />
+                                                <SearchRounded style={{ color: "white" }} onClick={handleClickSearch} />
                                             </Box>
                                         </InputAdornment>
                                     }
@@ -306,7 +344,7 @@ export default function HeaderMenu0() {
                 <Box padding={2}>
                     <Typography paddingBottom={2}>Yêu cầu:</Typography>
                     <Grid container width={"300px"} spacing={2}>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <TextField
                                 name="numberOfPeople"
                                 label="Số người"
@@ -315,24 +353,24 @@ export default function HeaderMenu0() {
                                 value={formState.numberOfPeople}
                                 onChange={handleInputChange}
                             />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                             <TextField
-                                name="numberOfBedrooms"
+                                name="bedroom"
                                 label="Số lượng phòng ngủ"
                                 variant="outlined"
                                 fullWidth
-                                value={formState.numberOfBedrooms}
+                                value={formState.bedroom}
                                 onChange={handleInputChange}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                name="numberOfBathrooms"
+                                name="bathroom"
                                 label="Số lượng phòng tắm"
                                 variant="outlined"
                                 fullWidth
-                                value={formState.numberOfBathrooms}
+                                value={formState.bathroom}
                                 onChange={handleInputChange}
                             />
                         </Grid>
