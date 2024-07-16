@@ -16,8 +16,8 @@ import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
 import AdminPage from './pages/AdminPage';
 import ForrentHouseEdit from './components/forrenthouse/ForrentHouseEdit';
-import DetailForrent from "./components/detail-forrent/DetailForrent";
-import DetailForrentPage from "./pages/DetailForrentPage";
+import BookingsByUser from './components/bookingsByUser/BookingsByUser';
+import BookingsPage from "./pages/BookingsPage"; // Import BookingsByUser
 
 const App = () => {
     return (
@@ -34,18 +34,18 @@ const App = () => {
                         <Route path="/forrent-house" element={<ForrentHouse />} />
                         <Route path="/detail" element={<DetailPage />} />
                         <Route path="/menu" element={<MenuPage />} />
-
-                        <Route path="/main" element={<MainPage />} />
-
+                        {/*<Route path="/main" element={<MainPage />}  của ánh />*/}
                         <Route path="/main" element={<AdminPage />} />
-                        <Route path="/forrent-house/edit" element={<ForrentHouseEdit/>} />
-                        <Route path="/forrent-house/:id" element={<DetailForrentPage />} /> {/* Updated route */}
-
+                        <Route path="/forrent-house/edit" element={<ForrentHouseEdit />} />
+                        <Route path="/bookings/user/:userId" element={<BookingsPage />} /> {/* Update this line */}
                     </Routes>
                 </header>
             </Container>
             <ToastContainer />
         </Router>
+        // <>
+        // <ParentComponent/>
+        // </>
     );
 };
 
