@@ -235,9 +235,11 @@ export default function HeaderMenu0( {onDataChange} ) {
                     </Grid>
                     <Grid item md={3} xs={9} sm={9}>
                         <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
+                            <Link to="/main" style={{ textDecoration: 'none' }}>
                             <Button variant="text" style={{ color: "black" }}>
                                 Become a host
                             </Button>
+                            </Link>
                             <LanguageIcon style={{ color: "black", marginLeft: "10px" }} />
                             <Button
                                 onClick={handleClick}
@@ -285,9 +287,9 @@ export default function HeaderMenu0( {onDataChange} ) {
                         <Typography>Chuyến đi</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={() => handleMenuClick("/favorites")} style={{ paddingRight: "100px" }}>
-                    <Link to="/favorites" style={{ textDecoration: "none", color: "black" }}>
-                        <Typography>Danh sách Yêu thích</Typography>
+                <MenuItem onClick={() => handleMenuClick("/house")} style={{ paddingRight: "100px" }}>
+                    <Link to="/house" style={{ textDecoration: "none", color: "black" }}>
+                        <Typography>Danh sách nhà cho thuê</Typography>
                     </Link>
                 </MenuItem>
                 <MenuItem

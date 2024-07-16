@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { uploadBytes, ref, getDownloadURL, getStorage, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
+import { Link, useParams } from 'react-router-dom';
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Container, Select, MenuItem } from "@mui/material";
 import HeaderMenu0 from '../HeaderMenu0';
 import Footer from '../Footer';
@@ -29,7 +30,8 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-const ForrentHouseEdit = ({ id }) => {
+const ForrentHouseEdit = () => {
+    const { id } = useParams(); // Get the id parameter from the URL
     const [imgUrl, setImgUrl] = useState([]);
     const [progress, setProgress] = useState([]);
     const userId = JSON.parse(localStorage.getItem('user')).id;
@@ -41,59 +43,24 @@ const ForrentHouseEdit = ({ id }) => {
     const [namehouse, setNamehouse] = useState('');
     const [bedroom, setBedroom] = useState('');
     const [bathroom, setBathroom] = useState('');
-    /*
-    const [formForrent, setFormForrent] = useState({
-        "address": "",
-        "img": [],
-        "decription": "",
-        "rentingprice": "",
-        "type": 1,
-        "users": userId,
-        "namehouse": "",
-        "bedroom": "",
-        "bathroom": ""
-    });*/
 
-    /*
     useEffect(() => {
         const fetchForRentHouse = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/forrent-house/2`);
-                const data = response.data;
-                setFormForrent({
-                    address: data.address,
-                    img: data.img,
-                    decription: data.decription,
-                    rentingprice: data.rentingprice,
-                    type: data.type,
-                    users: data.users,
-                    namehouse: data.namehouse,
-                    bedroom: data.bedroom,
-                    bathroom: data.bathroom
+                const response = await axios.get(`http://localhost:8080/api/forrent-house/${id}`, {
+                    headers: {
+                        'Authorization':'Bearer <your_access_token>'
+                    }
                 });
-                setImgUrl(data.img.map(img => img.img));
-                 console.log(formForrent,"---------------------------");
-            } catch (error) {
-                console.error('Error fetching data: ', error);
-            }
-        };
-        fetchForRentHouse();
-    }, [id]);*/
-    useEffect(() => {
-        const fetchForRentHouse = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/forrent-house/21`);
                 const data = response.data;
                 setAddress(data.address);
-                // setImg(data.imgs);
                 setDecription(data.decription);
                 setRentingprice(data.rentingprice);
                 setType(data.type.id);
                 setNamehouse(data.namehouse);
                 setBedroom(data.bedroom);
                 setBathroom(data.bathroom);
-                // setImgUrl(data.img.map(img => img.img));
-                setImgUrl(data.img)
+                setImgUrl(data.img); // Assuming data.img is an array of images
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }
@@ -101,31 +68,13 @@ const ForrentHouseEdit = ({ id }) => {
         };
         fetchForRentHouse();
     }, [id]);
-    console.log("File ảnh hiện ra",imgUrl);
+
     const calculateGridHeight = () => {
         const rows = Math.ceil(imgUrl.length / 3);
         return rows * 200;
     }
 
-    /*
-    const handleChange = (e) => {
-        setFormForrent({
-            ...formForrent,
-            [e.target.name]: e.target.value
-        });
-    }*/
-
-    /*    
-    const handleChangeTypeHouse = (e) => {
-        const value = e.target.value;
-        setFormForrent({
-            ...formForrent,
-            type: value
-        });
-    }*/
-
     const handleDelete = (index,id) => {
-        console.log(index,'id:',id)
         const storage = getStorage();
         const imageUrl = imgUrl[index].img;
         const imageRef = ref(storage, imageUrl);
@@ -133,11 +82,8 @@ const ForrentHouseEdit = ({ id }) => {
         deleteObject(imageRef).then(() => {
             const newImgUrl = [...imgUrl];
             newImgUrl.splice(index, 1);
-            // setImgUrl(newImgUrl);
-            // const newImg = img.fitler((imgObj, i) => i !== index);
-            // setImg(newImg);
             axios.delete(`http://localhost:8080/api/img/delete/${id}`)
-            .then(console.log("okkkkkkk"))
+                .then(console.log("okkkkkkk"))
             setImgUrl(newImgUrl);
         }).catch((error) => {
             console.error('Error deleting image: ', error);
@@ -145,45 +91,22 @@ const ForrentHouseEdit = ({ id }) => {
     };
 
     const handleClick = (e) => {
-    // let arr = [...formForrent.img || []]; // Initialize as empty array if undefined
-    /*
-    for (let i = 0; i < e.target.files.length; i++) {
-        const imgRef = ref(imgUpload, `file/${v4()}`)
-        uploadBytes(imgRef, e.target.files[i]).then((value) => {
-            getDownloadURL(value.ref).then(url => {
-                arr.push({ "img": url });
-                setImgUrl(data => [...data, url]);
-                setFormForrent({
-                    ...formForrent,
-                    img: arr  // Ensure you set the 'img' property correctly
-                });
-            })
-        });
-    }*/
-    let arr = [];
-    for (let i = 0; i < e.target.files.length; i++) {
+        let arr = [];
+        for (let i = 0; i < e.target.files.length; i++) {
             const imgRef = ref(imgUpload, `file/${v4()}`);
             uploadBytes(imgRef, e.target.files[i]).then((value) => {
                 getDownloadURL(value.ref).then(url => {
-                    arr.push({ "img":url} );
+                    arr.push({ "img":url });
                     setImgUrl(data => [...data, {"id":"","img":url} ]);
                     setImg(imgUrl);
                 });
             });
         }
-}
-
+    }
 
     const handleSubmit = async (e) => {
-        // console.log('Form data before validation', formForrent);
-        // Basic validation example (you can customize this as per your requirements)
-        /*
-        if (!formForrent.address || !formForrent.decription || !formForrent.rentingprice) {
-            toast.error('Please fill out all required fields.');
-            return;
-        }*/
         e.preventDefault();
-            const formForrent = {
+        const formForrent = {
             address,
             img:imgUrl,
             decription,
@@ -194,14 +117,19 @@ const ForrentHouseEdit = ({ id }) => {
             bedroom,
             bathroom
         };
-       if (!address || !decription || !rentingprice || !namehouse || !bedroom || !bathroom) {
+
+        if (!address || !decription || !rentingprice || !namehouse || !bedroom || !bathroom) {
             toast.error('Please fill out all required fields.');
             return;
         }
 
         try {
-            console.log("formForent", formForrent);
-            const response = await axios.patch(`http://localhost:8080/api/forrent-house/edit/21`, formForrent);
+            console.log("formForrent", formForrent);
+            const response = await axios.patch(`http://localhost:8080/api/forrent-house/edit/${id}`, formForrent, {
+                headers: {
+                    'Authorization':'Bearer <your_access_token>'
+                }
+            });
             if (response.data.status === 200) {
                 toast.success('Cập nhật thông tin nhà thành công');
             }
@@ -364,9 +292,19 @@ const ForrentHouseEdit = ({ id }) => {
                                                     ))}
                                                 </ImageList>
                                             </Grid>
-                                            <Grid item xs={2}>
-                                                <Button variant="contained" color="primary" type="submit" fullWidth>
+                                            <Grid item xs={12} mt={2}>
+                                                <Button variant="contained" color="primary" type="submit" sx={{mt:2}}>
                                                     Lưu thay đổi
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={12} mt={2}>
+                                                <Button
+                                                    component={Link}
+                                                    to="/house"
+                                                    variant="contained"
+                                                    sx={{ mt: 2, backgroundColor: 'red', color: 'white' }}
+                                                >
+                                                    Quay lại
                                                 </Button>
                                             </Grid>
                                         </Grid>
