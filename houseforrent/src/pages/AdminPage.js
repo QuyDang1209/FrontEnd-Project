@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 
 import AdminCardItem from "./../components/AdminCardItem";
-import HeaderMenu0 from "../components/HeaderMenu0";
 import Footer from "../components/Footer";
+import HeaderMenu1 from "../components/HeaderMenu0";
 
 export default function AdminPage() {
     const [forrentList, setForrentList] = useState([]);
@@ -32,7 +32,7 @@ export default function AdminPage() {
     }, []);
     return (
         <>
-            <HeaderMenu0 />
+            <HeaderMenu1 />
             <Divider />
             <Container
                 sx={{

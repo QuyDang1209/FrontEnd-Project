@@ -133,13 +133,10 @@ export default function ForrentHouse() {
 
         return () => intervals.forEach(clearInterval); // Xóa interval khi unmount
     }, [imgUrl]);
-
-
     const calculateGridHeight = () => {
         const rows = Math.ceil(imgUrl.length / 3);
         return rows * 200; // Adjust 200 based on your desired row height
     }
-
     return (
         <>
             <HeaderMenu />

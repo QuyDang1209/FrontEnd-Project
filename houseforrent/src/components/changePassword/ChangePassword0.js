@@ -220,7 +220,7 @@ const ChangePassword = () => {
                                     </Grid>
                                     <Grid item xs={6}>
                                         <Box display="flex" justifyContent="flex-end">
-                                            <Link to="/users" style={{ textDecoration: 'none' }}>
+                                            <Link to="/main" style={{ textDecoration: 'none' }}>
                                                 <Button
                                                     variant="contained"
                                                     style={{ color: 'blue', backgroundColor: 'white' }}

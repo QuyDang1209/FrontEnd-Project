@@ -9,11 +9,11 @@ import CardItem from "./../components/CardItem";
 import Footer from "../components/Footer";
 import HeaderDetail from "../components/HeaderDetail";
 import axios from "axios";
-import HeaderMenu0 from "../components/HeaderMenu0";
-
+import HeaderDetail0 from "../components/HeaderDetail0";
 
 export default function MainPage() {
     const [forrentList, setForrentList] = useState([]);
+        
 
     useEffect(() => {
         // Gọi API để lấy danh sách forrent
@@ -27,9 +27,13 @@ export default function MainPage() {
             });
     }, []);
 
+    const handleDataChange = (data) => {
+        setForrentList(data);
+    }
+
     return (
         <>
-            <HeaderMenu0 />
+            <HeaderDetail0 onDataChange={handleDataChange} />
             <Divider />
             <Container
                 sx={{
