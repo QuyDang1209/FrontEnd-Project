@@ -198,35 +198,37 @@ export default function HeaderMenu0( {onDataChange} ) {
                             </CustomButton>
                             <LocalizationProvider dateAdapter={AdapterDayjs} >
                                 <DemoContainer components={['DateRangePicker']} >
-                                    <DateRangePicker 
+                                    <DateRangePicker
                                         localeText={{ start: 'Check-in', end: 'Check-out' }} className="demoxxx"
                                         value={[dayjs(formState.checkin), dayjs(formState.checkout)]}
                                          onChange={handleChangeDatePicker}
-                                         />  
+                                         />
                                 </DemoContainer>
                             </LocalizationProvider>
                             <FormControl variant="standard" style={{ paddingLeft: "10px" }}>
                                 <Input
                                     id="input-with-icon-adornment"
-                                    placeholder="Add guests"
+                                    placeholder="Địa điểm"
                                     style={{ height: "100%" }}
                                     value={formState.address}
                                     onChange={handleInputChange}
                                     endAdornment={
                                         <InputAdornment position="end">
-                                            <Box
-                                                style={{
-                                                    backgroundColor: "red",
-                                                    display: "flex",
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    borderRadius: "50%", // Làm tròn Box
-                                                    width: "30px", // Đặt kích thước của Box
-                                                    height: "30px",
-                                                }}
-                                            >
-                                                <SearchRounded style={{ color: "white" }} onClick={handleClickSearch} />
-                                            </Box>
+                                            <Link onClick={handleClickSearch}>
+                                                <Box
+                                                    style={{
+                                                        backgroundColor: "red",
+                                                        display: "flex",
+                                                        justifyContent: "center",
+                                                        alignItems: "center",
+                                                        borderRadius: "50%", // Làm tròn Box
+                                                        width: "30px", // Đặt kích thước của Box
+                                                        height: "30px",
+                                                    }}
+                                                >
+                                                    <SearchRounded style={{ color: "white" }}  />
+                                                </Box>
+                                            </Link>
                                         </InputAdornment>
                                     }
                                 />

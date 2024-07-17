@@ -3,8 +3,6 @@ import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Container } from "@mui/material";
-
-// Importing all components and pages
 import ProfileForm0 from "./components/edit/ProfileForm0";
 import Register from './components/registers/Register';
 import Login from './components/login/Login';
@@ -17,8 +15,10 @@ import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
 import AdminPage from './pages/AdminPage';
 import ForrentHouseEdit from './components/forrenthouse/ForrentHouseEdit';
+import BookingsPage from "./pages/BookingsPage"; // Import BookingsPage
 import ForrentHousePage from './pages/ForrentHousePage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 const App = () => {
     return (
         <Router>
@@ -35,8 +35,11 @@ const App = () => {
                         <Route path="/detail" element={<DetailPage />} />
                         <Route path="/menu" element={<MenuPage />} />
                         <Route path="/main" element={<AdminPage />} />
-                        <Route path="/house" element={<ForrentHousePage/>}/>
+                        <Route path="/forrent-house/edit" element={<ForrentHouseEdit />} />
                         <Route path="/forrent-house/edit/:id" element={<ForrentHouseEdit />} />
+                        <Route path="/bookings/user/:userId" element={<BookingsPage />} />
+                        <Route path="/view-bookings" element={<BookingsPage />} />
+                        <Route path="/house" element={<ForrentHousePage/>}/>
                     </Routes>
                 </header>
                 <ToastContainer />
