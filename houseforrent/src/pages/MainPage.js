@@ -9,7 +9,7 @@ import CardItem from "./../components/CardItem";
 import Footer from "../components/Footer";
 import HeaderDetail from "../components/HeaderDetail";
 import axios from "axios";
-import HeaderMenu0 from "../components/HeaderMenu0";
+import HeaderDetail0 from "../components/HeaderDetail0";
 
 export default function MainPage() {
     const [forrentList, setForrentList] = useState([]);
@@ -33,7 +33,7 @@ export default function MainPage() {
 
     return (
         <>
-            <HeaderMenu0 onDataChange={handleDataChange} />
+            <HeaderDetail0 onDataChange={handleDataChange} />
             <Divider />
             <Container
                 sx={{

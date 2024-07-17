@@ -185,7 +185,7 @@ const ProfileForm0 = () => {
                                                     <Button variant="contained" color="primary" type="submit">
                                                         Lưu
                                                     </Button>
-                                                    <Link to="/users" style={{ textDecoration: 'none' }}>
+                                                    <Link to="/main" style={{ textDecoration: 'none' }}>
                                                         <Button variant="outlined" color="primary">
                                                             Quay lại
                                                         </Button>
