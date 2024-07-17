@@ -36,7 +36,7 @@ export default function ForrentHouseDetail({ house , onClose }){
                     <strong>Giá:</strong> {house.rentingprice}
                 </Typography>
                 <Typography variant="body1" mb={1}>
-                    <strong>Loại nhà:</strong> {house.type}
+                    <strong>Loại nhà:</strong> {house.type == 1 ? "villa":"homestay"}
                 </Typography>
                 <Box mt={2}>
                     <Typography variant="body1" mb={1}>

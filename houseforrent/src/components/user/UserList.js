@@ -210,7 +210,7 @@ const UserList = () => {
                                             <TableCell>
                                                 <Switch
                                                     checked={user.active.active === 'open' ? checked : unchecked}
-                                                    onChange={(event) => handleSwitchChange(user.id, event.target.checked)}
+                                                    onChange={  (event) => handleSwitchChange(user.id, event.target.checked)}
                                                     inputProps={{ 'aria-label': 'controlled' }}
                                                 />
                                             </TableCell>

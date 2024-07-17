@@ -29,6 +29,7 @@ export default function ForrentHouseList() {
     const [error, setError] = useState(null);
     const [selectedHouse, setSelectedHouse] = useState(null);
     const [filter, setFilter] = useState('all');
+    const userId = 1;
 
     useEffect(() => {
         fetchHouses();
@@ -37,13 +38,17 @@ export default function ForrentHouseList() {
     const fetchHouses = async () => {
         try {
             let response;
+
+            console.log(filter);
             if (filter === 'all') {
-                response = await axios.get('http://localhost:8080/api/forrent-house', {
+                console.log("kkkkkkkkkk");
+                response = await axios.get(`http://localhost:8080/api/forrent-house/users/${userId}`, {
                     headers: {
                         'Authorization': 'Bearer <your_access_token>'
                     }
                 });
-            } else {
+            }
+            else {
                 const typeId = filter == 'villa' ? 1 : 2;
                 response = await axios.get(`http://localhost:8080/api/forrent-house/filter-house-by-type?typeId=${typeId}`, {
                     headers: {
@@ -59,6 +64,7 @@ export default function ForrentHouseList() {
     };
 
     const handleViewClick = (house) => {
+        console.log(house,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuu"        )
         setSelectedHouse(house);
     };
 
@@ -122,7 +128,9 @@ export default function ForrentHouseList() {
                                     <TableCell>{house.bathroom}</TableCell>
                                     <TableCell>{house.description}</TableCell>
                                     <TableCell>{house.rentingprice}</TableCell>
-                                    <TableCell>{house.type.id == 1 ? "Villa" : "Homestay"}</TableCell>
+                                    {/* <TableCell>{house.type[0].id == 1 ? "Villa" : "Homestay"}</TableCell> */}
+                                    {/* <TableCell>{house.type && house.type[0] ? (house.type[0].id == 1 ? "Villa" : "Homestay") : "Unknown"}</TableCell> */}
+                                    <TableCell>{house.type == 1 ? "Villa" : "Homestay"}</TableCell>
                                     <TableCell>
                                         <Button
                                             variant="contained"
