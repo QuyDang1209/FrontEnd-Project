@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import {
     Box,
     Container,
@@ -51,6 +52,7 @@ export default function MainPage() {
                 <Box display={"flex"} gap={"20px"} flexWrap={"wrap"}>
                     {forrentList.length > 0 ? (
                         forrentList.map((f) => (
+                            <Slider>
                             <CardItem
                                 key={f.id}
                                 img={f.imgDTOs.length > 0 ? f.imgDTOs[0].img : ''} // Lấy ảnh đầu tiên từ imgDTOs
@@ -59,6 +61,7 @@ export default function MainPage() {
                                 description={f.description}
                                 rentingprice={new Intl.NumberFormat().format(f.rentingprice)}
                             />
+                            </Slider>
                         ))
                     ) : (
                         <p>Không có dữ liệu để hiển thị</p>

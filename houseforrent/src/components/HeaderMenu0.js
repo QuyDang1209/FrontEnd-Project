@@ -100,8 +100,8 @@ export default function HeaderMenu0( {onDataChange} ) {
     }
 
     const [formState, setFormState] = useState({
-        bedroom: '',
-        bathroom: '',
+        bedroom: 1,
+        bathroom: 1,
         checkin: "",
         checkout: "",
         address:""

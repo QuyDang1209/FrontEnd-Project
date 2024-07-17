@@ -16,8 +16,9 @@ import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
 import AdminPage from './pages/AdminPage';
 import ForrentHouseEdit from './components/forrenthouse/ForrentHouseEdit';
-import ChildComponent from './components/ChildComponent';
-import ParentComponent from './components/ParentComponent';
+import Emailtest from './test/Emailtest';
+import SimpleSlider from './test/SimpleSlider';
+
 const App = () => {
     return (
         <Router>
@@ -42,7 +43,7 @@ const App = () => {
             <ToastContainer />
         </Router>
         // <>
-        // <ParentComponent/>
+        // <SimpleSlider/>
         // </>
     );
 };
