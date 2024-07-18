@@ -295,6 +295,12 @@ export default function ForrentHouse() {
                                                     Lưu
                                                 </Button>
                                             </Grid>
+                                            <Grid item xs={2}>
+                                                <Button variant="contained" color="primary" to="/house" fullWidth
+                                                    onClick={() => window.history.back()}>
+                                                    Back
+                                                </Button>
+                                            </Grid>
                                         </Grid>
                                     </form>
                                 </Paper>

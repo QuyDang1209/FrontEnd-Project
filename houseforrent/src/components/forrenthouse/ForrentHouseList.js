@@ -31,7 +31,7 @@ export default function ForrentHouseList() {
     const [selectedHouse, setSelectedHouse] = useState(null);
     const [filter, setFilter] = useState('all');
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(1);
     const userId = 1;
 
