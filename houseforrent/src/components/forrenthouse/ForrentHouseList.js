@@ -18,7 +18,8 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogActions
+    DialogActions,
+    Pagination // Import Pagination from MUI
 } from '@mui/material';
 import ForrentHouseDetail from "./ForrentHouseDetail";
 import { Link } from 'react-router-dom';
@@ -29,42 +30,59 @@ export default function ForrentHouseList() {
     const [error, setError] = useState(null);
     const [selectedHouse, setSelectedHouse] = useState(null);
     const [filter, setFilter] = useState('all');
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
     const userId = 1;
 
     useEffect(() => {
         fetchHouses();
-    }, [filter]);
+    }, [filter, page]);
 
     const fetchHouses = async () => {
         try {
             let response;
-
             console.log(filter);
             if (filter === 'all') {
-                console.log("kkkkkkkkkk");
-                response = await axios.get(`http://localhost:8080/api/forrent-house/users/${userId}`, {
+                response = await axios.get(`http://localhost:8080/api/forrent-house/pagging/users/${userId}`, {
+                    params: {
+                        page: page - 1,
+                        pageSize: pageSize
+                    },
+                    headers: {
+                        'Authorization': 'Bearer <your_access_token>'
+                    }
+                });
+            } else {
+                const typeId = filter === 'villa' ? 1 : 2;
+                response = await axios.get(`http://localhost:8080/api/forrent-house/filter-house-by-type`, {
+                    params: {
+                        typeId: typeId,
+                        page: page - 1,
+                        pageSize: pageSize
+                    },
                     headers: {
                         'Authorization': 'Bearer <your_access_token>'
                     }
                 });
             }
-            else {
-                const typeId = filter == 'villa' ? 1 : 2;
-                response = await axios.get(`http://localhost:8080/api/forrent-house/filter-house-by-type?typeId=${typeId}`, {
-                    headers: {
-                        'Authorization': 'Bearer <your_access_token>'
-                    }
-                });
-            }
-            setHouses(response.data);
+
+            console.log("API response:", response.data);
+
+            const { content, totalPages } = response.data;
+            setHouses(Array.isArray(content) ? content : []);
+            setTotalPages(totalPages);
         } catch (error) {
             console.error('Error fetching houses:', error);
             setError('Lỗi khi lấy danh sách nhà cho thuê');
         }
     };
 
+    const handlePageChange = (event, value) => {
+        setPage(value);
+    };
+
     const handleViewClick = (house) => {
-        console.log(house,"uuuuuuuuuuuuuuuuuuuuuuuuuuuuu"        )
         setSelectedHouse(house);
     };
 
@@ -74,6 +92,7 @@ export default function ForrentHouseList() {
 
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
+        setPage(1); // Reset page when filter changes
     }
 
     return (
@@ -93,8 +112,16 @@ export default function ForrentHouseList() {
                         <MenuItem value="all"><SortIcon />All</MenuItem>
                         <MenuItem value="villa">Villa</MenuItem>
                         <MenuItem value="homestay">Homestay</MenuItem>
-                        {/* Add more filter options as needed */}
                     </Select>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        component={Link}
+                        to="/forrent-house"
+                        sx={{ ml: 2 }}
+                    >
+                        Thêm Mới
+                    </Button>
                 </FormControl>
             </Box>
             {error && (
@@ -118,37 +145,39 @@ export default function ForrentHouseList() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {houses.map((house, index) => {
-                            return (
-                                <TableRow key={house.id}>
-                                    <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{house.namehouse}</TableCell>
-                                    <TableCell>{house.address}</TableCell>
-                                    <TableCell>{house.bedroom}</TableCell>
-                                    <TableCell>{house.bathroom}</TableCell>
-                                    <TableCell>{house.description}</TableCell>
-                                    <TableCell>{house.rentingprice}</TableCell>
-                                    {/* <TableCell>{house.type[0].id == 1 ? "Villa" : "Homestay"}</TableCell> */}
-                                    {/* <TableCell>{house.type && house.type[0] ? (house.type[0].id == 1 ? "Villa" : "Homestay") : "Unknown"}</TableCell> */}
-                                    <TableCell>{house.type == 1 ? "Villa" : "Homestay"}</TableCell>
-                                    <TableCell>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => handleViewClick(house)}
-                                        >
-                                            View
-                                        </Button>
-                                        <Link to={`/forrent-house/edit/${house.id}`} style={{ textDecoration: "none", color: "black" }}>
-                                            <Button>Edit</Button>
-                                        </Link>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
+                        {houses.map((house, index) => (
+                            <TableRow key={house.id}>
+                                <TableCell>{(page - 1) * pageSize + index + 1}</TableCell>
+                                <TableCell>{house.namehouse}</TableCell>
+                                <TableCell>{house.address}</TableCell>
+                                <TableCell>{house.bedroom}</TableCell>
+                                <TableCell>{house.bathroom}</TableCell>
+                                <TableCell>{house.description}</TableCell>
+                                <TableCell>{house.rentingprice}</TableCell>
+                                <TableCell>{house.type === 1 ? "Villa" : "Homestay"}</TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => handleViewClick(house)}
+                                    >
+                                        View
+                                    </Button>
+                                    <Link to={`/forrent-house/edit/${house.id}`} style={{ textDecoration: "none", color: "black" }}>
+                                        <Button>Edit</Button>
+                                    </Link>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Pagination
+                count={totalPages}
+                page={page}
+                onChange={handlePageChange}
+                sx={{ mt: 2 }}
+            />
             <Dialog
                 open={!!selectedHouse}
                 onClose={handleCloseDetail}
