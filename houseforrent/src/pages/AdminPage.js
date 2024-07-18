@@ -11,6 +11,7 @@ import {
     InputAdornment,
     InputLabel,
     TextField,
+    Pagination
 } from "@mui/material";
 
 import AdminCardItem from "./../components/AdminCardItem";
@@ -19,9 +20,18 @@ import HeaderMenu1 from "../components/HeaderMenu0";
 
 export default function AdminPage() {
     const [forrentList, setForrentList] = useState([]);
-
+    const [page , setPage] = useState(1);
+    const [pageSize] = useState(8);
+    const [totalPages, setTotalPages] = useState(1);
+    const [topRentedHouses, setTopRentedHouses] = useState([]);
+    /* 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/forrent-house')
+        axios.get('http://localhost:8080/api/forrent-house',{
+            params : {
+                page : page - 1,
+                pageSize : pageSize
+            }
+        })
             .then(response => {
                 console.log('API Response:', response.data); // Kiểm tra dữ liệu trả về từ API
                 setForrentList(response.data);
@@ -29,7 +39,45 @@ export default function AdminPage() {
             .catch(error => {
                 console.error('Có lỗi xảy ra khi gọi API:', error);
             });
-    }, []);
+    }, [page , pageSize]);*/
+    
+    useEffect(() => {
+        fetchForRentHouses();
+        fetchTopRentedHouses();
+    },[page , pageSize])
+
+    const fetchForRentHouses = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/forrent-house/pagging',{
+                params: {
+                    page: page - 1,  // Backend might use zero-based index
+                    pageSize: pageSize
+                }
+            });
+            console.log('API response:', response.data);
+            const {content , totalPages} = response.data;
+            setForrentList(content);
+            setTotalPages(totalPages);
+        }
+        catch (error) {
+            console.log('Lỗi gọi API:', error);
+        }
+    }
+
+    const fetchTopRentedHouses = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/forrent-house/top-rented');
+            console.log('Top Rented Houses API Repsonse');
+            setTopRentedHouses(response.data);
+        }
+        catch (error){
+            console.error('Error fetching top rented houses:', error)
+        }
+    }
+    
+    const handlePageChange = (event , value) => {
+        setPage(value);
+    };
     return (
         <>
             <HeaderMenu1 />
@@ -71,6 +119,12 @@ export default function AdminPage() {
                         <p>Không có dữ liệu để hiển thị</p>
                     )}
                 </Box>
+                <Pagination
+                    count={totalPages}
+                    page={page}
+                    onChange={handlePageChange}
+                    sx={{ marginTop: "20px", display : "flex", justifyContent : "center" }}
+                />  
             </Container>
             <Divider />
             <Footer />

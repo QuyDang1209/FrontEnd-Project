@@ -283,6 +283,9 @@ export default function HeaderMenu0() {
                 <MenuItem onClick={() => handleMenuClick("/change-password")} style={{ paddingRight: "100px" }}>
                     <Typography>Thay đổi mật khẩu</Typography>
                 </MenuItem>
+                <MenuItem onClick={() => handleMenuClick("/users")} style={{ paddingRight: "100px" }}>
+                    <Typography>Trạng thái hoạt động</Typography>
+                </MenuItem>
             </Menu>
             <Popover
                 id={idPopover}
