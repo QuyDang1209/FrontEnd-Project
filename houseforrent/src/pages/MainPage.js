@@ -15,25 +15,31 @@ import HeaderDetail0 from "../components/HeaderDetail0";
 export default function MainPage() {
     const [forrentList, setForrentList] = useState([]);
     const [page , setPage] = useState(1);
-    const [pageSize] = useState(10);
-    const [totalPages, setTotalPages] = useState(1); 
-
+    const [pageSize] = useState(5);
+    const [totalPages, setTotalPages] = useState(1);
+    
     useEffect(() => {
+        fetchForRentHouses();
+    },[page , pageSize])
+
+     const fetchForRentHouses = async () => {
         // Gọi API để lấy danh sách forrent
-        axios.get('http://localhost:8080/api/forrent-house',{
+        axios.get('http://localhost:8080/api/forrent-house/pagging',{
             params : {
-                page : page,
+                page : page - 1,
                 pageSize : pageSize
             }
         })
             .then(response => {
                 console.log('API Response:', response.data); // Kiểm tra dữ liệu trả về từ API
-                setForrentList(response.data);
+                const {content,totalPages} = response.data;
+                setForrentList(response.data.content); // Assuming the API returns items in 'response.data.items'
+                setTotalPages(totalPages);
             })
             .catch(error => {
                 console.error('Có lỗi xảy ra khi gọi API:', error);
             });
-    }, [page, pageSize]);
+    };
 
     const handlePageChange = (event , value) => {
         setPage(value);
