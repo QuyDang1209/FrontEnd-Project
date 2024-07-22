@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Container } from "@mui/material";
+
+// Importing all components and pages
 import ProfileForm0 from "./components/edit/ProfileForm0";
 import Register from './components/registers/Register';
 import Login from './components/login/Login';
-import UserList from './components/user/UserList'; // Import UserList
-import { Container } from "@mui/material";
+import UserList from './components/user/UserList';
 import DetailPage from './pages/DetailPage';
 import ChangePassword0 from "./components/changePassword/ChangePassword0";
 import MainPage from "./pages/MainPage";
@@ -16,9 +17,11 @@ import ForrentHouse from './components/forrenthouse/ForrentHouse';
 import MenuPage from './pages/MenuPage';
 import AdminPage from './pages/AdminPage';
 import ForrentHouseEdit from './components/forrenthouse/ForrentHouseEdit';
-import Emailtest from './test/Emailtest';
 import SimpleSlider from './test/SimpleSlider';
+import Booking from './components/booking/Booking';
 
+import ForrentHousePage from './pages/ForrentHousePage';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 const App = () => {
     return (
         <Router>
@@ -33,18 +36,18 @@ const App = () => {
                         <Route path="/" element={<MainPage />} />
                         <Route path="/forrent-house" element={<ForrentHouse />} />
                         <Route path="/detail" element={<DetailPage />} />
-                        <Route path="/menu" element={<MenuPage />} />
-                        {/*<Route path="/main" element={<MainPage />}  của ánh />*/}
+                        {/* <Route path="/menu" element={<MenuPage />} /> */}
+                        <Route path="/booking/:id" element={<Booking />} />
                         <Route path="/main" element={<AdminPage />} />
-                        <Route path="/forrent-house/edit" element={<ForrentHouseEdit/>} />
+                        <Route path="/house" element={<ForrentHousePage/>}/>
+                        <Route path="/forrent-house/edit/:id" element={<ForrentHouseEdit />} />
+                        <Route path="/test" element={<SimpleSlider />} />
                     </Routes>
                 </header>
+                <ToastContainer />
             </Container>
-            <ToastContainer />
         </Router>
-        // <>
-        // <SimpleSlider/>
-        // </>
+        
     );
 };
 

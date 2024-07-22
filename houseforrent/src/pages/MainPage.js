@@ -6,11 +6,11 @@ import {
     Divider
 } from "@mui/material";
 
-import CardItem from "./../components/CardItem";
+import AdminCardItem from "./../components/AdminCardItem";
 import Footer from "../components/Footer";
 import HeaderDetail from "../components/HeaderDetail";
 import axios from "axios";
-import HeaderMenu0 from "../components/HeaderMenu0";
+import HeaderDetail0 from "../components/HeaderDetail0";
 
 export default function MainPage() {
     const [forrentList, setForrentList] = useState([]);
@@ -34,7 +34,7 @@ export default function MainPage() {
 
     return (
         <>
-            <HeaderMenu0 onDataChange={handleDataChange} />
+            <HeaderDetail0 onDataChange={handleDataChange} />
             <Divider />
             <Container
                 sx={{
@@ -52,8 +52,7 @@ export default function MainPage() {
                 <Box display={"flex"} gap={"20px"} flexWrap={"wrap"}>
                     {forrentList.length > 0 ? (
                         forrentList.map((f) => (
-                            <Slider>
-                            <CardItem
+                            <AdminCardItem
                                 key={f.id}
                                 img={f.imgDTOs.length > 0 ? f.imgDTOs[0].img : ''} // Lấy ảnh đầu tiên từ imgDTOs
                                 title={f.namehouse} // Sử dụng address thay cho description
@@ -61,7 +60,6 @@ export default function MainPage() {
                                 description={f.description}
                                 rentingprice={new Intl.NumberFormat().format(f.rentingprice)}
                             />
-                            </Slider>
                         ))
                     ) : (
                         <p>Không có dữ liệu để hiển thị</p>

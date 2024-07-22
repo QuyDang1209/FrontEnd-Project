@@ -15,9 +15,9 @@ export default function SimpleSlider() {
   };
 
   const slidesData = [
-    { id: 1, url: 'https://via.placeholder.com/800x400?text=Slide+1' },
-    { id: 2, url: 'https://via.placeholder.com/800x400?text=Slide+2' },
-    { id: 3, url: 'https://via.placeholder.com/800x400?text=Slide+3' },
+    { id: 1, url: 'https://demo-source.imgix.net/house.jpg?fit=max&w=944&h=351.333&dpr=2&q=50&auto=format%2Ccompress&cacheID=3432356195' },
+    { id: 2, url: 'https://th.bing.com/th/id/OIP.K2XHZApjhJtr7KaMROuZiQHaE7?rs=1&pid=ImgDetMain' },
+    { id: 3, url: 'https://th.bing.com/th/id/OIP.ci1E7m8wCISyHZ6um8z01gHaDt?rs=1&pid=ImgDetMain' },
   ];
 
   return (

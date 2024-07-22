@@ -33,7 +33,7 @@ export default function Footer() {
       style={{
         paddingLeft: 0,
         paddingRight: 0,
-        marginTop: "20px",
+        marginTop: "80px",
         paddingBottom: "20px",
       }}
     >

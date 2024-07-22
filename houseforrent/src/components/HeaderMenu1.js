@@ -182,9 +182,11 @@ export default function HeaderMenu0() {
                     </Grid>
                     <Grid item md={3} xs={9} sm={9}>
                         <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
+                            <Link to="/main" style={{ textDecoration: 'none' }}>
                             <Button variant="text" style={{ color: "black" }}>
                                 Become a host
                             </Button>
+                            </Link>
                             <LanguageIcon style={{ color: "black", marginLeft: "10px" }} />
                             <Button
                                 onClick={handleClick}
@@ -232,9 +234,9 @@ export default function HeaderMenu0() {
                         <Typography>Chuyến đi</Typography>
                     </Link>
                 </MenuItem>
-                <MenuItem onClick={() => handleMenuClick("/favorites")} style={{ paddingRight: "100px" }}>
-                    <Link to="/favorites" style={{ textDecoration: "none", color: "black" }}>
-                        <Typography>Danh sách Yêu thích</Typography>
+                <MenuItem onClick={() => handleMenuClick("/house")} style={{ paddingRight: "100px" }}>
+                    <Link to="/house" style={{ textDecoration: "none", color: "black" }}>
+                        <Typography>Danh sách nhà cho thuê</Typography>
                     </Link>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick("/hosting")} style={{ paddingRight: "100px" }}>
@@ -248,14 +250,14 @@ export default function HeaderMenu0() {
                 >
                     <Typography>Tài khoản</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => handleMenuClick("/help")} style={{ paddingRight: "100px" }} >
-                    <Link to="/help" style={{ textDecoration: "none", color: "black" }}>
-                        <Typography>Trung tâm trợ giúp</Typography>
+                <MenuItem onClick={() => handleMenuClick("/")} style={{ paddingRight: "100px" }} >
+                    <Link to="/register" style={{ textDecoration: "none", color: "black" }}>
+                        <Typography>Đăng ký tài khoản</Typography>
                     </Link>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick("/")} style={{ paddingRight: "100px" }}>
-                    <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-                        <Typography>Đăng Xuất</Typography>
+                    <Link to="/login" style={{ textDecoration: "none", color: "black" }}>
+                        <Typography>Đăng nhập</Typography>
                     </Link>
                 </MenuItem>
             </Menu>
