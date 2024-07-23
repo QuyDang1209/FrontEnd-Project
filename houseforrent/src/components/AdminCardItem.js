@@ -12,30 +12,7 @@ import Box from "@mui/material/Box";
 import { Typography, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {Link, useNavigate} from "react-router-dom";
-
-
-/*
-export default function AdminCardItem({ img, title, address, description, rentingprice }) {
-  const [open, setOpen] = useState(false);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleBooking = () => {
-    if (startDate && endDate) {
-      const days = (endDate - startDate) / (1000 * 3600 * 24);
-      const price = days * rentingprice;
-      setTotalPrice(price);
-      alert(`Booking successful! Total price: ${price}`);
-      handleClose();
-    }
-  };
-*/
-
-
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AdminCardItem({ img, id, title, address, description, rentingprice, handleBtnDetailClick }) {
   const [open, setOpen] = useState(false);
@@ -97,7 +74,7 @@ export default function AdminCardItem({ img, id, title, address, description, re
           {`Renting Price: ${rentingprice}`}
         </Typography>
       </Box>
-      <CardActions disableSpacing style={{ marginBottom: "10px" }}>
+      {/* <CardActions disableSpacing style={{ marginBottom: "10px" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
           <Box sx={{ display: "flex", gap: 1 }}>
             <IconButton aria-label="add to favorites">
@@ -107,14 +84,54 @@ export default function AdminCardItem({ img, id, title, address, description, re
               <ShareIcon />
             </IconButton>
           </Box>
-          <Button variant="contained" color="primary" aria-label="book now" onClick={handleOpen}>
-            Đặt mua ngay
-          </Button>
-          <Button variant="contained" color="primary" aria-label="details" onClick={() => handleBtnDetailClick(id)}>
-            Chi tiết
-          </Button>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Button variant="contained" color="primary"
+              aria-label="book now" onClick={handleOpen}
+              sx={{ flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              Đặt mua ngay
+            </Button>
+            <Button variant="contained"
+                  color="primary" aria-label="details"
+                  onClick={() => handleBtnDetailClick(id)}>
+              Chi tiết
+            </Button>
+          </Box>
         </Box>
-      </CardActions>
+      </CardActions> */}
+    <CardActions disableSpacing style={{ marginBottom: "10px" }}>
+  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+    {/* Icon Container */}
+    <Box sx={{ display: "flex", gap: 1, mr: 2 }}>
+      <IconButton aria-label="add to favorites">
+        <FavoriteIcon />
+      </IconButton>
+      <IconButton aria-label="share">
+        <ShareIcon />
+      </IconButton>
+    </Box>
+    
+    {/* Button Container */}
+    <Box sx={{ display: "flex", gap: 1, flex: 1 }}>
+      <Button
+        variant="contained"
+        color="primary"
+        aria-label="book now"
+        onClick={handleOpen}
+      >
+        Đặt mua ngay
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        aria-label="details"
+        onClick={() => handleBtnDetailClick(id)}
+        sx={{ flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", ml: 1 }}
+      >
+        Chi tiết
+      </Button>
+    </Box>
+  </Box>
+</CardActions>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Đặt thuê nhà:</DialogTitle>
         <DialogContent>
@@ -128,7 +145,7 @@ export default function AdminCardItem({ img, id, title, address, description, re
               dateFormat="yyyy/MM/dd"
               placeholderText="Chọn ngày bắt đầu"
               isClearable
-              style={{ width: "100%" }} // Adjust width here
+              style={{ width: "100%" }}
             />
             <DatePicker
               selected={endDate}
@@ -140,7 +157,7 @@ export default function AdminCardItem({ img, id, title, address, description, re
               dateFormat="yyyy/MM/dd"
               placeholderText="Chọn ngày kết thúc"
               isClearable
-              style={{ width: "100%" }} // Adjust width here
+              style={{ width: "100%" }}
             />
             <Typography variant="body2" color="text.secondary">
               Tổng tiền: {totalPrice}

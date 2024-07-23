@@ -47,12 +47,12 @@ export default function Booking() {
       status:1
     });
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/forrent-house/${id}`)
+        axios.get(`http://localhost:8080/api/forrent-house/detail/${id}`)
             .then(res => {
                 console.log(res.data,"aaaaaaaaaaaaaaaa");
                 setForrentDetail(res.data)
                 setHost(res.data.users)
-                setImg(res.data.img)})
+                setImg(res.data.imgDTOs)})
     },[])
 
     const handleChangeDatePicker = (newValue) => {
