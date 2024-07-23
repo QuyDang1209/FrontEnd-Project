@@ -33,7 +33,7 @@ export default function ForrentHouseList() {
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(1);
-    const userId = 1;
+    const userId = JSON.parse(localStorage.getItem('user')).id;
 
     useEffect(() => {
         fetchHouses();

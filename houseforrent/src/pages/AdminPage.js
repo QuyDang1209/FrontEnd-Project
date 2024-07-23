@@ -16,7 +16,7 @@ import {
 
 import AdminCardItem from "./../components/AdminCardItem";
 import Footer from "../components/Footer";
-import HeaderMenu1 from "../components/HeaderMenu0";
+import HeaderMenu0 from "../components/HeaderMenu0";
 
 export default function AdminPage() {
     const [forrentList, setForrentList] = useState([]);
@@ -78,9 +78,12 @@ export default function AdminPage() {
     const handlePageChange = (event , value) => {
         setPage(value);
     };
+    const handleDataChange = (data) => {
+        setForrentList(data);
+    }
     return (
         <>
-            <HeaderMenu1 />
+            <HeaderMenu0 onDataChange={handleDataChange}/>
             <Divider />
             <Container
                 sx={{

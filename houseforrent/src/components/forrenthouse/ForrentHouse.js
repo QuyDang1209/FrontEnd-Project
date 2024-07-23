@@ -16,6 +16,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
+import {useNavigation} from "react-router-dom";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -31,7 +32,7 @@ const VisuallyHiddenInput = styled('input')({
 
 export default function ForrentHouse() {
     const [imgUrl, setImgUrl] = useState([]);
-
+    const navigate = useNavigation();
     const [progress, setProgress] = useState([]);
     const id = JSON.parse(localStorage.getItem('user')).id ;
     const [formForrent, setFormForrent] = useState({
@@ -108,7 +109,8 @@ export default function ForrentHouse() {
         try {
             const response = await axios.post('http://localhost:8080/api/forrent-house', formForrent);
             if (response.data.status === 200) {
-                toast.success('Đăng kí nhà của bạn thành công, chờ admin duyệt');
+                toast.success('Đăng kí nhà của bạn thành công');
+                navigate("/house")
             }
         } catch (error) {
             console.error('Error submitting form: ', error);
