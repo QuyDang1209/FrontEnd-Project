@@ -82,7 +82,7 @@ export default function ForrentHouseDetail({ house, onClose }) {
                     <strong>Mô tả:</strong> {house.decription}
                 </Typography>
                 <Typography variant="body1" mb={1}>
-                    <strong>Giá:</strong> {house.rentingprice}
+                    <strong>Giá:</strong> {house.rentingprice} vnd/ngày
                 </Typography>
                 <Typography variant="body1" mb={1}>
                     <strong>Loại nhà:</strong> {house.type == 1 ? "villa" : "homestay"}

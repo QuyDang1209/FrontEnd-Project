@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CustomButton } from "./../custom-component/CustomButton";
 import dayjs from 'dayjs';
 import axios from "axios";
@@ -30,9 +30,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvid
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { DateTimeRangePicker } from '@mui/x-date-pickers-pro/DateTimeRangePicker';
-
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 import "./HeaderMenu.css"
 import 'dayjs/locale/en-gb';  // Import locale if necessary
+import { toast } from "react-toastify";
 
 // Extend dayjs with custom parsing and formatting capabilities
 const customParseFormat = require('dayjs/plugin/customParseFormat');
@@ -100,8 +102,8 @@ export default function HeaderMenu0( {onDataChange} ) {
     }
 
     const [formState, setFormState] = useState({
-        bedroom: '',
-        bathroom: '',
+        bedroom: 1,
+        bathroom: 1,
         checkin: "",
         checkout: "",
         address:""
@@ -143,7 +145,43 @@ export default function HeaderMenu0( {onDataChange} ) {
             onDataChange(res.data)
         })
     };
+    const [user, setUser] = useState('');
+    const idUser = JSON.parse(localStorage.getItem("user")).id
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/user/${idUser}` ).then((res) => {
+            setUser(res.data)
+        })
+    },[])
+    const handleBecomeahost =  () => {
+        if(user.role[0].id == 1){
+            axios.post("http://localhost:8080/api/test", user ).then((res) => {
+                toast.success("Đã thông báo đến admin, vui lòng chờ phản hồi")
+            })
+        }
+        else{
+            toast.error("Bạn đã đăng nhập với quyền chủ nhà")
+        }
+         
+    }
 
+    // admin nhận thông báo
+    const [stompClient, setStompClient] = useState(null);
+    useEffect(() => {
+        const socket = new SockJS("http:/localhost:8080/ws");
+        const client = Stomp.over(socket);
+        client.connect({}, () => {
+            client.subscribe("/topic/messages", (message) => {
+                console.log("receivedMessage", message.body);
+            });
+        });
+        setStompClient(client);
+        return () => {
+            client.disconnect();
+        };
+    }, []);
+    const backToHome = () => {
+        navigation("/main");
+    }
     return (
         <>
             <Container
@@ -161,6 +199,7 @@ export default function HeaderMenu0( {onDataChange} ) {
                             style={{ width: "100px", height: "50px" }}
                             src={"/images/logo-airbnb.png"}
                             alt="Airbnb Logo"
+                            onClick={backToHome}
                         />
                     </Grid>
                     <Grid
@@ -238,7 +277,7 @@ export default function HeaderMenu0( {onDataChange} ) {
                     <Grid item md={3} xs={9} sm={9}>
                         <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
                             <Link to="/main" style={{ textDecoration: 'none' }}>
-                            <Button variant="text" style={{ color: "black" }}>
+                            <Button onClick={handleBecomeahost} variant="text" style={{ color: "black" }}>
                                 Become a host
                             </Button>
                             </Link>

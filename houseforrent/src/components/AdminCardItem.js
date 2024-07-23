@@ -10,8 +10,10 @@ import ShareIcon from "@mui/icons-material/Share";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import {Link, useNavigate} from "react-router-dom";
 
-export default function AdminCardItem({ img, title, address, description, rentingprice }) {
+
+export default function AdminCardItem({ img,id, title, address, description, rentingprice, handleBtnDetailClick }) {
   return (
     <Card
       style={{display: "flex", flexDirection:"column", justifyContent: "space-between"}}
@@ -63,8 +65,8 @@ export default function AdminCardItem({ img, title, address, description, rentin
             <ShareIcon />
           </IconButton>
         </Box>
-        <Button variant="contained" color="primary" aria-label="book now">
-          Đặt mua ngay
+        <Button variant="contained" color="primary" aria-label="book now" onClick={(e) => handleBtnDetailClick(id)}>
+          Chi tiết
         </Button>
       </Box>
       </CardActions>
