@@ -48,7 +48,7 @@ const NotificationsPage = ({ landlordId }) => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        axios.get(`/api/notification/${landlordId}`)
+        axios.get(`http://localhost:8080/api/notification/${landlordId}`)
             .then(response => setNotifications(response.data))
             .catch(error => console.error('Error fetching notifications:', error));
     }, [landlordId]);
