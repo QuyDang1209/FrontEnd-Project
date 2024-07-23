@@ -66,7 +66,7 @@ export default function AdminCardItem({ img,id, title, address, description, ren
           </IconButton>
         </Box>
         <Button variant="contained" color="primary" aria-label="book now" onClick={(e) => handleBtnDetailClick(id)}>
-          Chi tiết nhà
+          Chi tiết
         </Button>
       </Box>
       </CardActions>
