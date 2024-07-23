@@ -31,6 +31,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { DateTimeRangePicker } from '@mui/x-date-pickers-pro/DateTimeRangePicker';
 
+import NotificationsPage from "../pages/NotificationsPage";
+
 import "./HeaderMenu.css"
 import 'dayjs/locale/en-gb';  // Import locale if necessary
 
@@ -243,6 +245,7 @@ export default function HeaderMenu0( {onDataChange} ) {
                             </Button>
                             </Link>
                             <LanguageIcon style={{ color: "black", marginLeft: "10px" }} />
+                            <NotificationsPage />
                             <Button
                                 onClick={handleClick}
                                 style={{

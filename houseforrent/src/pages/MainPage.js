@@ -15,7 +15,7 @@ import HeaderDetail0 from "../components/HeaderDetail0";
 export default function MainPage() {
     const [forrentList, setForrentList] = useState([]);
     const [page , setPage] = useState(1);
-    const [pageSize] = useState(5);
+    const [pageSize] = useState(6);
     const [totalPages, setTotalPages] = useState(1);
     
     useEffect(() => {

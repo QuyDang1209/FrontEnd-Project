@@ -83,23 +83,24 @@ export default function ForrentHouseDetail({ house, onClose, forrentId }) {
     };
 
     const handleStatusChange = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/houses/${house.id}/status?status=${status}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to update status');
-            }
-            const data = await response.json();
-            setStatus(data.status);
-            setOpenStatusDialog(false);
-        } catch (error) {
-            console.error('Error updating status:', error);
+    try {
+        const response = await fetch(`http://localhost:8080/api/forrent-house/${house.id}/status?orderStatus=${status}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update status');
         }
+        const data = await response.json();
+        setStatus(data.order_status);
+        setOpenStatusDialog(false);
+    } catch (error) {
+        console.error('Error updating status:', error);
+    }
     };
+
 
     if (!house) return null;
 
@@ -116,14 +117,14 @@ export default function ForrentHouseDetail({ house, onClose, forrentId }) {
                 <Typography variant="body1" mb={1}><strong>Mô tả:</strong> {house.decription}</Typography>
                 <Typography variant="body1" mb={1}><strong>Giá:</strong> {house.rentingprice}</Typography>
                 <Typography variant="body1" mb={1}><strong>Loại nhà:</strong> {house.type === 1 ? "villa" : "homestay"}</Typography>
-                <Typography variant="body1" mb={1}><strong>Trạng thái:</strong> {house.status}</Typography>
+                <Typography variant="body1" mb={1}><strong>Trạng thái:</strong> {house.order_status}</Typography>
 
                 {/* Status Update Button */}
                 <Box mt={2}>
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={house.status === 'Rented'}
+                        disabled={house.order_status === 'Rented'}
                         onClick={() => setOpenStatusDialog(true)}
                     >
                         Cập nhật trạng thái
