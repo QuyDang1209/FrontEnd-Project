@@ -98,7 +98,7 @@ export default function ForrentHouseList() {
     return (
         <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                <Typography variant="h4" component="h2">
+                <Typography variant="h4" component="h2" sx={{ color: 'black' }}>
                     Danh sách nhà cho thuê
                 </Typography>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>

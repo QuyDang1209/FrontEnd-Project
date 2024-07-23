@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import {
     Box,
     Container,
@@ -6,7 +7,7 @@ import {
     Pagination
 } from "@mui/material";
 
-import CardItem from "./../components/CardItem";
+import AdminCardItem from "./../components/AdminCardItem";
 import Footer from "../components/Footer";
 import HeaderDetail from "../components/HeaderDetail";
 import axios from "axios";
@@ -69,7 +70,7 @@ export default function MainPage() {
                 <Box display={"flex"} gap={"20px"} flexWrap={"wrap"}>
                     {forrentList.length > 0 ? (
                         forrentList.map((f) => (
-                            <CardItem
+                            <AdminCardItem
                                 key={f.id}
                                 img={f.imgDTOs.length > 0 ? f.imgDTOs[0].img : ''} // Lấy ảnh đầu tiên từ imgDTOs
                                 title={f.namehouse} // Sử dụng address thay cho description

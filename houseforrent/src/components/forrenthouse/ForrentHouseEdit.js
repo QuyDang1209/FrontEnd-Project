@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { uploadBytes, ref, getDownloadURL, getStorage, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import { Avatar, Button, TextField, Grid, Box, Typography, Paper, Container, Select, MenuItem } from "@mui/material";
 import HeaderMenu0 from '../HeaderMenu0';
 import Footer from '../Footer';
@@ -43,6 +43,7 @@ const ForrentHouseEdit = () => {
     const [namehouse, setNamehouse] = useState('');
     const [bedroom, setBedroom] = useState('');
     const [bathroom, setBathroom] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchForRentHouse = async () => {
@@ -137,6 +138,7 @@ const ForrentHouseEdit = () => {
             console.error('Error submitting form: ', error);
             toast.error('Cập nhật thông tin nhà thất bại. Vui lòng thử lại.');
         }
+        navigate('/house');
     }
 
     return (

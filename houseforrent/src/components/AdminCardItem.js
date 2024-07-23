@@ -12,7 +12,10 @@ import Box from "@mui/material/Box";
 import { Typography, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {Link, useNavigate} from "react-router-dom";
 
+
+/*
 export default function AdminCardItem({ img, title, address, description, rentingprice }) {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(null);
@@ -21,6 +24,28 @@ export default function AdminCardItem({ img, title, address, description, rentin
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleBooking = () => {
+    if (startDate && endDate) {
+      const days = (endDate - startDate) / (1000 * 3600 * 24);
+      const price = days * rentingprice;
+      setTotalPrice(price);
+      alert(`Booking successful! Total price: ${price}`);
+      handleClose();
+    }
+  };
+*/
+
+
+
+export default function AdminCardItem({ img, id, title, address, description, rentingprice, handleBtnDetailClick }) {
+  const [open, setOpen] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const handleBooking = () => {
     if (startDate && endDate) {
       const days = (endDate - startDate) / (1000 * 3600 * 24);
@@ -84,6 +109,9 @@ export default function AdminCardItem({ img, title, address, description, rentin
           </Box>
           <Button variant="contained" color="primary" aria-label="book now" onClick={handleOpen}>
             Đặt mua ngay
+          </Button>
+          <Button variant="contained" color="primary" aria-label="details" onClick={() => handleBtnDetailClick(id)}>
+            Chi tiết
           </Button>
         </Box>
       </CardActions>

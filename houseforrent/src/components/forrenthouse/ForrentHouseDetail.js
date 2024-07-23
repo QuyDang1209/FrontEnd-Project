@@ -130,7 +130,27 @@ export default function ForrentHouseDetail({ house, onClose, forrentId }) {
                         Cập nhật trạng thái
                     </Button>
                 </Box>
-
+                <Typography variant="body1" mb={1}>
+                    <strong>Tên nhà:</strong> {house.namehouse}
+                </Typography>
+                <Typography variant="body1" mb={1}>
+                    <strong>Địa chỉ:</strong> {house.address}
+                </Typography>
+                <Typography variant="body1" mb={1}>
+                    <strong>Số phòng ngủ:</strong> {house.bedroom}
+                </Typography>
+                <Typography variant="body1" mb={1}>
+                    <strong>Số phòng tắm:</strong> {house.bathroom}
+                </Typography>
+                <Typography variant="body1" mb={1}>
+                    <strong>Mô tả:</strong> {house.decription}
+                </Typography>
+                <Typography variant="body1" mb={1}>
+                    <strong>Giá:</strong> {house.rentingprice} vnd/ngày
+                </Typography>
+                <Typography variant="body1" mb={1}>
+                    <strong>Loại nhà:</strong> {house.type == 1 ? "villa" : "homestay"}
+                </Typography>
                 {/* House Images */}
                 <Box mt={2}>
                     <Typography variant="body1" mb={1}><strong>Ảnh nhà:</strong></Typography>
