@@ -51,10 +51,10 @@ export default function AdminPage() {
         navigate(`/booking/${idCardDetail}`)
     }
     
-    useEffect(() => {
-        fetchForRentHouses();
-        fetchTopRentedHouses();
-    },[page , pageSize])
+    // useEffect(() => {
+    //     fetchForRentHouses();
+    //     fetchTopRentedHouses();
+    // },[page , pageSize])
 
     const fetchForRentHouses = async () => {
         try {
@@ -74,16 +74,16 @@ export default function AdminPage() {
         }
     }
 
-    const fetchTopRentedHouses = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/forrent-house/top-rented');
-            console.log('Top Rented Houses API Repsonse');
-            setTopRentedHouses(response.data);
-        }
-        catch (error){
-            console.error('Error fetching top rented houses:', error)
-        }
-    }
+    // const fetchTopRentedHouses = async () => {
+    //     try {
+    //         const response = await axios.get('http://localhost:8080/api/forrent-house/top-rented');
+    //         console.log('Top Rented Houses API Repsonse');
+    //         setTopRentedHouses(response.data);
+    //     }
+    //     catch (error){
+    //         console.error('Error fetching top rented houses:', error)
+    //     }
+    // }
     
     const handlePageChange = (event , value) => {
         setPage(value);

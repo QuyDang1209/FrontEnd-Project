@@ -18,13 +18,13 @@ import {
 
 const BookingsByUser = () => {
     const [bookings, setBookings] = useState([]);
-    const { userId } = useParams(); // Lấy userId từ route params
+    const  userId  = JSON.parse(localStorage.getItem('user')).id; // Lấy userId từ route params
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/booking/user/${userId}`);
+                const response = await axios.get(`http://localhost:8080/api/booking/user/`+userId); 
                 setBookings(response.data);
             } catch (error) {
                 toast.error("Lỗi khi lấy thông tin đặt phòng!");

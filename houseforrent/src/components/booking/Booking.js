@@ -35,14 +35,19 @@ export default function Booking() {
     const [img, setImg] = useState([]);
     const [forrentDetail, setForrentDetail] = useState("");
     const [host, setHost] = useState("");
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState({});
+    const userID = JSON.parse(localStorage.getItem('user')).id
+    useEffect(async () => {
+       const res = await axios.get(`http://localhost:8080/api/user/${userID}`)
+            setUser(res.data)
+    },[])
     
     const [formState, setFormState] = useState({
       orderday: null,
       payday: null,
       deposite:"",
       forrent: id,
-      users: JSON.parse(localStorage.getItem('user')).id,
+      users: userID,
       payment:1,
       status:1
     });
@@ -50,6 +55,7 @@ export default function Booking() {
         axios.get(`http://localhost:8080/api/forrent-house/${id}`)
             .then(res => {
                 console.log(res.data,"aaaaaaaaaaaaaaaa");
+                
                 setForrentDetail(res.data)
                 setHost(res.data.users)
                 setImg(res.data.img)})
@@ -80,14 +86,14 @@ export default function Booking() {
       console.log(res);
       if (res.status == 201) {
         toast.success("Đặt thuê thành công, vui lòng kiểm tra email");
-         axios.post("http://localhost:8080/api/send-email", {
-            recipient: "dangphuocquy1996@gmail.com", //thay địa chỉ email bằng forrentDetail.users
+         axios.post("http://localhost:8080/api/send-email/to-customer", {
+            recipient: user.email , //thay địa chỉ email bằng forrentDetail.users
             subject: "Thông báo xác nhận thuê nhà",
             user: host,
             forrent: forrentDetail,
             booking: sendObject
         });
-        navigate("/main")
+        window.location.assign('/main');  
       }
     }
     catch(error){
