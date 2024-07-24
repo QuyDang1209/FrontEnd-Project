@@ -112,14 +112,14 @@ export default function AdminCardItem({ img, id, title, address, description, re
     
     {/* Button Container */}
     <Box sx={{ display: "flex", gap: 1, flex: 1 }}>
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         aria-label="book now"
         onClick={handleOpen}
       >
         Đặt mua ngay
-      </Button>
+      </Button> */}
       <Button
         variant="contained"
         color="primary"
