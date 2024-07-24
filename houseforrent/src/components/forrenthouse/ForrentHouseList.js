@@ -33,7 +33,7 @@ export default function ForrentHouseList() {
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(1);
-    const userId = 1;
+    const userId = JSON.parse(localStorage.getItem('user')).id;
 
     useEffect(() => {
         fetchHouses();
@@ -101,8 +101,8 @@ export default function ForrentHouseList() {
                 <Typography variant="h4" component="h2" sx={{ color: 'black' }}>
                     Danh sách nhà cho thuê
                 </Typography>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="filter-label">Filter</InputLabel>
+                <FormControl sx={{ m: 1, minWidth: 120, display: 'flex' }}>
+                    {/* <InputLabel id="filter-label">Filter</InputLabel>
                     <Select
                         labelId="filter-label"
                         id="filter-select"
@@ -112,16 +112,27 @@ export default function ForrentHouseList() {
                         <MenuItem value="all"><SortIcon />All</MenuItem>
                         <MenuItem value="villa">Villa</MenuItem>
                         <MenuItem value="homestay">Homestay</MenuItem>
-                    </Select>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        component={Link}
-                        to="/forrent-house"
-                        sx={{ ml: 2 }}
-                    >
-                        Thêm Mới
-                    </Button>
+                    </Select> */}
+                    <Box sx={{ display: 'flex', m: 1, minWidth: 120 }}>
+            <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/forrent-house"
+                sx={{ ml: 2 }}
+            >
+                Thêm Mới
+            </Button>
+            <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/view-bookings"
+                sx={{ ml: 2 }}
+            >
+                Checkin/Checkout
+            </Button>
+        </Box>
                 </FormControl>
             </Box>
             {error && (
