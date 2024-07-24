@@ -98,21 +98,21 @@ export default function ForrentHouseList() {
     return (
         <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                <Typography variant="h4" component="h2">
+                <Typography variant="h4" component="h2" sx={{ color: 'black' }}>
                     Danh sách nhà cho thuê
                 </Typography>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="filter-label">Filter</InputLabel>
-                    <Select
-                        labelId="filter-label"
-                        id="filter-select"
-                        value={filter}
-                        onChange={handleFilterChange}
-                    >
-                        <MenuItem value="all"><SortIcon />All</MenuItem>
-                        <MenuItem value="villa">Villa</MenuItem>
-                        <MenuItem value="homestay">Homestay</MenuItem>
-                    </Select>
+                    {/*<InputLabel id="filter-label">Filter</InputLabel>*/}
+                    {/*<Select*/}
+                    {/*    labelId="filter-label"*/}
+                    {/*    id="filter-select"*/}
+                    {/*    value={filter}*/}
+                    {/*    onChange={handleFilterChange}*/}
+                    {/*>*/}
+                    {/*    <MenuItem value="all"><SortIcon />All</MenuItem>*/}
+                    {/*    <MenuItem value="villa">Villa</MenuItem>*/}
+                    {/*    <MenuItem value="homestay">Homestay</MenuItem>*/}
+                    {/*</Select>*/}
                     <Button
                         variant="contained"
                         color="primary"
@@ -153,7 +153,7 @@ export default function ForrentHouseList() {
                                 <TableCell>{house.bedroom}</TableCell>
                                 <TableCell>{house.bathroom}</TableCell>
                                 <TableCell>{house.description}</TableCell>
-                                <TableCell>{house.rentingprice}</TableCell>
+                                <TableCell>{house.rentingprice.toLocaleString()}</TableCell> {/* Thêm dấu phẩy */}
                                 <TableCell>{house.type === 1 ? "Villa" : "Homestay"}</TableCell>
                                 <TableCell>
                                     <Button

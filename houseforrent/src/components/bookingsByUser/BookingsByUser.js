@@ -18,7 +18,7 @@ import {
 
 const BookingsByUser = () => {
     const [bookings, setBookings] = useState([]);
-    const { userId } = useParams(); // Lấy userId từ route params
+    const  userId  = JSON.parse(localStorage.getItem('user')).id; // Lấy userId từ route params
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -98,7 +98,7 @@ const BookingsByUser = () => {
                                     <TableCell>{booking.forrent.namehouse}</TableCell>
                                     <TableCell>{booking.orderDay}</TableCell>
                                     <TableCell>{booking.payDay}</TableCell>
-                                    <TableCell>{booking.deposite}</TableCell>
+                                    <TableCell>{booking.deposite.toLocaleString()}</TableCell>
                                     <TableCell>{booking.statusHouse.status}</TableCell>
                                     <TableCell>{booking.typeHouse.name}</TableCell>
                                     <TableCell>{booking.user.name}</TableCell>

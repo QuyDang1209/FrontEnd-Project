@@ -75,7 +75,7 @@ export default function DetailForrentPage() {
                                     <Typography variant="h6">Details</Typography>
                                     <Typography>Address: {forrent.address}</Typography>
                                     <Typography>Description: {forrent.description}</Typography>
-                                    <Typography>Renting Price: ${forrent.rentingprice}</Typography>
+                                    <Typography>Renting Price: ${forrent.rentingprice.toLocaleString}</Typography>
                                     <Typography>Bedrooms: {forrent.bedroom}</Typography>
                                     <Typography>Bathrooms: {forrent.bathroom}</Typography>
                                     <Typography>Type: {forrent.type.name}</Typography>

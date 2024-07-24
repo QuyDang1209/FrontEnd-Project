@@ -18,7 +18,7 @@ import { Label, SearchRounded } from "@mui/icons-material";
 import LanguageIcon from "@mui/icons-material/Language";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Popover from "@mui/material/Popover";
@@ -27,6 +27,7 @@ import { useTheme } from "@emotion/react";
 
 export default function HeaderDetail0() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,6 +73,9 @@ export default function HeaderDetail0() {
   if (matchesXS && matchesMD && openPopover) {
     handleClosePopover(); // handle
   }
+  const handleClick1 = () => {
+    navigate("/main");
+  };
   return (
     <>
       <Container
@@ -87,6 +91,7 @@ export default function HeaderDetail0() {
             <img
               style={{ width: "100px", height: "50px" }}
               src={"/images/logo-airbnb.png"}
+              onClick={handleClick1}
             />
           </Grid>
           <Grid
