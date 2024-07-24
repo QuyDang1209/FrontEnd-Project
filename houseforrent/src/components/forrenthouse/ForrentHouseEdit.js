@@ -131,14 +131,14 @@ const ForrentHouseEdit = () => {
                     'Authorization':'Bearer <your_access_token>'
                 }
             });
-            if (response.data.status === 200) {
+            if (response.status == 200) {
                 toast.success('Cập nhật thông tin nhà thành công');
+                navigate('/house');
             }
         } catch (error) {
             console.error('Error submitting form: ', error);
             toast.error('Cập nhật thông tin nhà thất bại. Vui lòng thử lại.');
         }
-        navigate('/house');
     }
 
     return (
