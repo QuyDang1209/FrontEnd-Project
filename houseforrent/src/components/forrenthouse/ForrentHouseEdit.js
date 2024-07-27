@@ -48,7 +48,7 @@ const ForrentHouseEdit = () => {
     useEffect(() => {
         const fetchForRentHouse = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/forrent-house/${id}`, {
+                const response = await axios.get(`http://localhost:8080/api/forrent-house/detail/${id}`, {
                     headers: {
                         'Authorization':'Bearer <your_access_token>'
                     }
@@ -61,7 +61,7 @@ const ForrentHouseEdit = () => {
                 setNamehouse(data.namehouse);
                 setBedroom(data.bedroom);
                 setBathroom(data.bathroom);
-                setImgUrl(data.img); // Assuming data.img is an array of images
+                setImgUrl(data.imgDTOs); // Assuming data.img is an array of images
             } catch (error) {
                 console.error('Error fetching data: ', error);
             }

@@ -7,7 +7,7 @@ import {
     Pagination
 } from "@mui/material";
 
-import AdminCardItem from "./../components/AdminCardItem";
+import AdminCardItem1 from "./../components/AdminCardItem1";
 import Footer from "../components/Footer";
 import HeaderDetail from "../components/HeaderDetail";
 import axios from "axios";
@@ -70,7 +70,7 @@ export default function MainPage() {
                 <Box display={"flex"} gap={"20px"} flexWrap={"wrap"}>
                     {forrentList.length > 0 ? (
                         forrentList.map((f) => (
-                            <AdminCardItem
+                            <AdminCardItem1
                                 key={f.id}
                                 img={f.imgDTOs.length > 0 ? f.imgDTOs[0].img : ''} // Lấy ảnh đầu tiên từ imgDTOs
                                 title={f.namehouse} // Sử dụng address thay cho description

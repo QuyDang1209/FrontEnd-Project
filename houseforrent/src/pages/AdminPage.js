@@ -27,6 +27,7 @@ export default function AdminPage() {
     const [pageSize] = useState(8);
     const [totalPages, setTotalPages] = useState(1);
     const [topRentedHouses, setTopRentedHouses] = useState([]);
+    /*
     useEffect(() => {
         axios.get('http://localhost:8080/api/forrent-house',{
             params : {
@@ -43,6 +44,7 @@ export default function AdminPage() {
             });
 
     }, [page , pageSize]);
+    */
         const handleDataChange = (data) => {
         setForrentList(data);
     }

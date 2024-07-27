@@ -16,7 +16,8 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -107,6 +108,7 @@ export default function ForrentHouse() {
         }
         try {
             const response = await axios.post('http://localhost:8080/api/forrent-house', formForrent);
+            console.log(response,"response");
             if (response.status == 201) {
                 toast.success('Đăng kí nhà của bạn thành công, chờ admin duyệt');
                 navigate('/house');
