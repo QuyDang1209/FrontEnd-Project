@@ -24,7 +24,7 @@ const BookingsByUser = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/booking/user/${userId}`);
+                const response = await axios.get(`http://localhost:8080/api/booking/user/`+userId); 
                 setBookings(response.data);
             } catch (error) {
                 toast.error("Lỗi khi lấy thông tin đặt phòng!");

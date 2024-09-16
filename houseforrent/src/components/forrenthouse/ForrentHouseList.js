@@ -101,27 +101,38 @@ export default function ForrentHouseList() {
                 <Typography variant="h4" component="h2" sx={{ color: 'black' }}>
                     Danh sách nhà cho thuê
                 </Typography>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    {/*<InputLabel id="filter-label">Filter</InputLabel>*/}
-                    {/*<Select*/}
-                    {/*    labelId="filter-label"*/}
-                    {/*    id="filter-select"*/}
-                    {/*    value={filter}*/}
-                    {/*    onChange={handleFilterChange}*/}
-                    {/*>*/}
-                    {/*    <MenuItem value="all"><SortIcon />All</MenuItem>*/}
-                    {/*    <MenuItem value="villa">Villa</MenuItem>*/}
-                    {/*    <MenuItem value="homestay">Homestay</MenuItem>*/}
-                    {/*</Select>*/}
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        component={Link}
-                        to="/forrent-house"
-                        sx={{ ml: 2 }}
+                <FormControl sx={{ m: 1, minWidth: 120, display: 'flex' }}>
+                    {/* <InputLabel id="filter-label">Filter</InputLabel>
+                    <Select
+                        labelId="filter-label"
+                        id="filter-select"
+                        value={filter}
+                        onChange={handleFilterChange}
                     >
-                        Thêm Mới
-                    </Button>
+                        <MenuItem value="all"><SortIcon />All</MenuItem>
+                        <MenuItem value="villa">Villa</MenuItem>
+                        <MenuItem value="homestay">Homestay</MenuItem>
+                    </Select> */}
+                    <Box sx={{ display: 'flex', m: 1, minWidth: 120 }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            component={Link}
+                            to="/forrent-house"
+                            sx={{ ml: 2 }}
+                        >
+                            Thêm Mới
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            component={Link}
+                            to="/view-bookings"
+                            sx={{ ml: 2 }}
+                        >
+                            Checkin/Checkout
+                        </Button>
+                    </Box>
                 </FormControl>
             </Box>
             {error && (
@@ -153,7 +164,7 @@ export default function ForrentHouseList() {
                                 <TableCell>{house.bedroom}</TableCell>
                                 <TableCell>{house.bathroom}</TableCell>
                                 <TableCell>{house.description}</TableCell>
-                                <TableCell>{house.rentingprice.toLocaleString()}</TableCell> {/* Thêm dấu phẩy */}
+                                <TableCell>{house.rentingprice.toLocaleString()}</TableCell>
                                 <TableCell>{house.type === 1 ? "Villa" : "Homestay"}</TableCell>
                                 <TableCell>
                                     <Button

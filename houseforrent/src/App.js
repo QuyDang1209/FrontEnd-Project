@@ -40,7 +40,7 @@ const App = () => {
                         <Route path="/main" element={<AdminPage />} />
                         <Route path="/forrent-house/edit" element={<ForrentHouseEdit />} />
                         <Route path="/forrent-house/edit/:id" element={<ForrentHouseEdit />} />
-                        <Route path="/bookings/user/" element={<BookingsPage />} />
+                        <Route path="/bookings/user" element={<BookingsPage />} />
                         <Route path="/view-bookings" element={<BookingsPage />} />
                         <Route path="/house" element={<ForrentHousePage/>}/>
                     </Routes>
@@ -48,7 +48,7 @@ const App = () => {
                 <ToastContainer />
             </Container>
         </Router>
-        
+
     );
 };
 

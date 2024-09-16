@@ -14,9 +14,15 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import LinearProgress from '@mui/material/LinearProgress';
-import { styled } from '@mui/material/styles';
+// import { styled } from '@mui/material/styles';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+import {
+    Unstable_NumberInput as BaseNumberInput,
+    numberInputClasses,
+} from '@mui/base/Unstable_NumberInput';
+import { styled } from '@mui/system';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -33,6 +39,7 @@ const VisuallyHiddenInput = styled('input')({
 export default function ForrentHouse() {
     const [imgUrl, setImgUrl] = useState([]);
     const navigate = useNavigate();
+
     const [progress, setProgress] = useState([]);
     const id = JSON.parse(localStorage.getItem('user')).id ;
     const [formForrent, setFormForrent] = useState({
@@ -43,8 +50,8 @@ export default function ForrentHouse() {
         "type": 1,
         "users": id,
         "namehouse":"",
-        "bedroom":"",
-        "bathroom":""
+        "bedroom": "",
+        "bathroom": ""
     });
 
     useEffect(() => {
@@ -55,6 +62,19 @@ export default function ForrentHouse() {
         setFormForrent({
             ...formForrent,
             [e.target.name]: e.target.value
+        });
+    }
+    const handleChangeBedRoom = (e, newValue)=>{
+
+        setFormForrent({
+            ...formForrent,
+            'bedroom': parseInt(newValue, 10)
+        });
+    }
+    const handleChangeBathRoom = (e, newValue)=>{
+        setFormForrent({
+            ...formForrent,
+           "bathroom": parseInt(newValue, 10)
         });
     }
 
@@ -108,10 +128,10 @@ export default function ForrentHouse() {
         }
         try {
             const response = await axios.post('http://localhost:8080/api/forrent-house', formForrent);
-            console.log(response)
-            if (response.status === 201) {
-                toast.success('Đăng kí nhà của bạn thành công');
-                navigate("/house")
+            console.log(response,"response");
+            if (response.status == 201) {
+                toast.success('Đăng kí nhà của bạn thành công, chờ admin duyệt');
+                navigate('/house');
             }
         } catch (error) {
             console.error('Error submitting form: ', error);
@@ -211,30 +231,32 @@ export default function ForrentHouse() {
                                                 />
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <TextField
-                                                    sx={{ mt: 2 }}
-                                                    label="Số phòng ngủ"
-                                                    variant="outlined"
-                                                    id="outlined-size-small"
-                                                    name="bedroom"
-                                                    type="number"
-                                                    value={formForrent.bedroom}
-                                                    onChange={handleChange}
-                                                    fullWidth
-                                            />
+                                                <CustomNumberInput    name="bedroom" value={formForrent.bedroom} onChange={handleChangeBedRoom} aria-label="Demo number input" placeholder="Số lượng phòng ngủ" />
+                                                {/*<TextField*/}
+                                                {/*    sx={{ mt: 2 }}*/}
+                                                {/*    label="Số phòng ngủ"*/}
+                                                {/*    variant="outlined"*/}
+                                                {/*    id="outlined-size-small"*/}
+                                                {/*    name="bedroom"*/}
+                                                {/*    type="number"*/}
+                                                {/*    value={formForrent.bedroom}*/}
+                                                {/*    onChange={handleChange}*/}
+                                                {/*    fullWidth*/}
+                                                {/*/>*/}
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <TextField
-                                                    sx={{ mt: 2 }}
-                                                    label="Số phòng tắm"
-                                                    variant="outlined"
-                                                    id="outlined-size-small"
-                                                    name="bathroom"
-                                                    type="number"
-                                                    value={formForrent.bathroom}
-                                                    onChange={handleChange}
-                                                    fullWidth
-                                            />
+                                                <CustomNumberInput   name="bathroom" value={formForrent.bathroom} onChange={handleChangeBathRoom} aria-label="Demo number input" placeholder="Số lượng phòng tắm" />
+                                                {/*<TextField*/}
+                                                {/*    sx={{ mt: 2 }}*/}
+                                                {/*    label="Số phòng tắm"*/}
+                                                {/*    variant="outlined"*/}
+                                                {/*    id="outlined-size-small"*/}
+                                                {/*    name="bathroom"*/}
+                                                {/*    type="number"*/}
+                                                {/*    value={formForrent.bathroom}*/}
+                                                {/*    onChange={handleChange}*/}
+                                                {/*    fullWidth*/}
+                                                {/*/>*/}
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <InputLabel id="house">Loại nhà của bạn</InputLabel>
@@ -300,7 +322,7 @@ export default function ForrentHouse() {
                                             </Grid>
                                             <Grid item xs={2}>
                                                 <Button variant="contained" color="primary" to="/house" fullWidth
-                                                    onClick={() => window.history.back()}>
+                                                        onClick={() => window.history.back()}>
                                                     Back
                                                 </Button>
                                             </Grid>
@@ -316,3 +338,176 @@ export default function ForrentHouse() {
         </>
     );
 }
+
+
+const CustomNumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
+    return (
+        <BaseNumberInput
+            slots={{
+                root: StyledInputRoot,
+                input: StyledInputElement,
+                incrementButton: StyledButton,
+                decrementButton: StyledButton,
+            }}
+            slotProps={{
+                incrementButton: {
+                    children: '▴',
+                    type: 'button'
+                },
+                decrementButton: {
+                    children: '▾',
+                    type: 'button'
+                },
+            }}
+            {...props}
+            ref={ref}
+        />
+    );
+});
+
+const blue = {
+    100: '#DAECFF',
+    200: '#80BFFF',
+    400: '#3399FF',
+    500: '#007FFF',
+    600: '#0072E5',
+    700: '#0059B2',
+};
+
+const grey = {
+    50: '#F3F6F9',
+    100: '#E5EAF2',
+    200: '#DAE2ED',
+    300: '#C7D0DD',
+    400: '#B0B8C4',
+    500: '#9DA8B7',
+    600: '#6B7A90',
+    700: '#434D5B',
+    800: '#303740',
+    900: '#1C2025',
+};
+
+const StyledInputRoot = styled('div')(
+    ({ theme }) => `
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  border-radius: 8px;
+  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+  box-shadow: 0px 2px 4px ${
+        theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
+    };
+  display: grid;
+  grid-template-columns: 1fr 19px;
+  grid-template-rows: 1fr 1fr;
+  overflow: hidden;
+  column-gap: 8px;
+  padding: 4px;
+
+  &.${numberInputClasses.focused} {
+    border-color: ${blue[400]};
+    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[700] : blue[200]};
+  }
+
+  &:hover {
+    border-color: ${blue[400]};
+  }
+
+  // firefox
+  &:focus-visible {
+    outline: 0;
+  }
+`,
+);
+
+const StyledInputElement = styled('input')(
+    ({ theme }) => `
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  grid-column: 1/2;
+  grid-row: 1/3;
+  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  background: inherit;
+  border: none;
+  border-radius: inherit;
+  padding: 8px 12px;
+  outline: 0;
+`,
+);
+
+const StyledButton = styled('button')(
+    ({ theme }) => `
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  appearance: none;
+  padding: 0;
+  width: 19px;
+  height: 19px;
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1;
+  box-sizing: border-box;
+  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  border: 0;
+  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 120ms;
+
+  &:hover {
+    background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
+    border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
+    cursor: pointer;
+  }
+
+  &.${numberInputClasses.incrementButton} {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border: 1px solid;
+    border-bottom: 0;
+    border-color: ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+    background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+    color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
+
+    &:hover {
+      cursor: pointer;
+      color: #FFF;
+      background: ${theme.palette.mode === 'dark' ? blue[600] : blue[500]};
+      border-color: ${theme.palette.mode === 'dark' ? blue[400] : blue[600]};
+    }
+  }
+
+  &.${numberInputClasses.decrementButton} {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border: 1px solid;
+    border-color: ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+    background: ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+    color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: #FFF;
+    background: ${theme.palette.mode === 'dark' ? blue[600] : blue[500]};
+    border-color: ${theme.palette.mode === 'dark' ? blue[400] : blue[600]};
+  }
+
+  & .arrow {
+    transform: translateY(-1px);
+  }
+
+  & .arrow {
+    transform: translateY(-1px);
+  }
+`,
+);

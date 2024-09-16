@@ -27,22 +27,22 @@ export default function AdminPage() {
     const [pageSize] = useState(8);
     const [totalPages, setTotalPages] = useState(1);
     const [topRentedHouses, setTopRentedHouses] = useState([]);
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/forrent-house',{
-            params : {
-                page : page - 1,
-                pageSize : pageSize
-            }
-        })
-            .then(response => {
-                console.log('API Response:', response.data); // Kiểm tra dữ liệu trả về từ API
-                setForrentList(response.data);
-            })
-            .catch(error => {
-                console.error('Có lỗi xảy ra khi gọi API:', error);
-            });
-
-    }, [page , pageSize]);
+    // useEffect(() => {
+    //     axios.get('http://localhost:8080/api/forrent-house',{
+    //         params : {
+    //             page : page - 1,
+    //             pageSize : pageSize
+    //         }
+    //     })
+    //         .then(response => {
+    //             console.log('API Response:', response.data); // Kiểm tra dữ liệu trả về từ API
+    //             setForrentList(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Có lỗi xảy ra khi gọi API:', error);
+    //         });
+    //
+    // }, [page , pageSize]);
     const handleDataChange = (data) => {
         setForrentList(data);
     }
@@ -53,7 +53,7 @@ export default function AdminPage() {
 
     useEffect(() => {
         fetchForRentHouses();
-        fetchTopRentedHouses();
+        // fetchTopRentedHouses();
     },[page , pageSize])
 
     const fetchForRentHouses = async () => {
@@ -74,16 +74,16 @@ export default function AdminPage() {
         }
     }
 
-    const fetchTopRentedHouses = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/forrent-house/top-rented');
-            console.log('Top Rented Houses API Repsonse');
-            setTopRentedHouses(response.data);
-        }
-        catch (error){
-            console.error('Error fetching top rented houses:', error)
-        }
-    }
+    // const fetchTopRentedHouses = async () => {
+    //     try {
+    //         const response = await axios.get('http://localhost:8080/api/forrent-house/top-rented');
+    //         console.log('Top Rented Houses API Repsonse');
+    //         setTopRentedHouses(response.data);
+    //     }
+    //     catch (error){
+    //         console.error('Error fetching top rented houses:', error)
+    //     }
+    // }
 
     const handlePageChange = (event , value) => {
         setPage(value);

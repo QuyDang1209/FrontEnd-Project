@@ -147,6 +147,8 @@ export default function HeaderMenu0( {onDataChange} ) {
     };
     const [user, setUser] = useState('');
     const idUser = JSON.parse(localStorage.getItem("user")).id
+    const role = JSON.parse(localStorage.getItem("user")).authorities[0].authority
+
     useEffect(() => {
         axios.get(`http://localhost:8080/api/user/${idUser}` ).then((res) => {
             setUser(res.data)
@@ -161,7 +163,7 @@ export default function HeaderMenu0( {onDataChange} ) {
         else{
             toast.error("Bạn đã đăng nhập với quyền chủ nhà")
         }
-         
+
     }
 
     // admin nhận thông báo
@@ -274,10 +276,10 @@ export default function HeaderMenu0( {onDataChange} ) {
                             </FormControl>
                         </ButtonGroup>
                     </Grid>
-                    <Grid item md={3} xs={9} sm={9}>
+                    <Grid item md={3} xs={9} sm={9} >
                         <Box display="flex" justifyContent="flex-end" alignItems={"center"}>
                             <Link to="/main" style={{ textDecoration: 'none' }}>
-                            <Button onClick={handleBecomeahost} variant="text" style={{ color: "black" }}>
+                            <Button onClick={handleBecomeahost} variant="text" style={{ color: "black" , display: role == "ROLE_ADMIN" ? "none" :""}}>
                                 Become a host
                             </Button>
                             </Link>
@@ -333,6 +335,11 @@ export default function HeaderMenu0( {onDataChange} ) {
                         <Typography>Danh sách nhà cho thuê</Typography>
                     </Link>
                 </MenuItem>
+                <MenuItem onClick={() => handleMenuClick("/users")} style={{ paddingRight: "100px", display: role == "ROLE_ADMIN" ? "" : "none" }}>
+                    <Link to="/house" style={{ textDecoration: "none", color: "black" }}>
+                        <Typography>Danh sách người dùng    </Typography>
+                    </Link>
+                </MenuItem>
                 <MenuItem
                     onClick={handleAccountClick}
                     style={{ paddingRight: "100px" }}
@@ -372,9 +379,9 @@ export default function HeaderMenu0( {onDataChange} ) {
                 <MenuItem onClick={() => handleMenuClick("/change-password")} style={{ paddingRight: "100px" }}>
                     <Typography>Thay đổi mật khẩu</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => handleMenuClick("/users")} style={{ paddingRight: "100px" }}>
-                    <Typography>Trạng thái hoạt động</Typography>
-                </MenuItem>
+                {/*<MenuItem onClick={() => handleMenuClick("/users")} style={{ paddingRight: "100px" }}>*/}
+                {/*    <Typography>Trạng thái hoạt động</Typography>*/}
+                {/*</MenuItem>*/}
             </Menu>
             <Popover
                 id={idPopover}
